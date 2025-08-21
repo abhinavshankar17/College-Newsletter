@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cloudComputingRoutes from "./routes/cloudComputing.js";
+import cyberSecurityRoutes from "./routes/cyberSecurity.js";
 
 dotenv.config();
 const app = express();
@@ -24,6 +25,7 @@ app.get("/", (req, res) => {
 
 // Routes
 app.use("/specialization/cloud-computing", cloudComputingRoutes);
+app.use("/specialization/cyber-security", cyberSecurityRoutes);
 
 // Start server
 app.listen(3000, () => {

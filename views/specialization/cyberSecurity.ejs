@@ -1,0 +1,126 @@
+<%- include("../partials/header", { title: "CyberSecurity Specialization" }) %>
+
+<section class="container page-cyber py-5">
+  <!-- Page header -->
+  <header class="page-header mb-4">
+    <h1 class="title"><%= page.title %></h1>
+    <p class="lead"><%= page.introduction %></p>
+  </header>
+
+  <div class="grid">
+    <!-- Left column: main content -->
+    <main class="main-col">
+
+      <!-- Academic Excellence & Research Output -->
+      <article class="card section mb-4">
+        <h2>Academic Excellence & Research Output</h2>
+        <p><%= page.academicExcellence.description %></p>
+
+        <ul class="highlights">
+          <% page.academicExcellence.facultyHighlights.forEach(function(h) { %>
+            <li><%= h %></li>
+          <% }); %>
+        </ul>
+
+        <h4>Publications & Outputs</h4>
+        <div class="pub-list">
+          <% page.academicExcellence.publications.forEach(function(pub) { %>
+            <div class="pub">
+              <strong><%= pub.title %></strong><br>
+              <small class="muted"><%= [pub.publisher, pub.date].filter(Boolean).join(' • ') %></small>
+              <p><%= pub.description %></p>
+            </div>
+          <% }); %>
+        </div>
+      </article>
+
+      <!-- Internship & Industry Exposure -->
+      <article class="card section mb-4">
+        <h2>Internship & Industry Exposure</h2>
+        <% page.internships.forEach(function(i) { %>
+          <div class="internship mb-3">
+            <h4><%= i.leader %> — <small class="muted"><%= i.organization %></small></h4>
+            <p><strong>Mentors:</strong> <%= i.mentors.join(', ') %></p>
+            <p><strong>Team:</strong> <%= i.team.join(', ') %></p>
+            <p><%= i.description %></p>
+            <p><strong>Techniques / Topics:</strong> <%= i.techniques.join(', ') %></p>
+          </div>
+        <% }) %>
+      </article>
+
+      <!-- Faculty Development & Certifications -->
+      <article class="card section mb-4">
+        <h2>Faculty Development & Certifications</h2>
+        <ul class="cert-list">
+          <% page.certifications.forEach(function(c) { %>
+            <li>
+              <strong><%= c.faculty.join(', ') %></strong> — 
+              <%= c.program %>
+              <span class="muted"> (<%= c.organization %>)</span>
+              — <small class="muted"><%= c.date %></small>
+              <span class="badge">Grade: <%= c.grade %></span>
+            </li>
+          <% }); %>
+        </ul>
+      </article>
+
+      <!-- Outreach, Recognition & Engagement -->
+      <article class="card section mb-4">
+        <h2>Outreach, Recognition & Engagement</h2>
+
+        <h4>Programs</h4>
+        <ul>
+          <% page.outreach.programs.forEach(function(p){ %>
+            <li><%= p %></li>
+          <% }) %>
+        </ul>
+
+        <h4>Events</h4>
+        <ul>
+          <% page.outreach.events.forEach(function(e){ %>
+            <li><%= e %></li>
+          <% }) %>
+        </ul>
+      </article>
+
+      <!-- International Collaborations -->
+      <article class="card section mb-4">
+        <h2>International Collaborations</h2>
+        <% page.collaborations.forEach(function(col){ %>
+          <div class="collab mb-3">
+            <h4><%= col.partner %> <small class="muted"><%= col.date %></small></h4>
+            <p><%= col.description %></p>
+            <p><strong>Team:</strong> <%= col.participants.join(', ') %></p>
+          </div>
+        <% }) %>
+      </article>
+
+    </main>
+
+    <!-- Right column: images, quote, quick facts -->
+    <aside class="side-col">
+      <div class="card mb-4 images">
+        <% page.images.forEach(function(src){ %>
+          <figure class="thumb">
+            <img src="<%= src %>" alt="cyber image" />
+          </figure>
+        <% }) %>
+      </div>
+
+      <div class="card quote mb-4">
+        <blockquote>"<%= page.quote %>"</blockquote>
+      </div>
+
+      <div class="card quick mb-4">
+        <h4>Quick Highlights</h4>
+        <ul>
+          <% page.academicExcellence.facultyHighlights.slice(0,5).forEach(function(h){ %>
+            <li><%= h %></li>
+          <% }) %>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<%- include("../partials/footer") %>
