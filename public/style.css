@@ -22,3 +22,41 @@ img {
   margin: 10px 5px;
   border-radius: 5px;
 }
+/* Dark blue navbar with yellow highlights */
+.navbar-custom {
+  background: #0d1b2a; /* rich dark navy */
+}
+
+/* Brand */
+.navbar-custom .navbar-brand {
+  color: #ffcc00; /* golden yellow */
+  font-size: 1.6rem;
+  transition: color 0.3s ease;
+}
+.navbar-custom .navbar-brand:hover {
+  color: #fff176; /* softer yellow */
+}
+
+/* Links */
+.navbar-custom .nav-link {
+  color: #f0f0f0 !important;
+  margin-left: 15px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+.navbar-custom .nav-link:hover {
+  background-color: rgba(255, 204, 0, 0.2); /* soft yellow overlay */
+  color: #ffcc00 !important;
+  transform: scale(1.05);
+}
+
+/* Active link */
+.navbar-custom .nav-link.active {
+  background-color: #ffcc00;
+  color: #0d1b2a !important;
+  font-weight: 600;
+  border-radius: 6px;
+}
+
