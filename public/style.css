@@ -60,3 +60,17 @@ img {
   border-radius: 6px;
 }
 
+/* Research Projects section title */
+.rp-section-title{
+  color: var(--accent, #c62828);
+  border-left: 6px solid var(--accent, #c62828);
+  padding-left: 10px;
+  margin-top: 32px;
+}
+
+.rp-section-title {
+  color: var(--accent, #c62828);
+  border-bottom: 2px solid var(--accent, #c62828);
+  padding-bottom: 0.25rem;
+}
+

@@ -1,8 +1,11 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import cloudComputingRoutes from "./routes/cloudComputing.js";
-import cyberSecurityRoutes from "./routes/cyberSecurity.js";
+
+// ✅ Correct paths
+import cloudComputingRoutes from "./routes/specialization/cloudComputing.js";
+import cyberSecurityRoutes from "./routes/specialization/cyberSecurity.js";
+import researchRoutes from "./routes/research/research.js"; 
 
 dotenv.config();
 const app = express();
@@ -12,16 +15,17 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 
-// MongoDB Connection (local for now)
+app.use("/research", researchRoutes);
+
+// MongoDB Connection
 mongoose.connect("mongodb://127.0.0.1:27017/college_newsletter")
   .then(() => console.log("✅ MongoDB Connected"))
   .catch(err => console.log("❌ MongoDB Error:", err));
 
-
+// Default route
 app.get("/", (req, res) => {
   res.send("Welcome to College Newsletter 🚀");
 });
-// Body parser
 
 // Routes
 app.use("/specialization/cloud-computing", cloudComputingRoutes);

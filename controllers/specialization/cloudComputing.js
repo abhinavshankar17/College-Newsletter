@@ -1,4 +1,4 @@
-import CloudComputing from "../models/specialization/CloudComputing.js";
+import CloudComputing from "../../models/specialization/CloudComputing.js";
 
 // Show Page
 export const getCloudComputing = async (req, res) => {

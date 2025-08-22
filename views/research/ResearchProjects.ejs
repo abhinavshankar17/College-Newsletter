@@ -1,0 +1,39 @@
+<%- include("../partials/header", { title: page.pageTitle }) %>
+
+<div class="container py-4">
+  <h1 class="mb-4"><%= page.pageTitle %></h1>
+
+  <% const sections = (page.sections || []).sort((a, b) => (a.order || 0) - (b.order || 0)); %>
+
+  <% sections.forEach(function(sec){ 
+       const accent = sec.themeColor || '#c62828'; 
+  %>
+    <!-- 🔴 Section Title -->
+ <h2 class="rp-section-title mb-3" style="--accent:<%= accent %>">
+  <%= sec.title %>
+</h2>
+
+      <%= sec.title %>
+    </h2>
+
+    <!-- Projects Grid -->
+    <div class="row g-3">
+      <% (sec.projects || []).forEach(function(p){ %>
+        <div class="col-md-6 col-lg-4">
+          <div class="card h-100 shadow-sm p-3">
+            <!-- 🟢 Headline -->
+            <h5 class="text-success mb-2"><%= p.headline %></h5>
+
+            <!-- Details -->
+            <p><strong>Inventor(s):</strong> <%= (p.inventors || []).join(", ") %></p>
+            <p><strong>Status:</strong> <%= p.status %></p>
+            <p><strong>Issuing Agency:</strong> <%= p.issuingAgency %></p>
+            <p><strong>Overview:</strong> <%= p.overview %></p>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  <% }); %>
+</div>
+
+<%- include("../partials/footer") %>

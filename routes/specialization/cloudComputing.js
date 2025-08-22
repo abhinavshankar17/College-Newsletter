@@ -1,12 +1,12 @@
 import express from "express";
-import { getCloudComputing, addCloudComputing } from "../controllers/cloudComputing.js";
+import { getCloudComputing, addCloudComputing } from "../../controllers/specialization/cloudComputing.js";
 
 const router = express.Router();
 
-// GET - show page
+// Show page
 router.get("/", getCloudComputing);
 
-// POST - add new doc
+// Add new document
 router.post("/add", addCloudComputing);
 
 export default router;

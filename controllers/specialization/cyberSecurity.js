@@ -1,7 +1,7 @@
-import cyberSecurity from "../models/specialization/cyberSecurity.js";
+import cyberSecurity from "../../models/specialization/cyberSecurity.js";
 //show page
 // show page
-import CyberSecurity from "../models/specialization/cyberSecurity.js";
+import CyberSecurity from "../../models/specialization/cyberSecurity.js";
 
 export const getCyberSecurity = async (req, res) => {
   try {

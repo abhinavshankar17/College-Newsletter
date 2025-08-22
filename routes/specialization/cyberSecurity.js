@@ -1,11 +1,12 @@
 import express from "express";
-import { getCyberSecurity, addCyberSecurity } from "../controllers/cyberSecurity.js";
+import { getCyberSecurity, addCyberSecurity } from "../../controllers/specialization/cyberSecurity.js";
+
 const router = express.Router();
 
-// GET - show page
+// Show page
 router.get("/", getCyberSecurity);
 
-// POST - add new doc
+// Add new document
 router.post("/add", addCyberSecurity);
 
 export default router;
