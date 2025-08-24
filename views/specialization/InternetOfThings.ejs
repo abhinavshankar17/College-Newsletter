@@ -1,0 +1,164 @@
+<%- include("../partials/header", { title: "Internet of Things Specialization" }) %>
+
+<style>
+  body {
+    background-color: #f8f9fa;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  h1, h2 {
+    font-weight: 600;
+    color: #2c3e50;
+  }
+
+  .section-title {
+    margin-top: 40px;
+    padding-bottom: 8px;
+    border-bottom: 3px solid #16a085;
+    display: inline-block;
+  }
+
+  .card {
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border: none;
+    transition: transform 0.2s;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+  }
+
+  .card h4 {
+    color: #16a085;
+    font-weight: 600;
+  }
+
+  .card p {
+    margin-bottom: 6px;
+  }
+
+  img.img-thumbnail {
+    border-radius: 8px;
+  }
+
+  .quote {
+    background: #e8f6f3;
+    padding: 15px;
+    margin-top: 30px;
+    border-left: 5px solid #16a085;
+    font-style: italic;
+    text-align: center;
+    border-radius: 5px;
+  }
+
+  .author {
+    display: block;
+    font-weight: bold;
+    margin-top: 8px;
+  }
+</style>
+
+<div class="container py-4">
+  <h1 class="text-center mb-5">
+    <%= data?.sectionTitle || "Internet of Things Specialization" %>
+  </h1>
+
+  <!-- Doctoral Committee Meetings -->
+  <section>
+    <h2 class="section-title">Doctoral Committee Meetings</h2>
+    <% if (data?.doctoralCommitteeMeetings?.length > 0) { %>
+      <% data.doctoralCommitteeMeetings.forEach(m => { %>
+        <div class="card my-3 p-4">
+          <h4><%= m.memberName %></h4>
+          <p><%= m.details %></p>
+          <p><strong>Date:</strong> <%= m.date?.toDateString() %></p>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <p>No Doctoral Committee meetings available.</p>
+    <% } %>
+  </section>
+
+  <!-- PhD Awardees -->
+  <section>
+    <h2 class="section-title">PhD Awardees</h2>
+    <% if (data?.phdAwardees?.length > 0) { %>
+      <% data.phdAwardees.forEach(p => { %>
+        <div class="card my-3 p-4">
+          <h4><%= p.name %></h4>
+          <p><strong>Thesis:</strong> <%= p.thesisTitle %></p>
+          <p><strong>Supervisor:</strong> <%= p.supervisor %></p>
+          <p><strong>Guidance:</strong> <%= p.guidance %></p>
+          <p><%= p.description %></p>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <p>No PhD awardees available.</p>
+    <% } %>
+  </section>
+
+  <!-- Research Publications -->
+  <section>
+    <h2 class="section-title">Research Publications</h2>
+    <% if (data?.researchPublications?.length > 0) { %>
+      <% data.researchPublications.forEach(r => { %>
+        <div class="card my-3 p-4">
+          <h4><%= r.title %></h4>
+          <p><strong>Authors:</strong> <%= (r.authors || []).join(", ") %></p>
+          <p><strong>Published in:</strong> <%= r.journalOrConference %></p>
+          <p><strong>Date:</strong> <%= r.date?.toDateString() %></p>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <p>No research publications available.</p>
+    <% } %>
+  </section>
+
+  <!-- Workshops and FDPs -->
+  <section>
+    <h2 class="section-title">Workshops & FDPs</h2>
+    <% if (data?.workshopsAndFDPs?.length > 0) { %>
+      <% data.workshopsAndFDPs.forEach(w => { %>
+        <div class="card my-3 p-4">
+          <h4><%= w.title %></h4>
+          <p><strong>Organizer:</strong> <%= w.organizer %></p>
+          <p><strong>Location:</strong> <%= w.location %></p>
+          <p><strong>Dates:</strong> <%= w.startDate?.toDateString() %> - <%= w.endDate?.toDateString() %></p>
+          <p><strong>Participants:</strong> <%= (w.participants || []).join(", ") %></p>
+          <p><%= w.description %></p>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <p>No workshops or FDPs available.</p>
+    <% } %>
+  </section>
+
+  <!-- Images -->
+  <section>
+    <h2 class="section-title">Gallery</h2>
+    <% if (data?.images?.length > 0) { %>
+      <% data.images.forEach(img => { %>
+        <div class="my-3">
+          <img src="<%= img.url %>" alt="<%= img.caption %>" class="img-thumbnail m-2" width="250">
+          <p><em><%= img.caption %></em></p>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <p>No images uploaded yet.</p>
+    <% } %>
+  </section>
+
+  <!-- Quote -->
+  <% if (data?.quote?.text) { %>
+    <div class="quote">
+      “ <%= data.quote.text %> ”
+      <br>
+      <span class="author">– <%= data.quote.author %></span>
+    </div>
+  <% } else { %>
+    <p class="quote">No inspirational quote yet.</p>
+  <% } %>
+</div>
+
+<%- include("../partials/footer") %>

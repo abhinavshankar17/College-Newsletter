@@ -6,6 +6,10 @@ import dotenv from "dotenv";
 import cloudComputingRoutes from "./routes/specialization/cloudComputing.js";
 import cyberSecurityRoutes from "./routes/specialization/cyberSecurity.js";
 import researchRoutes from "./routes/research/research.js"; 
+import computerNetworkingRoutes from "./routes/specialization/ComputerNetworking.js";
+import informationTechnologyRoutes from "./routes/specialization/InformationTechnology.js";
+import internetOfThingsRoutes from "./routes/specialization/InternetOfThings.js";
+
 
 dotenv.config();
 const app = express();
@@ -30,8 +34,13 @@ app.get("/", (req, res) => {
 // Routes
 app.use("/specialization/cloud-computing", cloudComputingRoutes);
 app.use("/specialization/cyber-security", cyberSecurityRoutes);
+app.use("/specialization/computer-networking", computerNetworkingRoutes);
+app.use("/specialization/information-technology", informationTechnologyRoutes);
+app.use("/specialization/internet-of-things", internetOfThingsRoutes);
+
+
 
 // Start server
-app.listen(3000, () => {
+app.listen(3000,   () => {
   console.log("🚀 Server running at http://localhost:3000");
 });

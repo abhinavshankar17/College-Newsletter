@@ -1,0 +1,141 @@
+<%- include("../partials/header", { title: "Computer Networking Specialization" }) %>
+
+<style>
+  body {
+    background-color: #f8f9fa;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  h1, h2 {
+    font-weight: 600;
+    color: #2c3e50;
+  }
+
+  .section-title {
+    margin-top: 40px;
+    padding-bottom: 8px;
+    border-bottom: 3px solid #3498db;
+    display: inline-block;
+  }
+
+  .card {
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border: none;
+    transition: transform 0.2s;
+    background: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+  }
+
+  .card h3, .card h4 {
+    color: #2980b9;
+    font-weight: 600;
+  }
+
+  .card p {
+    margin-bottom: 6px;
+  }
+
+  img.img-thumbnail {
+    border-radius: 8px;
+  }
+
+  .quote {
+    background: #fff9c4;
+    padding: 15px;
+    margin-top: 30px;
+    border-left: 5px solid #facc15;
+    font-style: italic;
+    text-align: center;
+    border-radius: 5px;
+  }
+
+  .author {
+    display: block;
+    font-weight: bold;
+    margin-top: 8px;
+  }
+</style>
+
+<div class="container py-4">
+  <h1 class="text-center mb-5">
+    <%= data && data.title ? data.title : "Computer Networking Specialization" %>
+  </h1>
+
+  <!-- Description -->
+  <section>
+    <h2 class="section-title">Overview</h2>
+    <p><%= data && data.description ? data.description : "Details will be updated soon." %></p>
+  </section>
+
+  <!-- Specialized Lab -->
+  <section>
+    <h2 class="section-title">Specialized Lab</h2>
+    <div class="card">
+      <h3><%= data?.specializedLab?.name || "Lab information coming soon" %></h3>
+      <p><%= data?.specializedLab?.description || "No description available." %></p>
+
+      <% if (data?.specializedLab?.equipment?.length > 0) { %>
+        <h4>Equipment</h4>
+        <ul>
+          <% data.specializedLab.equipment.forEach(eq => { %>
+            <li><%= eq %></li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p>No equipment listed.</p>
+      <% } %>
+
+      <% if (data?.specializedLab?.supportedLicenses?.length > 0) { %>
+        <h4>Supported Licenses</h4>
+        <ul>
+          <% data.specializedLab.supportedLicenses.forEach(lic => { %>
+            <li><%= lic %></li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p>No licenses available.</p>
+      <% } %>
+
+      <% if (data?.specializedLab?.imageUrl) { %>
+        <img src="<%= data.specializedLab.imageUrl %>" alt="Lab Image" class="img-thumbnail mt-3" width="400">
+      <% } %>
+    </div>
+  </section>
+
+  <!-- MoUs -->
+  <section>
+    <h2 class="section-title">Memorandum of Understanding (MoU)</h2>
+    <% if (data?.memorandumOfUnderstanding?.length > 0) { %>
+      <% data.memorandumOfUnderstanding.forEach(mou => { %>
+        <div class="card">
+          <h4><%= mou.company %> (<%= mou.year %>)</h4>
+          <p><%= mou.details %></p>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <p>No MoUs available.</p>
+    <% } %>
+  </section>
+
+  <!-- Quote -->
+  <section>
+    <h2 class="section-title">Inspirational Quote</h2>
+    <% if (data?.quote) { %>
+      <div class="quote">
+        “ <%= data.quote.text %> ”
+        <br>
+        <span class="author">– <%= data.quote.author %></span>
+      </div>
+    <% } else { %>
+      <p>No inspirational quote yet.</p>
+    <% } %>
+  </section>
+</div>
+
+<%- include("../partials/footer") %>

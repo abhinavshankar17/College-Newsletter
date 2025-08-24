@@ -1,4 +1,4 @@
-import cyberSecurity from "../../models/specialization/cyberSecurity.js";
+//import cyberSecurity from "../../models/specialization/cyberSecurity.js";
 //show page
 // show page
 import CyberSecurity from "../../models/specialization/cyberSecurity.js";
