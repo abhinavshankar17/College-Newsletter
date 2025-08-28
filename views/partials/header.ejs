@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title><%= title || "College Newsletter" %></title>
+ <title><%= typeof title !== 'undefined' ? title : "College Newsletter" %></title>
+
   <link rel="stylesheet" href="/style.css">
 
   <!-- Bootstrap CSS -->

@@ -1,0 +1,87 @@
+<%- include('../partials/header') %>   <!-- ✅ This pulls in your head, css, navbar etc. -->
+
+<div class="container mt-4">
+  <h2>Add Data</h2>
+
+  <form action="/admin/add-article" method="POST">
+    <div class="mb-3">
+      <label for="pageSelect">Select Page</label>
+      <select id="pageSelect" name="page" class="form-select" required>
+        <option value="">-- Select --</option>
+        <% Object.keys(pages || {}).forEach(function(page) { %>
+          <option value="<%= page %>"><%= page.charAt(0).toUpperCase() + page.slice(1) %></option>
+        <% }); %>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="modelSelect">Select Model</label>
+      <select id="modelSelect" name="model" class="form-select" required>
+        <option value="">-- Select --</option>
+      </select>
+    </div>
+
+    <div id="formFields"></div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+  </form>
+</div>
+
+<script>
+  const pages = JSON.parse('<%- JSON.stringify(pages) %>');
+  const schemas = JSON.parse('<%- JSON.stringify(schemas) %>');
+</script>
+
+<script>
+  const pageSelect = document.getElementById("pageSelect");
+  const modelSelect = document.getElementById("modelSelect");
+  const formFields = document.getElementById("formFields");
+
+  // Format camelCase → nice labels
+  function formatLabel(key) {
+    return key.replace(/([A-Z])/g, " $1").replace(/^./, str => str.toUpperCase());
+  }
+
+  // When page changes → populate models
+  pageSelect.addEventListener("change", () => {
+    const selectedPage = pageSelect.value;
+    modelSelect.innerHTML = "<option value=''>-- Select --</option>";
+
+    if (pages[selectedPage]) {
+      pages[selectedPage].models.forEach(m => {
+        modelSelect.innerHTML += `<option value="${m}">${formatLabel(m)}</option>`;
+      });
+    }
+    formFields.innerHTML = ""; // Reset form fields
+  });
+
+  // When model changes → populate schema fields
+  modelSelect.addEventListener("change", async () => {
+    const selectedModel = modelSelect.value;
+    formFields.innerHTML = "";
+
+    if (selectedModel) {
+      try {
+        const response = await fetch(`/admin/schema/${selectedModel}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch schema fields");
+        }
+        const fields = await response.json();
+
+        fields.forEach(field => {
+          formFields.innerHTML += `
+            <div class="mb-3">
+              <label>${formatLabel(field)}</label>
+              <input type="text" name="data[${field}]" class="form-control" required />
+            </div>
+          `;
+        });
+      } catch (error) {
+        console.error("Error fetching schema fields:", error);
+        alert("Failed to load schema fields. Please try again.");
+      }
+    }
+  });
+</script>
+
+<%- include('../partials/footer') %> <!-- ✅ This pulls in your closing tags and scripts -->

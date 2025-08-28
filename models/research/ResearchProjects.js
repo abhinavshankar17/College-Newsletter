@@ -23,7 +23,12 @@ const researchProjectsPageSchema = new mongoose.Schema({
 
 // 🔑 Static method for controller
 researchProjectsPageSchema.statics.getAllSections = async function () {
-  return await this.find().sort({ order: 1 }).lean();
+  try {
+    return await this.find().sort({ order: 1 }).lean();
+  } catch (error) {
+    console.error("Error fetching sections:", error);
+    throw error;
+  }
 };
 
 // 👇 Explicitly tell mongoose to use research_sections collection
