@@ -3,7 +3,7 @@
 <div class="container mt-4">
   <h2>Add Data</h2>
 
-  <form action="/admin/add-article" method="POST">
+  <form action="/admin/add-article" method="POST" enctype="multipart/form-data">
     <div class="mb-3">
       <label for="pageSelect">Select Page</label>
       <select id="pageSelect" name="page" class="form-select" required>
@@ -69,13 +69,22 @@
         const fields = await response.json();
 
         fields.forEach(field => {
+          // 🚫 Skip MongoDB internal fields
+          if (field === "_id" || field === "__v") return;
+
+          const isImageField = field.toLowerCase().includes("image");
+
           formFields.innerHTML += `
             <div class="mb-3">
               <label>${formatLabel(field)}</label>
-              <input type="text" name="data[${field}]" class="form-control" required />
+              ${isImageField 
+                ? `<input type="file" name="data[${field}]" class="form-control" />`
+                : `<input type="text" name="data[${field}]" class="form-control" required />`
+              }
             </div>
           `;
         });
+
       } catch (error) {
         console.error("Error fetching schema fields:", error);
         alert("Failed to load schema fields. Please try again.");

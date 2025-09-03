@@ -2,6 +2,16 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
+
+// ✅ Debug check for Cloudinary envs (remove in production)
+dotenv.config();
+console.log("Cloudinary config:", {
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY ? "✅ set" : "❌ missing",
+  api_secret: process.env.CLOUDINARY_API_SECRET ? "✅ set" : "❌ missing",
+});
+
+
 // ✅ Correct paths
 import cloudComputingRoutes from "./routes/specialization/cloudComputing.js";
 import cyberSecurityRoutes from "./routes/specialization/cyberSecurity.js";
@@ -13,7 +23,6 @@ import internetOfThingsRoutes from "./routes/specialization/InternetOfThings.js"
 // ✅ Add this import
 import adminRoutes from "./routes/admin.js";
 
-dotenv.config();
 const app = express();
 
 // Middleware
