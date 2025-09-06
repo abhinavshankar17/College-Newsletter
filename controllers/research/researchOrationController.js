@@ -1,31 +1,43 @@
-import ResearchOration from "../models/ResearchOration.js";
+import ResearchOration from "../../models/research/ResearchOration.js";
 
-// Show all orations + form
+// Show all orations
 export const getAllOrations = async (req, res) => {
   try {
-    const orations = await ResearchOration.find().sort({ date: -1 });
-    res.render("research/researchOrations", { orations });
+    const orations = await ResearchOration.find().sort({ date: -1 }).lean();
+
+    res.render("research/researchOrations", {
+  page: {
+    pageTitle: "Research Orations",
+    sections: orations
+  }
+});
+
   } catch (err) {
-    console.error("❌ Error fetching orations:", err);
-    res.status(500).send("Error fetching research orations");
+    console.error("Error in getAllOrations:", err);
+    res.status(500).send("Error loading research orations");
   }
 };
 
 // Add new oration
 export const createOration = async (req, res) => {
   try {
-    const data = req.body;
+    const { name, regNo, supervisor, title, date, description } = req.body;
 
-    if (req.file) {
-      data.imageUrl = req.file.path; // Cloudinary URL
-    }
+    const newOration = new ResearchOration({
+      name,
+      regNo,
+      supervisor,
+      title,
+      date: new Date(date), // ensure correct type
+      description,
+      imageUrl: req.file ? req.file.path : null, // Cloudinary URL
+    });
 
-    const oration = new ResearchOration(data);
-    await oration.save();
+    await newOration.save();
 
     res.redirect("/research-orations");
   } catch (err) {
-    console.error("❌ Error saving oration:", err);
+    console.error("Error in createOration:", err);
     res.status(500).send("Failed to save research oration");
   }
 };

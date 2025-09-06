@@ -1,0 +1,73 @@
+<%- include("../partials/header", { title: page.pageTitle }) %>
+<h1>RESEARCH ORATION</h1>
+<p style="text-align: center; max-width: 700px; margin: auto;">
+  We are proud to showcase the innovative research presented by our scholars this quarter. 
+  Their work exemplifies emerging trends, technical exploration, and academic excellence in cutting-edge domains.
+</p>
+
+<div class="container">
+  <% page.sections.forEach(oration => { %>
+  <div class="card">
+    <p class="name"><%= oration.name %> (Reg. No: <%= oration.regNo %>)</p>
+    <p class="supervisor">Supervisor : <%= oration.supervisor %></p>
+    <p class="title">Title : <%= oration.title %></p>
+    <p class="date">Date : <%= new Date(oration.date).toDateString() %></p>
+    <p class="description"><%= oration.description %></p>
+    <% if (oration.imageUrl) { %>
+      <img src="<%= oration.imageUrl %>" alt="Research Oration image">
+    <% } %>
+  </div>
+<% }) %>
+
+</div>
+
+<%- include("../partials/footer") %>
+
+<style>
+  h1 {
+    text-align: center;
+    color: #0c2c5d;
+    margin-bottom: 20px;
+    border-bottom: 2px dashed #aaa;
+    padding-bottom: 10px;
+  }
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  .card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 350px;
+    padding: 15px;
+    background: #fff;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+  }
+  .card img {
+    width: 100%;
+    height: auto;
+    margin: 10px 0;
+    border-radius: 5px;
+  }
+  .name {
+    font-weight: bold;
+    color: #b22222;
+  }
+  .supervisor {
+    font-weight: bold;
+  }
+  .title {
+    font-weight: bold;
+    margin-top: 5px;
+  }
+  .date {
+    font-style: italic;
+    margin-bottom: 8px;
+  }
+  .description {
+    color: #444;
+  }
+</style>

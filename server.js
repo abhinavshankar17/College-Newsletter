@@ -2,7 +2,6 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
-
 // ✅ Debug check for Cloudinary envs (remove in production)
 dotenv.config();
 console.log("Cloudinary config:", {
@@ -11,7 +10,6 @@ console.log("Cloudinary config:", {
   api_secret: process.env.CLOUDINARY_API_SECRET ? "✅ set" : "❌ missing",
 });
 
-
 // ✅ Correct paths
 import cloudComputingRoutes from "./routes/specialization/cloudComputing.js";
 import cyberSecurityRoutes from "./routes/specialization/cyberSecurity.js";
@@ -19,9 +17,10 @@ import researchRoutes from "./routes/research/research.js";
 import computerNetworkingRoutes from "./routes/specialization/ComputerNetworking.js";
 import informationTechnologyRoutes from "./routes/specialization/InformationTechnology.js";
 import internetOfThingsRoutes from "./routes/specialization/InternetOfThings.js";
-
-// ✅ Add this import
 import adminRoutes from "./routes/admin.js";
+
+// ✅ NEW: Research Orations routes
+import researchOrationRoutes from "./routes/research/researchOrationRoutes.js";
 
 const app = express();
 
@@ -42,9 +41,8 @@ app.use("/specialization/cyber-security", cyberSecurityRoutes);
 app.use("/specialization/computer-networking", computerNetworkingRoutes);
 app.use("/specialization/information-technology", informationTechnologyRoutes);
 app.use("/specialization/internet-of-things", internetOfThingsRoutes);
-
-// ✅ Add this line for admin
 app.use("/admin", adminRoutes);
+app.use("/research-orations", researchOrationRoutes);
 
 // Default route
 app.get("/", (req, res) => {

@@ -1,6 +1,6 @@
 import express from "express";
-import upload from "../config/upload.js";
-import { getAllOrations, createOration } from "../controllers/researchOrationController.js";
+import { getAllOrations, createOration } from "../../controllers/research/researchOrationController.js";
+import upload from "../../utils/upload.js";  // ✅ use multer-cloudinary setup
 
 const router = express.Router();
 
