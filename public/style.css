@@ -74,3 +74,10 @@ img {
   padding-bottom: 0.25rem;
 }
 
+.navbar-custom .navbar-brand img {
+  background: transparent; /* ensure no bg */
+  height: 60px; /* bigger logo */
+  width: auto; /* keep proportions */
+}
+
+
