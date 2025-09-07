@@ -18,9 +18,8 @@ import computerNetworkingRoutes from "./routes/specialization/ComputerNetworking
 import informationTechnologyRoutes from "./routes/specialization/InformationTechnology.js";
 import internetOfThingsRoutes from "./routes/specialization/InternetOfThings.js";
 import adminRoutes from "./routes/admin.js";
-
-// ✅ NEW: Research Orations routes
 import researchOrationRoutes from "./routes/research/researchOrationRoutes.js";
+import researchArticlesRoutes from "./routes/research/researchArticlesRoutes.js";
 
 const app = express();
 
@@ -43,6 +42,7 @@ app.use("/specialization/information-technology", informationTechnologyRoutes);
 app.use("/specialization/internet-of-things", internetOfThingsRoutes);
 app.use("/admin", adminRoutes);
 app.use("/research-orations", researchOrationRoutes);
+app.use("/research-articles", researchArticlesRoutes);
 
 // Default route
 app.get("/", (req, res) => {
