@@ -1,6 +1,8 @@
+<%- include("../partials/header", { title: "Placement Highlights" }) %>
+
 <div class="placement-container">
 
-  <!-- Google Font -->
+  <!-- Google Font (move to header.ejs ideally, but leaving here since you said no major changes) -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
@@ -37,6 +39,7 @@
       border: 2px solid transparent;
       border-radius: 16px;
       transition: all 0.5s ease;
+      pointer-events: none; /* prevents border blocking clicks */
     }
 
     /* Hover interaction */
@@ -220,3 +223,5 @@
   </div>
 
 </div>
+</main>
+<%- include("../partials/footer") %>

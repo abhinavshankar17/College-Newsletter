@@ -48,9 +48,13 @@ app.use("/research-articles", researchArticlesRoutes);
 app.get("/", (req, res) => {
   res.send("Welcome to College Newsletter 🚀");
 });
+
 app.get("/students/placement-highlights", (req, res) => {
-  res.render("students/placementHighlights");
+  res.render("students/placementHighlights", {
+    page: { pageTitle: "Placement Highlights" }  
+  });
 });
+
 
 
 // Start server
