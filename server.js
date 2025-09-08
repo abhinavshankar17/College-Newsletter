@@ -48,6 +48,10 @@ app.use("/research-articles", researchArticlesRoutes);
 app.get("/", (req, res) => {
   res.send("Welcome to College Newsletter 🚀");
 });
+app.get("/students/placement-highlights", (req, res) => {
+  res.render("students/placementHighlights");
+});
+
 
 // Start server
 app.listen(3000, () => {
