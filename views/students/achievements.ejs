@@ -1,0 +1,14 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-4">
+  <h2 class="text-primary">Student Achievement</h2>
+
+  <% achievements.forEach(ach => { %>
+    <div class="achievement mb-5">
+      <h4 class="text-danger"><%= ach.title %></h4>
+      <p><%= ach.description %></p>
+    </div>
+  <% }) %>
+</div>
+
+<%- include('../partials/footer') %>
