@@ -1,10 +1,9 @@
 import mongoose from "mongoose";
 
 const studentAchievementSchema = new mongoose.Schema({
-  title: { type: String, required: true },       // the red line
-  description: { type: String, required: true }  // full description text
-}, { timestamps: true });
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+  imageUrl: { type: String }  // ✅ New field
+});
 
-const StudentAchievement = mongoose.model("StudentAchievement", studentAchievementSchema);
-
-export default StudentAchievement;
+export default mongoose.model("StudentAchievement", studentAchievementSchema);
