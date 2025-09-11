@@ -21,6 +21,8 @@ import adminRoutes from "./routes/admin.js";
 import researchOrationRoutes from "./routes/research/researchOrationRoutes.js";
 import researchArticlesRoutes from "./routes/research/researchArticlesRoutes.js";
 import studentAchievementsRoutes from "./routes/students/studentAchievements.js";
+import activitiesRoutes from "./routes/students/activityRoutes.js";
+
 
 
 const app = express();
@@ -46,6 +48,7 @@ app.use("/admin", adminRoutes);
 app.use("/research-orations", researchOrationRoutes);
 app.use("/research-articles", researchArticlesRoutes);
 app.use("/students/achievements", studentAchievementsRoutes);
+app.use("/students", activitiesRoutes);
 
 
 // Default route

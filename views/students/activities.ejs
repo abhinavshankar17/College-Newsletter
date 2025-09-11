@@ -1,0 +1,83 @@
+<%- include("../partials/header") %>  
+
+<div class="container py-5">
+  <h2 class="text-center mb-5 fw-bold activity-title">Student's Co-Curricular Activities</h2>
+
+  <div class="row g-4">
+    <% activities.forEach(activity => { %>
+      <div class="col-md-6 col-lg-4">
+        <div class="card activity-card h-100 shadow-lg border-0">
+          
+          <% if (activity.imageUrl && activity.imageUrl.trim() !== "") { %>
+            <!-- Case 1: With Image -->
+            <img src="<%= activity.imageUrl %>" class="card-img-top activity-img" alt="Student Activity">
+            <div class="card-body">
+              <h5 class="card-title text-dark fw-bold">
+                <%= activity.name %> <small class="text-muted">(<%= activity.rollNumber %>)</small>
+              </h5>
+              <p class="card-text text-secondary"><%= activity.description %></p>
+            </div>
+
+          <% } else { %>
+            <!-- Case 2: No Image (Text-only style) -->
+            <div class="card-body text-only-card d-flex flex-column justify-content-center align-items-center">
+              <h5 class="card-title text-dark fw-bold text-center">
+                <%= activity.name %> <small class="text-muted">(<%= activity.rollNumber %>)</small>
+              </h5>
+              <p class="card-text text-secondary text-center"><%= activity.description %></p>
+            </div>
+          <% } %>
+
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</div>
+
+<style>
+  /* Activity Section Title */
+  .activity-title {
+    font-size: 2.2rem;
+    color: #0d1b2a; /* dark navy to match navbar */
+    border-bottom: 3px solid #ffcc00;
+    display: inline-block;
+    padding-bottom: 6px;
+  }
+
+  /* Activity Card */
+  .activity-card {
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .activity-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+  }
+
+  .activity-img {
+    height: 220px;
+    object-fit: cover;
+    border-bottom: 1px solid #eee;
+  }
+
+  .text-only-card {
+    padding: 40px 20px;
+    text-align: center;
+    min-height: 220px;
+  }
+
+  .card-title {
+    font-size: 1.2rem;
+    color: #0d1b2a; /* match dark navy */
+  }
+
+  .card-text {
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+</style>
+
+<%- include("../partials/footer") %>  
