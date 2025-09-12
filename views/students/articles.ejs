@@ -1,0 +1,93 @@
+<%- include("../partials/header") %>  
+
+<div class="container py-5">
+  <h2 class="text-center mb-5 fw-bold section-title"> Student's Articles </h2>
+
+  <% if (articles.length === 0) { %>
+    <p class="text-center text-muted">No articles yet.</p>
+  <% } %>
+
+  <% articles.forEach(article => { %>
+    <div class="card article-card shadow-lg border-0 mb-5">
+      
+      <div class="row g-0">
+        <% if (article.studentImage) { %>
+          <div class="col-md-4">
+            <img src="<%= article.studentImage %>" class="img-fluid student-img" alt="Student">
+          </div>
+        <% } %>
+
+        <div class="col-md-8">
+          <div class="card-body">
+            <h3 class="card-title"><%= article.heading %></h3>
+            
+            <p class="text-secondary mb-2">
+              <strong><%= article.author.name %></strong> 
+              (<%= article.author.rollNumber %>)<br>
+              <%= article.author.year %> Year, Section <%= article.author.section %><br>
+              Dept: <%= article.author.department %>
+            </p>
+
+            <p class="card-text text-dark">
+              <%= article.description %>
+            </p>
+
+            <small class="text-muted d-block mt-3">
+              Posted on <%= article.createdAt.toDateString() %>
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% }) %>
+</div>
+
+<style>
+  body {
+    background: #f4f7fb;
+    font-family: "Segoe UI", sans-serif;
+  }
+
+  .section-title {
+    font-size: 2.2rem;
+    color: #0d1b2a; /* deep navy blue */
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
+  }
+
+  .article-card {
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .article-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(13, 27, 42, 0.25);
+    border-left: 6px solid #415a77; /* contrast stripe */
+  }
+
+  .student-img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .card-title {
+    font-size: 1.6rem;
+    /* color: #0d1b2a; */
+    color: crimson;
+    font-weight: 700;
+  }
+
+  .card-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    text-align: justify;
+  }
+
+  .article-card:hover .card-title {
+    color:crimson; /* slightly lighter blue on hover */
+  }
+</style>
+
+<%- include("../partials/footer") %>  
