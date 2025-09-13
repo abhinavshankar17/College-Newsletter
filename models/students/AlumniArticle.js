@@ -17,7 +17,8 @@ const alumniArticleSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   },
   createdAt: {
     type: Date,
@@ -25,6 +26,8 @@ const alumniArticleSchema = new mongoose.Schema({
   }
 });
 
-const AlumniArticle = mongoose.model("AlumniArticle", alumniArticleSchema);
+// ✅ Prevent OverwriteModelError
+const AlumniArticle =
+  mongoose.models.AlumniArticle || mongoose.model("AlumniArticle", alumniArticleSchema);
 
 export default AlumniArticle;

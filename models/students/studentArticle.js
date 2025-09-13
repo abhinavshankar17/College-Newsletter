@@ -28,6 +28,8 @@ const studentArticleSchema = new mongoose.Schema({
   }
 });
 
-const StudentArticle = mongoose.model("StudentArticle", studentArticleSchema);
+// ✅ Prevent OverwriteModelError
+const StudentArticle =
+  mongoose.models.StudentArticle || mongoose.model("StudentArticle", studentArticleSchema);
 
 export default StudentArticle;
