@@ -1,14 +1,14 @@
 import express from "express";
 import multer from "multer";
-import { getAlumniArticles, createAlumniArticle } from "../../controllers/studetns/alumniController.js";
+import { getAlumniArticles, createAlumniArticle } from "../../controllers/students/alumniController.js";
 
 const router = express.Router();
 const upload = multer({ dest: "uploads/" });
 
-// GET alumni articles
-router.get("/articles", getAlumniArticles);
+// 🟢 View all alumni articles
+router.get("/alumniArticles", getAlumniArticles);
 
-// POST new alumni article
-router.post("/articles", upload.single("alumniImage"), createAlumniArticle);
+// 🟢 Add a new alumni article
+router.post("/alumniArticles", upload.single("alumniImage"), createAlumniArticle);
 
 export default router;

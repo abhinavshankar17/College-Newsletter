@@ -2,62 +2,46 @@ import AlumniArticle from "../../models/students/AlumniArticle.js";
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
 
-// GET - display alumni articles
+// 📌 Get all alumni articles
 export const getAlumniArticles = async (req, res) => {
   try {
-    const articles = await AlumniArticle.find().sort({ createdAt: -1 });
-    res.render("alumni/articles", { articles });
-  } catch (err) {
-    console.error(err);
+    const alumniArticles = await AlumniArticle.find().sort({ createdAt: -1 });
+    // If alumniArticles.ejs is inside views/students/
+    res.render("students/alumniArticles", { alumniArticles });
+
+  } catch (error) {
+    console.error(error);
     res.status(500).send("Error fetching alumni articles");
   }
 };
 
-// POST - create new alumni article
+// 📌 Create a new alumni article
 export const createAlumniArticle = async (req, res) => {
   try {
-    let alumniImage = "";
-
+    let imageUrl = "";
     if (req.file) {
-      try {
-        const result = await cloudinary.uploader.upload(req.file.path, {
-          folder: "alumni_articles",
-        });
-        alumniImage = result.secure_url;
-      } catch (uploadErr) {
-        console.error("Cloudinary upload failed:", uploadErr);
-      } finally {
-        try {
-          await fs.promises.unlink(req.file.path);
-        } catch (unlinkErr) {
-          console.warn("Failed to delete temp file:", unlinkErr.message);
-        }
-      }
+      const uploadResult = await cloudinary.uploader.upload(req.file.path, {
+        folder: "alumni_articles"
+      });
+      imageUrl = uploadResult.secure_url;
+      fs.unlinkSync(req.file.path); // delete local file
     }
 
-    const { heading, name, rollNumber, yearOfPassing, department, currentPosition, description } =
-      req.body;
-
-    if (!heading || !name || !rollNumber || !yearOfPassing || !department || !description) {
-      return res.status(400).send("Missing required fields");
-    }
-
-    await AlumniArticle.create({
-      heading,
-      alumni: {
-        name,
-        rollNumber,
-        yearOfPassing,
-        department,
-        currentPosition,
+    const newArticle = new AlumniArticle({
+      heading: req.body.heading,
+      author: {
+        name: req.body.name,
+        batch: req.body.batch,
+        department: req.body.department
       },
-      alumniImage,
-      description,
+      alumniImage: imageUrl,
+      description: req.body.description
     });
 
-    res.redirect("/students/articles");
-  } catch (err) {
-    console.error(err);
+    await newArticle.save();
+    res.redirect("/students/alumniArticles");
+  } catch (error) {
+    console.error(error);
     res.status(500).send("Error creating alumni article");
   }
 };

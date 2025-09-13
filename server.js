@@ -23,6 +23,8 @@ import researchArticlesRoutes from "./routes/research/researchArticlesRoutes.js"
 import studentAchievementsRoutes from "./routes/students/studentAchievements.js";
 import activitiesRoutes from "./routes/students/activityRoutes.js";
 import articleRoutes from "./routes/students/articleRoutes.js";
+import alumniRoutes from "./routes/students/alumniRoutes.js";
+
 
 
 
@@ -51,6 +53,7 @@ app.use("/research-articles", researchArticlesRoutes);
 app.use("/students/achievements", studentAchievementsRoutes);
 app.use("/students", activitiesRoutes);
 app.use("/students", articleRoutes);
+app.use("/students", alumniRoutes);
 
 
 // Default route
