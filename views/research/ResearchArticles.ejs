@@ -1,0 +1,67 @@
+<%- include("../partials/header", { title: page.pageTitle }) %>
+
+<style>
+  /* Container shadow */
+  .rp-container {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+  }
+
+  /* Section headings */
+  .rp-section-title {
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  /* Card title color */
+  .rp-card-title {
+    color: #0d47a1; /* darker blue */
+  }
+</style>
+
+<div class="container py-4 rp-container">
+  <h1 class="mb-4 text-center"><%= page.pageTitle %></h1>
+
+  <% (page.sections || []).forEach(function(wrapper) { %>
+    <% (wrapper.sections || []).sort(function(a, b) { return (a.order || 0) - (b.order || 0); }).forEach(function(sec) { %>
+
+      <h2 class="rp-section-title" style="color:<%= sec.themeColor || '#c62828' %>;">
+        <%= sec.title %>
+      </h2>
+
+      <div class="row g-3">
+        <% (sec.projects || []).forEach(function(p) { %>
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0">
+              <div class="card-body">
+                <h5 class="card-title rp-card-title mb-2"><%= p.headline %></h5>
+
+                <% if (p.authors && p.authors.length) { %>
+                  <p class="mb-1"><strong>Authors:</strong> <%= p.authors.join(", ") %></p>
+                <% } %>
+
+                <% if (p.journal) { %>
+                  <p class="mb-1"><strong>Journal:</strong> <%= p.journal %></p>
+                <% } %>
+
+                <% if (p.issn) { %>
+                  <p class="mb-1"><strong>ISSN:</strong> <%= p.issn %></p>
+                <% } %>
+
+                <% if (p.description) { %>
+                  <p class="text-muted"><%= p.description %></p>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+
+      <hr class="my-4">
+    <% }); %>
+  <% }); %>
+</div>
+
+<%- include("../partials/footer") %>

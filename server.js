@@ -18,6 +18,7 @@ import computerNetworkingRoutes from "./routes/specialization/ComputerNetworking
 import informationTechnologyRoutes from "./routes/specialization/InformationTechnology.js";
 import internetOfThingsRoutes from "./routes/specialization/InternetOfThings.js";
 import adminRoutes from "./routes/admin.js";
+
 import consultancyRoutes from "./routes/faculty/consultancy.js";
 // ✅ NEW: Research Orations routes
 import researchOrationRoutes from "./routes/research/researchOrationRoutes.js";
@@ -26,6 +27,15 @@ import facultyUpskilling from "./routes/faculty/FacultyUpskilling.js";
 import FacultyOnBoard from "./routes/faculty/FacultyOnBoard.js";
 import phdScholarRoutes from "./routes/faculty/phdScholar.js";
 import FacultyArticle from "./routes/faculty/FacultyArticle.js";
+
+import researchOrationRoutes from "./routes/research/researchOrationRoutes.js";
+import researchArticlesRoutes from "./routes/research/researchArticlesRoutes.js";
+import studentAchievementsRoutes from "./routes/students/studentAchievements.js";
+import activitiesRoutes from "./routes/students/activityRoutes.js";
+import articleRoutes from "./routes/students/articleRoutes.js";
+import alumniRoutes from "./routes/students/alumniRoutes.js";
+
+
 
 
 const app = express();
@@ -49,16 +59,34 @@ app.use("/specialization/information-technology", informationTechnologyRoutes);
 app.use("/specialization/internet-of-things", internetOfThingsRoutes);
 app.use("/admin", adminRoutes);
 app.use("/research-orations", researchOrationRoutes);
+
 app.use("/consultancy", consultancyRoutes);
 app.use("/faculty-achievements", facultyAchivementRoutes);
 app.use("/facultyUpskilling", facultyUpskilling);
 app.use("/facultyOnBoard", FacultyOnBoard);
 app.use("/phdscholars", phdScholarRoutes);
 app.use("/FacultyArticle",FacultyArticle);
+
+app.use("/research-articles", researchArticlesRoutes);
+app.use("/students/achievements", studentAchievementsRoutes);
+app.use("/students", activitiesRoutes);
+app.use("/students", articleRoutes);
+app.use("/students", alumniRoutes);
+
+
+
 // Default route
 app.get("/", (req, res) => {
   res.send("Welcome to College Newsletter 🚀");
 });
+
+app.get("/students/placement-highlights", (req, res) => {
+  res.render("students/placementHighlights", {
+    page: { pageTitle: "Placement Highlights" }  
+  });
+});
+
+
 
 // Start server
 app.listen(3000, () => {

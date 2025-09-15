@@ -1,0 +1,81 @@
+<%- include("../partials/header", { title: "Student's Achievements" }) %>
+
+<div class="container py-5">
+  <h2 class="text-center mb-5 page-heading fw-bold">🎉 Student Achievements 🎉</h2>
+
+  <div class="row g-4">
+    <% achievements.forEach((ach, index) => { %>
+      <div class="col-12">
+        <div class="card achievement-card shadow-lg border-0 p-4 d-flex flex-lg-row <%= index % 2 === 0 ? 'flex-row-reverse' : '' %>">
+          
+          <% if (ach.imageUrl) { %>
+            <div class="article-image-container">
+              <img src="<%= ach.imageUrl %>" class="article-img" alt="Achievement Image">
+            </div>
+          <% } %>
+
+          <div class="card-body flex-fill">
+            <h4 class="card-title fw-bold mb-3"><%= ach.title %></h4>
+            <p class="card-text mb-0"><%= ach.description %></p>
+          </div>
+
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</div>
+
+<style>
+  body {
+    background: #f0f4ff;
+    font-family: "Segoe UI", sans-serif;
+  }
+
+  .page-heading {
+    font-size: 2.2rem;
+    color: #1a237e;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+  }
+
+  .achievement-card {
+    border-radius: 15px;
+    overflow: hidden;
+    background: #ffffff;
+    border-left: 6px solid #1a237e;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .achievement-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(26,35,126,0.25);
+  }
+
+  .article-image-container {
+    flex: 0 0 35%; /* image takes smaller part */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .article-img {
+    max-width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .card-title {
+    font-size: 1.3rem;
+    color: #0d47a1;
+  }
+
+  .card-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #424242;
+  }
+</style>
+
+<%- include("../partials/footer") %>
