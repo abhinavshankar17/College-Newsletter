@@ -58,7 +58,7 @@ app.use("/students", alumniRoutes);
 
 // Default route
 app.get("/", (req, res) => {
-  res.send("Welcome to College Newsletter 🚀");
+  res.render("home", { page: { pageTitle: "HomePage" } });
 });
 
 app.get("/students/placement-highlights", (req, res) => {

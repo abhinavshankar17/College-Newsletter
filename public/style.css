@@ -5,7 +5,7 @@ body {
 }
 h1 {
   text-align: center;
-  color: darkblue;
+  color: #0d1b2a; /* navy */
 }
 section {
   margin: 20px 0;
@@ -22,7 +22,8 @@ img {
   margin: 10px 5px;
   border-radius: 5px;
 }
-/* Dark blue navbar with yellow highlights */
+
+/* ---------------- NAVBAR ---------------- */
 .navbar-custom {
   background: #0d1b2a; /* rich dark navy */
 }
@@ -34,7 +35,7 @@ img {
   transition: color 0.3s ease;
 }
 .navbar-custom .navbar-brand:hover {
-  color: #fff176; /* softer yellow */
+  color: #ffd54f; /* softer yellow */
 }
 
 /* Links */
@@ -60,25 +61,158 @@ img {
   border-radius: 6px;
 }
 
-/* Research Projects section title */
-.rp-section-title{
-  color: var(--accent, #c62828);
-  border-left: 6px solid var(--accent, #c62828);
-  padding-left: 10px;
-  margin-top: 32px;
-}
-
-.rp-section-title {
-  color: var(--accent, #c62828);
-  border-bottom: 2px solid var(--accent, #c62828);
-  padding-bottom: 0.25rem;
-}
-
 .navbar-custom .navbar-brand img {
-  background: transparent; /* ensure no bg */
-  height: 60px; /* bigger logo */
-  width: auto; /* keep proportions */
+  background: transparent;
+  height: 60px;
+  width: auto;
+}
+
+/* ---------------- HERO SECTION ---------------- */
+.hero-section {
+  background: linear-gradient(135deg, #f9fbff, #eef3ff);
+  padding: 100px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  top: -50px;
+  left: -50px;
+  width: 200px;
+  height: 200px;
+  background: rgba(13, 27, 42, 0.08); /* navy transparent circle */
+  border-radius: 50%;
+}
+
+.hero-section::after {
+  content: "";
+  position: absolute;
+  bottom: -60px;
+  right: -60px;
+  width: 250px;
+  height: 250px;
+  background: rgba(255, 204, 0, 0.12); /* soft yellow transparent circle */
+  border-radius: 50%;
+}
+
+.hero-heading {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #0d1b2a; /* navy */
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 2;
+  transition: all 0.4s ease;
+}
+
+.hero-quote {
+  font-size: 1.5rem;
+  font-style: italic;
+  color: #ffcc00; /* golden yellow */
+  margin: 20px auto;
+  max-width: 700px;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-message {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #444;
+  max-width: 850px;
+  margin: 20px auto 40px;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-message .highlight {
+  color: #ffcc00; /* golden yellow */
+  font-weight: bold;
+}
+
+.divider {
+  margin: 30px auto 0;
+  width: 140px;
+  height: 5px;
+  background: linear-gradient(90deg, #0d1b2a, #ffcc00);
+  border-radius: 3px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  position: relative;
+  z-index: 2;
+  transition: all 0.4s ease;
+}
+
+/* ---------------- HERO SECTION HOVER ---------------- */
+.hero-section:hover .hero-heading {
+  background: linear-gradient(90deg, #0d1b2a, #1b263b, #34495e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero-section:hover .divider {
+  background: linear-gradient(90deg, #0d1b2a, #1b263b, #34495e);
 }
 
 
 
+/* ---------------- HOD SIGNATURE ---------------- */
+.hod-signature {
+  margin-top: 25px;
+  text-align: right;
+  font-style: italic;
+  font-weight: 600;
+  color: #000000; /* solid black */
+}
+
+
+/* ---------------- HOD MESSAGE SECTION ---------------- */
+.hod-message {
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 40px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  line-height: 1.8;
+  color: #333;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-left: 6px solid #ffcc00;
+}
+
+.hod-message:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 25px rgba(0,0,0,0.12);
+}
+
+.hod-title {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #0d1b2a; /* navy */
+  border-bottom: 3px solid #ffcc00; /* yellow underline */
+  display: inline-block;
+  padding-bottom: 8px;
+  margin: 0 auto 20px;
+}
+
+.hod-text {
+  font-size: 1rem;
+  text-align: justify;
+  color: #444;
+}
+
+.hod-text b {
+  color: #0d1b2a; /* navy bolds */
+}
+
+.hod-signature {
+  margin-top: 25px;
+  text-align: right;
+  font-style: italic;
+  font-weight: 600;
+  color: #000; /* yellow signature */
+}
