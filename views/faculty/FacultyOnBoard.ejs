@@ -1,0 +1,54 @@
+<%- include("../partials/header", { title: "Faculty On Board" }) %>
+
+<div class="container my-5">
+  <!-- Title -->
+  <h1 class="text-white bg-primary px-4 py-3 rounded mb-5 text-center fw-bold">
+    New On Board
+  </h1>
+
+  <!-- Faculty Grid -->
+  <div class="row g-4">
+    <% if (faculty && faculty.length > 0) { %>
+      <% faculty.forEach(member => { %>
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="card h-100 text-center shadow-sm">
+            <!-- Photo -->
+            <div class="d-flex justify-content-center mt-3">
+              <% if (member.photoUrl) { %>
+                <img src="<%= member.photoUrl %>" 
+                     alt="<%= member.fullName %>" 
+                     class="rounded border shadow-sm"
+                     style="width: 130px; height: 130px; object-fit: cover;">
+              <% } else { %>
+                <div class="d-flex align-items-center justify-content-center bg-light border text-muted"
+                     style="width: 130px; height: 130px; border-radius: 8px;">
+                  No Photo
+                </div>
+              <% } %>
+            </div>
+
+            <!-- Name + Designation -->
+            <div class="card-body">
+              <h5 class="card-title fw-semibold text-dark"><%= member.fullName %></h5>
+              <p class="card-text text-muted">
+                <%= member.designation %> 
+                <% if (member.grade) { %> (<%= member.grade %>) <% } %>
+              </p>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <div class="col-12">
+        <p class="text-center text-muted fst-italic">No new faculty members added.</p>
+      </div>
+    <% } %>
+  </div>
+
+  <!-- Congratulations Footer -->
+  <div class="mt-5 text-center">
+    <h2 class="fw-bold text-warning">🎉 Congratulations 🎉</h2>
+  </div>
+</div>
+
+<%- include("../partials/footer") %>

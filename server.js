@@ -18,9 +18,15 @@ import computerNetworkingRoutes from "./routes/specialization/ComputerNetworking
 import informationTechnologyRoutes from "./routes/specialization/InformationTechnology.js";
 import internetOfThingsRoutes from "./routes/specialization/InternetOfThings.js";
 import adminRoutes from "./routes/admin.js";
-
+import consultancyRoutes from "./routes/faculty/consultancy.js";
 // ✅ NEW: Research Orations routes
 import researchOrationRoutes from "./routes/research/researchOrationRoutes.js";
+import facultyAchivementRoutes from "./routes/faculty/FacultyAchivement.js";
+import facultyUpskilling from "./routes/faculty/FacultyUpskilling.js";
+import FacultyOnBoard from "./routes/faculty/FacultyOnBoard.js";
+import phdScholarRoutes from "./routes/faculty/phdScholar.js";
+import FacultyArticle from "./routes/faculty/FacultyArticle.js";
+
 
 const app = express();
 
@@ -43,7 +49,12 @@ app.use("/specialization/information-technology", informationTechnologyRoutes);
 app.use("/specialization/internet-of-things", internetOfThingsRoutes);
 app.use("/admin", adminRoutes);
 app.use("/research-orations", researchOrationRoutes);
-
+app.use("/consultancy", consultancyRoutes);
+app.use("/faculty-achievements", facultyAchivementRoutes);
+app.use("/facultyUpskilling", facultyUpskilling);
+app.use("/facultyOnBoard", FacultyOnBoard);
+app.use("/phdscholars", phdScholarRoutes);
+app.use("/FacultyArticle",FacultyArticle);
 // Default route
 app.get("/", (req, res) => {
   res.send("Welcome to College Newsletter 🚀");

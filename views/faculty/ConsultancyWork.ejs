@@ -1,0 +1,72 @@
+
+<body class="bg-light">
+  <%- include("../partials/header", { title: "Consultancy Work" }) %>
+
+  <div class="container my-5">
+    <div class="card shadow-lg p-4 rounded-3">
+      <!-- Header -->
+      <h2 class="text-center text-primary fw-bold">
+        Innovation Through Industry Partnerships
+      </h2>
+      <h3 class="text-center text-danger fw-semibold mt-2">
+        Consultancy Work
+      </h3>
+      <hr class="my-4 border border-2 border-dashed">
+
+      <!-- Intro -->
+      <p class="text-muted text-justify mb-4">
+        The Department of <%= consultancy?.department || "N/A" %> continues to strengthen its industry–academia collaborations through impactful consultancy projects. 
+        From <%= consultancy?.duration?.start ? consultancy.duration.start.toDateString() : "Start Date" %> 
+        to <%= consultancy?.duration?.end ? consultancy.duration.end.toDateString() : "End Date" %>, 
+        our faculty members partnered with reputed organizations, offering expert solutions. These consultancies demonstrate the practical relevance of academic expertise and provide platforms for real-world problem solving, innovation, and institutional visibility.
+      </p>
+
+      <!-- Project Info -->
+      <div class="mb-4">
+        <h4 class="text-danger fw-semibold">Project: <%= consultancy?.title || "Untitled Project" %></h4>
+        <p><strong>Collaborating Agency:</strong> <%= consultancy?.collaboratingAgency || "Not Specified" %></p>
+        <p><strong>Consultancy Amount:</strong> ₹ <%= consultancy?.consultancyAmount ? consultancy.consultancyAmount.toLocaleString() : "0" %></p>
+      </div>
+
+      <!-- Team Members -->
+      <div class="mb-5">
+        <h4 class="text-center text-primary fw-semibold mb-3">Team Members</h4>
+        <div class="row justify-content-center g-4">
+          <% if (consultancy?.teamMembers && consultancy.teamMembers.length > 0) { %>
+            <% consultancy.teamMembers.forEach(member => { %>
+              <div class="col-md-3 col-sm-6 text-center">
+                <% if (member.photoUrl) { %>
+                  <img src="<%= member.photoUrl %>" alt="<%= member.name %>" class="rounded-circle shadow mb-2" style="width: 100px; height: 100px; object-fit: cover;">
+                <% } else { %>
+                  <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center mx-auto mb-2 shadow" style="width: 100px; height: 100px;">
+                    No Photo
+                  </div>
+                <% } %>
+                <p class="fw-bold mb-0"><%= member.name || "Unknown" %></p>
+                <p class="text-muted small mb-0"><%= member.designation || "N/A" %></p>
+                <p class="text-muted small"><%= member.department || "N/A" %></p>
+              </div>
+            <% }) %>
+          <% } else { %>
+            <p class="text-center text-muted fst-italic">No team members available.</p>
+          <% } %>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="mb-4">
+        <p class="text-muted text-justify">
+          <%= consultancy?.projectDescription || "Project description will be added soon." %>
+        </p>
+      </div>
+
+      <!-- Closing Quote -->
+      <div class="text-center fst-italic fw-semibold text-success mt-4">
+        “<%= consultancy?.closingQuote || "Innovation begins with collaboration." %>”
+      </div>
+    </div>
+  </div>
+
+<%- include("../partials/footer") %>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>

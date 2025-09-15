@@ -1,0 +1,66 @@
+
+  <%- include("../partials/header", { title: "Phd Scholars" }) %>
+  <style>
+    /* body {
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      margin: 20px;
+      padding: 0;
+    } */
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    .scholar-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      margin: 20px auto;
+      padding: 20px;
+      max-width: 800px;
+    }
+    .scholar-card h2 {
+      margin: 0;
+      color: #34495e;
+    }
+    .scholar-card p {
+      margin: 6px 0;
+      color: #555;
+    }
+    .no-data {
+      text-align: center;
+      font-size: 18px;
+      color: #888;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Ph.D. Powerhouse!<br>Driving Scholarly Achievement</h1>
+
+  <% if (scholars && scholars.length > 0) { %>
+    <% scholars.forEach(function(scholar) { %>
+      <div class="scholar-card">
+        <h2><%= scholar.name %> (Reg. No: <%= scholar.regNo %>)</h2>
+        <p><strong>Type:</strong> <%= scholar.scholarType %></p>
+        <p><strong>Guide:</strong> <%= scholar.guide %></p>
+        <p><strong>Viva Date:</strong> 
+          <%= scholar.vivaDate ? scholar.vivaDate.toDateString() : "Not available" %>
+        </p>
+        <p><strong>Research Title:</strong> <%= scholar.researchTitle %></p>
+        <% if (scholar.researchDomain) { %>
+          <p><strong>Domain:</strong> <%= scholar.researchDomain %></p>
+        <% } %>
+        <% if (scholar.techniquesUsed && scholar.techniquesUsed.length > 0) { %>
+          <p><strong>Techniques Used:</strong> <%= scholar.techniquesUsed.join(", ") %></p>
+        <% } %>
+      </div>
+    <% }) %>
+  <% } else { %>
+    <div class="no-data">
+      <p>No Ph.D. scholar records found.</p>
+    </div>
+  <% } %>
+</body>
+</html>
+<%- include("../partials/footer") %>
