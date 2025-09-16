@@ -21,7 +21,7 @@ import adminRoutes from "./routes/admin.js";
 
 import consultancyRoutes from "./routes/faculty/consultancy.js";
 // ✅ NEW: Research Orations routes
-import researchOrationRoutes from "./routes/research/researchOrationRoutes.js";
+// import researchOrationRoutes from "./routes/research/researchOrationRoutes.js";
 import facultyAchivementRoutes from "./routes/faculty/FacultyAchivement.js";
 import facultyUpskilling from "./routes/faculty/FacultyUpskilling.js";
 import FacultyOnBoard from "./routes/faculty/FacultyOnBoard.js";
@@ -35,7 +35,7 @@ import activitiesRoutes from "./routes/students/activityRoutes.js";
 import articleRoutes from "./routes/students/articleRoutes.js";
 import alumniRoutes from "./routes/students/alumniRoutes.js";
 
-
+import CelebrationRoutes from "./routes/events/Celebration.js";
 
 
 const app = express();
@@ -73,6 +73,8 @@ app.use("/students", activitiesRoutes);
 app.use("/students", articleRoutes);
 app.use("/students", alumniRoutes);
 
+
+app.use("/Celebration", CelebrationRoutes);
 
 
 // Default route
