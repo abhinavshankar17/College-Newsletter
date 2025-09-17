@@ -6,7 +6,7 @@ const facultyAchievementSchema = new mongoose.Schema({
   designation: { type: String, required: true }, // e.g., Professor, Associate Professor
   department: { type: String, required: true },  // e.g., NWC
   institution: { type: String, default: "SRMIST" },
-  photoUrl: { type: String }, // faculty profile photo
+  imageUrl: { type: String }, // faculty profile photo
 
   // Achievement details
   achievementType: {

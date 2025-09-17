@@ -22,7 +22,7 @@ const facultyUpskillingSchema = new mongoose.Schema({
       monthYear: { type: String },    // alternative for "April 2025"
     },
   ],
-  photo: {
+  image: {
     type: String, // store image path or URL
   },
   createdAt: {

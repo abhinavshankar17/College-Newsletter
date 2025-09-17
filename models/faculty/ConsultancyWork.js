@@ -15,7 +15,7 @@ const ConsultancyWorkSchema = new mongoose.Schema({
       name: { type: String, required: true },
       designation: { type: String },
       department: { type: String, default: "NWC, SRMIST" },
-      photoUrl: { type: String },
+      imageUrl: { type: String },
     },
   ],
   closingQuote: {

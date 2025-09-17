@@ -22,7 +22,7 @@ const facultySchema = new mongoose.Schema({
     type: String, // e.g. "Jr.G", can be null if not applicable
     default: null,
   },
-  photoUrl: {
+  imageUrl: {
     type: String, // URL or local path to photo
     default: null,
   },
@@ -32,6 +32,6 @@ const facultySchema = new mongoose.Schema({
   },
 });
 
-const FacultyOnBoard = mongoose.model("Faculty", facultySchema);
+const FacultyOnBoard = mongoose.model("Faculty on Board", facultySchema);
 
 export default FacultyOnBoard ;
