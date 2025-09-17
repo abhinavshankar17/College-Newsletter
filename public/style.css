@@ -216,3 +216,70 @@ img {
   font-weight: 600;
   color: #000; /* yellow signature */
 }
+/* ===== Team & Department Sections ===== */
+
+/* Section Headings */
+section h3 {
+  color: #0d1b2a; /* navy */
+  border-bottom: 2px solid #ffcc00; /* yellow underline */
+  display: inline-block;
+  padding-bottom: 6px;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+section h5 {
+  color: #0d1b2a;
+  font-weight: 600;
+  margin-top: 25px;
+}
+
+/* Advisor / Editorial / Student Names */
+section p.fw-bold {
+  margin: 0;
+  font-size: 1.05rem;
+  color: #0d1b2a; /* navy for names */
+}
+
+section p.text-muted {
+  font-size: 0.9rem;
+  color: #555 !important;
+}
+
+/* Profile Images */
+section img.rounded-circle {
+  border: 3px solid #ffcc00; /* golden border */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+section img.rounded-circle:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+/* About Department box */
+section.container.my-5:last-of-type {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  border-left: 6px solid #ffcc00; /* yellow accent */
+}
+
+/* List Styling */
+section ul {
+  padding-left: 20px;
+}
+
+section ul li {
+  margin-bottom: 6px;
+  line-height: 1.6;
+}
+h6.fw-bold {
+  color: #0d1b2a; /* navy text */
+  background: #ffcc00; /* yellow background */
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+

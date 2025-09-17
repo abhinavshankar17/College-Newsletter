@@ -72,17 +72,18 @@
           // 🚫 Skip MongoDB internal fields
           if (field === "_id" || field === "__v") return;
 
-          const isImageField = field.toLowerCase().includes("image");
+         const isImageField = field.toLowerCase().endsWith("imageurl") || field.toLowerCase().endsWith("url");
+            formFields.innerHTML += `
+  <div class="mb-3">
+    <label>${formatLabel(field)}</label>
+    ${
+      isImageField
+        ? `<input type="file" name="data[${field}]" class="form-control" />`
+        : `<input type="text" name="data[${field}]" class="form-control" required />`
+    }
+  </div>
+`;
 
-          formFields.innerHTML += `
-            <div class="mb-3">
-              <label>${formatLabel(field)}</label>
-              ${isImageField 
-                ? `<input type="file" name="data[${field}]" class="form-control" />`
-                : `<input type="text" name="data[${field}]" class="form-control" required />`
-              }
-            </div>
-          `;
         });
 
       } catch (error) {

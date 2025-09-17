@@ -1,11 +1,9 @@
 import CelebrationModel from "../../models/events/CelebrationModel.js";
 
-// Get one event (or all if needed)
+// Get all events
 export const getAllEvents = async (req, res) => {
   try {
-    // if you want only one event
-    const Events = await CelebrationModel.findOne(); 
-    
+    const Events = await CelebrationModel.find().lean(); // returns an array
     res.render("events/Celebration.ejs", { Events });
   } catch (error) {
     console.log("The error occurred is: " + error);
