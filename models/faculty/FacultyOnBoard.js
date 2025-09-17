@@ -32,6 +32,6 @@ const facultySchema = new mongoose.Schema({
   },
 });
 
-const FacultyOnBoard = mongoose.model("Faculty on Board", facultySchema);
+const FacultyOnBoard = mongoose.model("FacultyonBoard", facultySchema);
 
 export default FacultyOnBoard ;

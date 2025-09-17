@@ -54,8 +54,8 @@
     <% if (faculties && faculties.length > 0) { %>
       <% faculties.forEach(faculty => { %>
         <div class="card">
-          <% if (faculty.photo) { %>
-            <img src="<%= faculty.photo %>" alt="<%= faculty.name %>">
+          <% if (faculty.image) { %>
+            <img src="<%= faculty.image %>" alt="<%= faculty.name %>">
           <% } else { %>
             <img src="/images/default-avatar.png" alt="No photo">
           <% } %>

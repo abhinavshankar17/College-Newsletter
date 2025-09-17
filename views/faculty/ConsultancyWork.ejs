@@ -35,8 +35,8 @@
           <% if (consultancy?.teamMembers && consultancy.teamMembers.length > 0) { %>
             <% consultancy.teamMembers.forEach(member => { %>
               <div class="col-md-3 col-sm-6 text-center">
-                <% if (member.photoUrl) { %>
-                  <img src="<%= member.photoUrl %>" alt="<%= member.name %>" class="rounded-circle shadow mb-2" style="width: 100px; height: 100px; object-fit: cover;">
+                <% if (member.imageUrl) { %>
+                  <img src="<%= member.imageUrl %>" alt="<%= member.name %>" class="rounded-circle shadow mb-2" style="width: 100px; height: 100px; object-fit: cover;">
                 <% } else { %>
                   <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center mx-auto mb-2 shadow" style="width: 100px; height: 100px;">
                     No Photo
