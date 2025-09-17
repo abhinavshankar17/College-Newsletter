@@ -1,0 +1,98 @@
+<body class="bg-light">
+  <!-- Header -->
+  <%- include("../partials/header", { title: guestLecture?.title || "Guest Lecture" }) %>
+
+  <div class="container my-5">
+    <div class="card shadow-lg">
+      <div class="card-body">
+        <!-- Title -->
+        <h2 class="card-title text-primary mb-3">
+          <%= guestLecture?.title || "No Title Available" %>
+        </h2>
+
+        <!-- Date -->
+        <p class="text-muted">
+          <strong>Date:</strong>
+          <%= guestLecture?.date ? new Date(guestLecture.date).toDateString() : "Not Available" %>
+        </p>
+
+        <!-- Conveners -->
+        <h5 class="mt-3">Conveners:</h5>
+        <ul>
+          <% if (guestLecture?.conveners?.length > 0) { %>
+            <% guestLecture.conveners.forEach(c => { %>
+              <li><%= c.name %> (<%= c.designation || "No designation" %>)</li>
+            <% }) %>
+          <% } else { %>
+            <li>No conveners listed</li>
+          <% } %>
+        </ul>
+
+        <!-- Resource Person -->
+        <h5 class="mt-3">Resource Person:</h5>
+        <% if (guestLecture?.resourcePerson) { %>
+          <p><%= guestLecture.resourcePerson.name %> - <%= guestLecture.resourcePerson.role || "Role not available" %></p>
+        <% } else { %>
+          <p>No resource person info</p>
+        <% } %>
+
+        <!-- Registered Participants -->
+        <p class="mt-3">
+          <strong>Registered Participants:</strong>
+          <%= guestLecture?.numberOfRegisteredParticipants || 0 %>
+        </p>
+
+        <!-- Tracks -->
+        <h5 class="mt-3">Tracks:</h5>
+        <ul>
+          <% if (guestLecture?.tracks?.length > 0) { %>
+            <% guestLecture.tracks.forEach(track => { %>
+              <li><%= track %></li>
+            <% }) %>
+          <% } else { %>
+            <li>No tracks available</li>
+          <% } %>
+        </ul>
+
+        <!-- Prizes -->
+        <h5 class="mt-3">Prizes:</h5>
+        <ul>
+          <li>First Prize: <%= guestLecture?.prizes?.firstPrize || "Not specified" %></li>
+          <li>Second Prize: <%= guestLecture?.prizes?.secondPrize || "Not specified" %></li>
+          <li>Participation: <%= guestLecture?.prizes?.participation || "Not specified" %></li>
+        </ul>
+
+        <!-- Venue -->
+        <p class="mt-3"><strong>Venue:</strong> <%= guestLecture?.venue || "Not specified" %></p>
+
+        <!-- Registration -->
+        <h5 class="mt-3">Registration:</h5>
+        <p>
+          Fee: ₹<%= guestLecture?.registration?.fee ?? "N/A" %> |
+          Team Size: <%= guestLecture?.registration?.teamSize ?? "N/A" %>
+        </p>
+
+        <!-- Event Summary -->
+        <h5 class="mt-3">Event Summary:</h5>
+        <p><%= guestLecture?.eventSummary || "No summary provided" %></p>
+
+        <!-- Images -->
+        <h5 class="mt-3">Images:</h5>
+        <div class="row">
+          <% if (guestLecture?.imageUrl?.length > 0) { %>
+            <% guestLecture.imageUrl.forEach(url => { %>
+              <div class="col-md-4 mb-3">
+                <img src="<%= url %>" class="img-fluid rounded shadow-sm" alt="Event Image">
+              </div>
+            <% }) %>
+          <% } else { %>
+            <p>No images available</p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <%- include("../partials/footer") %>
+</body>

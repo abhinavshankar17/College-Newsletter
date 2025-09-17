@@ -36,8 +36,10 @@ import articleRoutes from "./routes/students/articleRoutes.js";
 import alumniRoutes from "./routes/students/alumniRoutes.js";
 
 import CelebrationRoutes from "./routes/events/Celebration.js";
-
-
+import GuestLecture from "./routes/events/GuestLecture.js";
+import Workshop from "./routes/events/Workshop.js";
+import AlumniActivities from "./routes/events/AlumniActivity.js";
+import OutreachActivities from "./routes/events/OutreachActivity.js";
 const app = express();
 
 // Middleware
@@ -75,8 +77,10 @@ app.use("/students", alumniRoutes);
 
 
 app.use("/Celebration", CelebrationRoutes);
-
-
+app.use("/GuestLecture", GuestLecture);
+app.use("/Workshop", Workshop);
+app.use("/AlumniActivities", AlumniActivities);
+app.use("/OutreachActivities", OutreachActivities);
 // Default route
 app.get("/", (req, res) => {
   res.render("home", { page: { pageTitle: "HomePage" } });
