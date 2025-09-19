@@ -1,7 +1,10 @@
 import express from "express";
-
 const router = express.Router();
-import { getAllWorkshop  ,addAllWorkshops} from "../../controllers/events/Workshop.js";
-router.get("/",getAllWorkshop);
-router.post("/add",addAllWorkshops);
+
+// Correct import: match the exported names
+import { getAllWorkshops, addAllWorkshops } from "../../controllers/events/Workshop.js";
+
+router.get("/", getAllWorkshops);
+router.post("/add", addAllWorkshops);
+
 export default router;

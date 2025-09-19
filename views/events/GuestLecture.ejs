@@ -1,10 +1,10 @@
 <body class="bg-light">
   <!-- Header -->
-  <%- include("../partials/header", { title: guestLecture?.title || "Guest Lecture" }) %>
+  <%- include("../partials/header", { title: "Guest Lectures" }) %>
 
   <style>
     body {
-      background: #f8f9fa; /* light gray */
+      background: #f8f9fa;
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       color: #333;
     }
@@ -13,6 +13,13 @@
       border: none;
       border-radius: 15px;
       overflow: hidden;
+      margin-bottom: 2rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
     }
 
     .card-body {
@@ -22,7 +29,7 @@
     .card-title {
       font-size: 2rem;
       font-weight: 600;
-      color: #0d47a1; /* darker blue */
+      color: #0d47a1;
       border-bottom: 2px solid #e3e6ea;
       padding-bottom: 0.5rem;
       margin-bottom: 1.5rem;
@@ -55,15 +62,9 @@
 
     .img-fluid:hover {
       transform: scale(1.05);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.25);
     }
 
-    /* Section spacing */
-    p, ul {
-      margin-bottom: 1rem;
-    }
-
-    /* Highlighted info sections */
     .info-box {
       background: #f1f5fb;
       border-left: 4px solid #0d47a1;
@@ -78,94 +79,98 @@
   </style>
 
   <div class="container my-5">
-    <div class="card shadow-lg">
-      <div class="card-body">
-        <!-- Title -->
-        <h2 class="card-title">
-          <%= guestLecture?.title || "No Title Available" %>
-        </h2>
+    <% if (guestLectures && guestLectures.length > 0) { %>
+      <% guestLectures.forEach(lecture => { %>
+        <div class="card shadow-lg">
+          <div class="card-body">
+            <!-- Title -->
+            <h2 class="card-title"><%= lecture.title %></h2>
 
-        <!-- Date -->
-        <p class="text-muted">
-          <strong>Date:</strong>
-          <%= guestLecture?.date ? new Date(guestLecture.date).toDateString() : "Not Available" %>
-        </p>
+            <!-- Date -->
+            <p class="text-muted">
+              <strong>Date:</strong>
+              <%= lecture.date ? new Date(lecture.date).toDateString() : "Not Available" %>
+            </p>
 
-        <!-- Conveners -->
-        <h5>Conveners:</h5>
-        <ul>
-          <% if (guestLecture?.conveners?.length > 0) { %>
-            <% guestLecture.conveners.forEach(c => { %>
-              <li><%= c.name %> (<%= c.designation || "No designation" %>)</li>
-            <% }) %>
-          <% } else { %>
-            <li>No conveners listed</li>
-          <% } %>
-        </ul>
+            <!-- Conveners -->
+            <h5>Conveners:</h5>
+            <ul>
+              <% if (lecture.conveners?.length > 0) { %>
+                <% lecture.conveners.forEach(c => { %>
+                  <li><%= c.name %> (<%= c.designation || "No designation" %>)</li>
+                <% }) %>
+              <% } else { %>
+                <li>No conveners listed</li>
+              <% } %>
+            </ul>
 
-        <!-- Resource Person -->
-        <h5>Resource Person:</h5>
-        <% if (guestLecture?.resourcePerson) { %>
-          <p><%= guestLecture.resourcePerson.name %> - <%= guestLecture.resourcePerson.role || "Role not available" %></p>
-        <% } else { %>
-          <p>No resource person info</p>
-        <% } %>
+            <!-- Resource Person -->
+            <h5>Resource Person:</h5>
+            <% if (lecture.resourcePerson) { %>
+              <p><%= lecture.resourcePerson.name %> - <%= lecture.resourcePerson.role || "Role not available" %></p>
+            <% } else { %>
+              <p>No resource person info</p>
+            <% } %>
 
-        <!-- Registered Participants -->
-        <div class="info-box">
-          <strong>Registered Participants:</strong>
-          <%= guestLecture?.numberOfRegisteredParticipants || 0 %>
+            <!-- Registered Participants -->
+            <div class="info-box">
+              <strong>Registered Participants:</strong>
+              <%= lecture.numberOfRegisteredParticipants || 0 %>
+            </div>
+
+            <!-- Tracks -->
+            <h5>Tracks:</h5>
+            <ul>
+              <% if (lecture.tracks?.length > 0) { %>
+                <% lecture.tracks.forEach(track => { %>
+                  <li><%= track %></li>
+                <% }) %>
+              <% } else { %>
+                <li>No tracks available</li>
+              <% } %>
+            </ul>
+
+            <!-- Prizes -->
+            <h5>Prizes:</h5>
+            <ul>
+              <li>First Prize: <%= lecture.prizes?.firstPrize || "Not specified" %></li>
+              <li>Second Prize: <%= lecture.prizes?.secondPrize || "Not specified" %></li>
+              <li>Participation: <%= lecture.prizes?.participation || "Not specified" %></li>
+            </ul>
+
+            <!-- Venue -->
+            <p class="mt-3"><strong>Venue:</strong> <%= lecture.venue || "Not specified" %></p>
+
+            <!-- Registration -->
+            <div class="info-box">
+              <strong>Registration:</strong>
+              Fee: ₹<%= lecture.registration?.fee ?? "N/A" %> |
+              Team Size: <%= lecture.registration?.teamSize ?? "N/A" %>
+            </div>
+
+            <!-- Event Summary -->
+            <h5>Event Summary:</h5>
+            <p><%= lecture.eventSummary || "No summary provided" %></p>
+
+            <!-- Images -->
+            <h5>Images:</h5>
+            <div class="row">
+              <% if (lecture.imageUrl?.length > 0) { %>
+                <% lecture.imageUrl.forEach(url => { %>
+                  <div class="col-md-4 mb-3">
+                    <img src="<%= url %>" class="img-fluid rounded shadow-sm" alt="Event Image">
+                  </div>
+                <% }) %>
+              <% } else { %>
+                <p>No images available</p>
+              <% } %>
+            </div>
+          </div>
         </div>
-
-        <!-- Tracks -->
-        <h5>Tracks:</h5>
-        <ul>
-          <% if (guestLecture?.tracks?.length > 0) { %>
-            <% guestLecture.tracks.forEach(track => { %>
-              <li><%= track %></li>
-            <% }) %>
-          <% } else { %>
-            <li>No tracks available</li>
-          <% } %>
-        </ul>
-
-        <!-- Prizes -->
-        <h5>Prizes:</h5>
-        <ul>
-          <li>First Prize: <%= guestLecture?.prizes?.firstPrize || "Not specified" %></li>
-          <li>Second Prize: <%= guestLecture?.prizes?.secondPrize || "Not specified" %></li>
-          <li>Participation: <%= guestLecture?.prizes?.participation || "Not specified" %></li>
-        </ul>
-
-        <!-- Venue -->
-        <p class="mt-3"><strong>Venue:</strong> <%= guestLecture?.venue || "Not specified" %></p>
-
-        <!-- Registration -->
-        <div class="info-box">
-          <strong>Registration:</strong>
-          Fee: ₹<%= guestLecture?.registration?.fee ?? "N/A" %> |
-          Team Size: <%= guestLecture?.registration?.teamSize ?? "N/A" %>
-        </div>
-
-        <!-- Event Summary -->
-        <h5>Event Summary:</h5>
-        <p><%= guestLecture?.eventSummary || "No summary provided" %></p>
-
-        <!-- Images -->
-        <h5>Images:</h5>
-        <div class="row">
-          <% if (guestLecture?.imageUrl?.length > 0) { %>
-            <% guestLecture.imageUrl.forEach(url => { %>
-              <div class="col-md-4 mb-3">
-                <img src="<%= url %>" class="img-fluid rounded shadow-sm" alt="Event Image">
-              </div>
-            <% }) %>
-          <% } else { %>
-            <p>No images available</p>
-          <% } %>
-        </div>
-      </div>
-    </div>
+      <% }) %>
+    <% } else { %>
+      <p>No guest lectures found.</p>
+    <% } %>
   </div>
 
   <!-- Footer -->

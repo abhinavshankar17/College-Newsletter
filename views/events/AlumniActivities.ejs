@@ -76,56 +76,58 @@
   <div class="container my-5">
     <h1 class="text-center mb-4">🎓 Alumni Activities</h1>
 
-    <% if (!AlumniActivities) { %>
+    <% if (!AlumniActivities || AlumniActivities.length === 0) { %>
       <!-- When no data is in DB -->
       <div class="alert alert-warning text-center">
         No Alumni Activities found. Please add one.
       </div>
     <% } else { %>
-      <!-- Render event details -->
-      <div class="card shadow mb-4">
-        <div class="card-body">
-          <h2 class="card-title mb-3"><%= AlumniActivities.eventTitle %></h2>
-          
-          <p><strong>Date:</strong> 
-            <%= AlumniActivities.date ? new Date(AlumniActivities.date).toLocaleDateString() : "N/A" %>
-          </p>
-          
-          <p><strong>Participants:</strong> 
-            <%= AlumniActivities.participantsCount || "N/A" %> 
-            (Batches: <%= AlumniActivities.participantsBatchRange || "N/A" %>)
-          </p>
+      <!-- Loop over each alumni activity -->
+      <% AlumniActivities.forEach(activity => { %>
+        <div class="card shadow mb-4">
+          <div class="card-body">
+            <h2 class="card-title mb-3"><%= activity.eventTitle %></h2>
+            
+            <p><strong>Date:</strong> 
+              <%= activity.date ? new Date(activity.date).toLocaleDateString() : "N/A" %>
+            </p>
+            
+            <p><strong>Participants:</strong> 
+              <%= activity.participantsCount || "N/A" %> 
+              (Batches: <%= activity.participantsBatchRange || "N/A" %>)
+            </p>
 
-          <h5 class="mt-4">Convener</h5>
-          <ul class="list-group list-group-flush mb-3">
-            <li class="list-group-item"><strong>Name:</strong> <%= AlumniActivities.convener?.name || "N/A" %></li>
-            <li class="list-group-item"><strong>Designation:</strong> <%= AlumniActivities.convener?.designation || "N/A" %></li>
-            <li class="list-group-item"><strong>Department:</strong> <%= AlumniActivities.convener?.department || "N/A" %></li>
-            <li class="list-group-item"><strong>Institution:</strong> <%= AlumniActivities.convener?.institution || "N/A" %></li>
-          </ul>
+            <h5 class="mt-4">Convener</h5>
+            <ul class="list-group list-group-flush mb-3">
+              <li class="list-group-item"><strong>Name:</strong> <%= activity.convener?.name || "N/A" %></li>
+              <li class="list-group-item"><strong>Designation:</strong> <%= activity.convener?.designation || "N/A" %></li>
+              <li class="list-group-item"><strong>Department:</strong> <%= activity.convener?.department || "N/A" %></li>
+              <li class="list-group-item"><strong>Institution:</strong> <%= activity.convener?.institution || "N/A" %></li>
+            </ul>
 
-          <h5 class="mt-4">Event Outcomes</h5>
-          <p><%= AlumniActivities.eventOutcomes || "No outcomes provided." %></p>
+            <h5 class="mt-4">Event Outcomes</h5>
+            <p><%= activity.eventOutcomes || "No outcomes provided." %></p>
 
-          <% if (AlumniActivities.photos && AlumniActivities.photos.length > 0) { %>
-            <h5 class="mt-4">📸 Photos</h5>
-            <div class="row">
-              <% AlumniActivities.photos.forEach(photo => { %>
-                <div class="col-md-4 text-center mb-3">
-                  <img src="<%= photo.imageUrl %>" alt="<%= photo.name %>" class="img-fluid rounded">
-                  <p class="mt-2"><%= photo.name %></p>
-                </div>
-              <% }) %>
-            </div>
-          <% } else { %>
-            <p class="text-muted">No photos available.</p>
-          <% } %>
+            <% if (activity.photos && activity.photos.length > 0) { %>
+              <h5 class="mt-4">📸 Photos</h5>
+              <div class="row">
+                <% activity.photos.forEach(photo => { %>
+                  <div class="col-md-4 text-center mb-3">
+                    <img src="<%= photo.imageUrl %>" alt="<%= photo.name %>" class="img-fluid rounded">
+                    <p class="mt-2"><%= photo.name %></p>
+                  </div>
+                <% }) %>
+              </div>
+            <% } else { %>
+              <p class="text-muted">No photos available.</p>
+            <% } %>
 
-          <% if (AlumniActivities.pageNumber) { %>
-            <p class="text-muted">Page No: <%= AlumniActivities.pageNumber %></p>
-          <% } %>
+            <% if (activity.pageNumber) { %>
+              <p class="text-muted">Page No: <%= activity.pageNumber %></p>
+            <% } %>
+          </div>
         </div>
-      </div>
+      <% }) %>
     <% } %>
   </div>
 
