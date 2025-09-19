@@ -1,20 +1,106 @@
 <%- include("../partials/header", { title: page.pageTitle }) %>
 
-<div class="container py-4">
-  <h1 class="mb-4"><%= page.pageTitle %></h1>
+<style>
+  /* ===== Container Styling ===== */
+  .rp-container {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 2rem;
+  }
+
+  /* ===== Page Title ===== */
+  h1 {
+    text-align: center;
+    font-weight: 700;
+    color: #0d1b2a; /* Navy */
+    margin-bottom: 2rem;
+  }
+
+  /* ===== Section Title ===== */
+  .rp-section-title {
+    font-weight: 600;
+    color: #0d1b2a; /* Navy */
+    position: relative;
+    display: inline-block;
+    padding-bottom: 6px;
+    margin-bottom: 1.5rem;
+  }
+
+  .rp-section-title::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 50%;
+    background: #ffb703; /* Yellow underline */
+    border-radius: 2px;
+    transition: width 0.3s ease;
+  }
+
+  .rp-section-title:hover::after {
+    width: 100%;
+  }
+
+  /* ===== Card Styling ===== */
+.card {
+  border: none;
+  border-radius: 12px;
+  background: #f9fafc;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  background: #ffffff;
+}
+
+/* ===== Status Badge (subtle) ===== */
+.status-badge {
+  display: inline-block;
+  background: rgba(13, 27, 42, 0.08); /* light navy tint */
+  color: #0d1b2a; /* navy text */
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+
+  /* ===== Card Headline ===== */
+  .card h5 {
+    font-weight: 600;
+    color: #0d1b2a; /* Navy */
+    transition: color 0.3s ease;
+  }
+
+  .card:hover h5 {
+    color: #ffb703; /* Yellow on hover */
+  }
+
+  /* ===== Card Text ===== */
+  .card p {
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+
+  .card strong {
+    color: #0d1b2a;
+  }
+
+  /* ===== Accent Badge (Optional for Status) ===== */
+  
+</style>
+
+<div class="container py-4 rp-container">
+  <h1><%= page.pageTitle %></h1>
 
   <% const sections = (page.sections || []).sort((a, b) => (a.order || 0) - (b.order || 0)); %>
 
-  <% sections.forEach(function(sec){ 
-       const accent = sec.themeColor || '#c62828'; 
-  %>
+  <% sections.forEach(function(sec){ %>
     <!-- 🔴 Section Title -->
- <h2 class="rp-section-title mb-3" style="--accent:<%= accent %>">
-  <%= sec.title %>
-</h2>
-
-      <%= sec.title %>
-    </h2>
+    <h2 class="rp-section-title"><%= sec.title %></h2>
 
     <!-- Projects Grid -->
     <div class="row g-3">
@@ -22,11 +108,11 @@
         <div class="col-md-6 col-lg-4">
           <div class="card h-100 shadow-sm p-3">
             <!-- 🟢 Headline -->
-            <h5 class="text-success mb-2"><%= p.headline %></h5>
+            <h5><%= p.headline %></h5>
 
             <!-- Details -->
             <p><strong>Inventor(s):</strong> <%= (p.inventors || []).join(", ") %></p>
-            <p><strong>Status:</strong> <%= p.status %></p>
+            <p><strong>Status:</strong> <span class="status-badge"><%= p.status %></span></p>
             <p><strong>Issuing Agency:</strong> <%= p.issuingAgency %></p>
             <p><strong>Overview:</strong> <%= p.overview %></p>
           </div>

@@ -1,6 +1,77 @@
-
 <body>
   <%- include("../partials/header", { title: "Alumni Activities" }) %>
+
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background-color: #f9f9fb;
+      color: #333;
+    }
+
+    h1 {
+      font-family: "Merriweather", serif;
+      font-weight: 700;
+      color: #2c3e50;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .card {
+      border: none;
+      border-radius: 12px;
+      background: #ffffff;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    .card-title {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #34495e;
+    }
+
+    .list-group-item {
+      border: none;
+      background: #f8f9fa;
+      font-size: 0.95rem;
+    }
+
+    .list-group-item strong {
+      color: #2c3e50;
+    }
+
+    h5 {
+      font-weight: 600;
+      color: #8e44ad;
+      border-left: 4px solid #8e44ad;
+      padding-left: 8px;
+      margin-bottom: 12px;
+    }
+
+    .alert-warning {
+      font-weight: 500;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    img {
+      transition: transform 0.3s ease;
+      border-radius: 10px;
+    }
+
+    img:hover {
+      transform: scale(1.05);
+    }
+
+    .text-muted {
+      font-size: 0.9rem;
+      color: #6c757d !important;
+    }
+  </style>
 
   <div class="container my-5">
     <h1 class="text-center mb-4">🎓 Alumni Activities</h1>
@@ -60,4 +131,3 @@
 
   <%- include("../partials/footer") %>
 </body>
-

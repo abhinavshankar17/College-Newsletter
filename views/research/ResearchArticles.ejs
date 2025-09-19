@@ -1,26 +1,5 @@
 <%- include("../partials/header", { title: page.pageTitle }) %>
 
-<style>
-  /* Container shadow */
-  .rp-container {
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
-  }
-
-  /* Section headings */
-  .rp-section-title {
-    font-weight: 600;
-    margin-bottom: 1rem;
-  }
-
-  /* Card title color */
-  .rp-card-title {
-    color: #0d47a1; /* darker blue */
-  }
-</style>
-
 <div class="container py-4 rp-container">
   <h1 class="mb-4 text-center"><%= page.pageTitle %></h1>
 
@@ -65,3 +44,107 @@
 </div>
 
 <%- include("../partials/footer") %>
+<style>
+  /* Responsive card grid spacing */
+  @media (max-width: 767px) {
+    .rp-container {
+      padding: 1rem;
+    }
+    .card {
+      margin-bottom: 1rem;
+    }
+  }
+
+  /* Card image placeholder */
+  .rp-card-img {
+    width: 100%;
+    height: 140px;
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1976d2;
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+    transition: background 0.3s;
+  }
+  .card:hover .rp-card-img {
+    background: linear-gradient(135deg, #f8bbd0 0%, #ffcdd2 100%); /* Updated to red tint */
+    color: #b71c1c;
+  }
+
+  /* Card body subtle background on hover */
+  .card:hover .card-body {
+    background: #fff5f5; /* Subtle red background */
+    border-radius: 0 0 12px 12px;
+  }
+
+  /* Section divider style */
+  hr.my-4 {
+    border-top: 2px dashed #e3e3e3;
+    opacity: 0.7;
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  /* Card shadow pop on hover */
+  .card {
+    box-shadow: 0 2px 8px rgba(33, 150, 243, 0.07);
+  }
+  .card:hover {
+    box-shadow: 0 12px 32px rgba(244, 67, 54, 0.18); /* Updated to red shadow */
+    border: 1px solid #ef9a9a; /* Subtle red border */
+  }
+
+  /* Card title underline on hover */
+  .card-title.rp-card-title {
+    position: relative;
+    z-index: 1;
+  }
+  .card-title.rp-card-title::after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0; bottom: -4px;
+    width: 0;
+    height: 3px;
+    background: #b71c1c; /* Updated to red */
+    border-radius: 2px;
+    transition: width 0.3s;
+    z-index: -1;
+  }
+  .card:hover .card-title.rp-card-title::after {
+    width: 60%;
+  }
+
+  /* Subtle scale on card hover */
+  .card {
+    transition: transform 0.25s cubic-bezier(.4,2,.6,1), box-shadow 0.25s;
+  }
+  .card:hover {
+    transform: translateY(-8px) scale(1.03);
+  }
+</style>
+
+<script>
+  // Optional: Animate cards on scroll into view
+  document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('.card');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = 1;
+          entry.target.style.transform += ' scale(1.02)';
+        }
+      });
+    }, { threshold: 0.15 });
+
+    cards.forEach(card => {
+      card.style.opacity = 0;
+      observer.observe(card);
+    });
+  });
+</script>
