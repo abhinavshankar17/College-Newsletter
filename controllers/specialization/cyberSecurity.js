@@ -1,11 +1,12 @@
-//import cyberSecurity from "../../models/specialization/cyberSecurity.js";
-//show page
-// show page
 import CyberSecurity from "../../models/specialization/cyberSecurity.js";
 
+// Show page
 export const getCyberSecurity = async (req, res) => {
   try {
-    const raw = (await CyberSecurity.findOne().lean()) || {};
+    const raw = await CyberSecurity.findOne().lean();
+    if (!raw) {
+      return res.render("specialization/cyberSecurity", { page: null });
+    }
 
     const page = {
       title: raw.title || "Cyber Security",
@@ -26,20 +27,21 @@ export const getCyberSecurity = async (req, res) => {
       images: raw.images || [],
     };
 
-    return res.render("specialization/cyberSecurity", { page });
+    res.render("specialization/cyberSecurity", { page });
   } catch (err) {
     console.error(err);
-    return res.status(500).send("Error fetching Cyber Security data");
+    res.status(500).send("Error fetching Cyber Security data");
   }
 };
 
+// Add new document
 export const addCyberSecurity = async (req, res) => {
   try {
     const doc = new CyberSecurity(req.body);
     await doc.save();
-    return res.redirect("/specialization/cyber-security");
+    res.redirect("/specialization/cyber-security");
   } catch (err) {
     console.error(err);
-    return res.status(500).send("Error adding Cyber Security data");
+    res.status(500).send("Error adding Cyber Security data");
   }
 };

@@ -12,7 +12,8 @@ console.log("Cloudinary config:", {
 
 // ✅ Correct paths
 import cloudComputingRoutes from "./routes/specialization/cloudComputing.js";
-import cyberSecurityRoutes from "./routes/specialization/cyberSecurity.js";
+// import cyberSecurityRoutes from "./routes/specialization/cyberSecurity.js";
+import cyberSecurityRouter from "./routes/specialization/cyberSecurity.js";
 import researchRoutes from "./routes/research/research.js"; 
 import computerNetworkingRoutes from "./routes/specialization/ComputerNetworking.js";
 import informationTechnologyRoutes from "./routes/specialization/InformationTechnology.js";
@@ -35,6 +36,7 @@ import activitiesRoutes from "./routes/students/activityRoutes.js";
 import articleRoutes from "./routes/students/articleRoutes.js";
 import alumniRoutes from "./routes/students/alumniRoutes.js";
 
+
 import CelebrationRoutes from "./routes/events/Celebration.js";
 import GuestLecture from "./routes/events/GuestLecture.js";
 import Workshop from "./routes/events/Workshop.js";
@@ -55,7 +57,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/college_newsletter")
 // Routes
 app.use("/research", researchRoutes);
 app.use("/specialization/cloud-computing", cloudComputingRoutes);
-app.use("/specialization/cyber-security", cyberSecurityRoutes);
+app.use("/specialization/cyber-security", cyberSecurityRouter);
 app.use("/specialization/computer-networking", computerNetworkingRoutes);
 app.use("/specialization/information-technology", informationTechnologyRoutes);
 app.use("/specialization/internet-of-things", internetOfThingsRoutes);

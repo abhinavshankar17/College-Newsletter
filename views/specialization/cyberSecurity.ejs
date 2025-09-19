@@ -1,126 +1,249 @@
-<%- include("../partials/header", { title: "CyberSecurity Specialization" }) %>
+<%- include("../partials/header", { title: page?.title || "Cyber Security" }) %>
+
+<style>
+  /* Global Styles */
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    background: #f4f6f8;
+    color: #2c3e50;
+  }
+
+  h1, h2, h4 {
+    color: #1f3a57;
+    margin-bottom: 10px;
+  }
+
+  p, li, small {
+    color: #555;
+  }
+
+  a {
+    color: #3498db;
+    text-decoration: none;
+  }
+
+  /* Layout */
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+  }
+
+  .main-col {
+    flex: 2;
+    min-width: 320px;
+  }
+
+  .side-col {
+    flex: 1;
+    min-width: 250px;
+  }
+
+  /* Cards */
+  .card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    margin-bottom: 25px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  }
+
+  /* Page Header */
+  .page-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .page-header .lead {
+    font-size: 1.1rem;
+    color: #666;
+  }
+
+  /* Lists */
+  ul {
+    padding-left: 20px;
+    margin-bottom: 10px;
+  }
+
+  li {
+    margin-bottom: 6px;
+  }
+
+  /* Publications */
+  .pub {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-left: 3px solid #3498db;
+    background: #f0f8ff;
+    border-radius: 5px;
+  }
+
+  .pub small {
+    color: #888;
+  }
+
+  /* Certifications */
+  .cert-list li {
+    margin-bottom: 10px;
+    padding: 8px;
+    background: #eef6fb;
+    border-radius: 5px;
+  }
+
+  .cert-list .badge {
+    background: #3498db;
+    color: white;
+    padding: 3px 7px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    margin-left: 5px;
+  }
+
+  /* Sidebar */
+  .side-col .images {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .side-col .thumb img {
+    width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+
+  .quote blockquote {
+    font-style: italic;
+    background: #eaf2fc;
+    padding: 15px 20px;
+    border-left: 5px solid #3498db;
+    border-radius: 5px;
+    color: #1f3a57;
+    margin: 0;
+  }
+
+  /* Section Titles */
+  .section h2 {
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+  }
+
+  /* Responsive */
+  @media(max-width: 900px) {
+    .grid {
+      flex-direction: column;
+    }
+  }
+</style>
 
 <section class="container page-cyber py-5">
-  <!-- Page header -->
+  <% if (!page) { %>
+    <p class="text-center">No Cyber Security data found.</p>
+  <% } else { %>
+
   <header class="page-header mb-4">
     <h1 class="title"><%= page.title %></h1>
     <p class="lead"><%= page.introduction %></p>
   </header>
 
   <div class="grid">
-    <!-- Left column: main content -->
     <main class="main-col">
 
-      <!-- Academic Excellence & Research Output -->
+      <!-- Academic Excellence -->
       <article class="card section mb-4">
         <h2>Academic Excellence & Research Output</h2>
         <p><%= page.academicExcellence.description %></p>
-
-        <ul class="highlights">
-          <% page.academicExcellence.facultyHighlights.forEach(function(h) { %>
+        <ul>
+          <% page.academicExcellence.facultyHighlights.forEach(h => { %>
             <li><%= h %></li>
-          <% }); %>
+          <% }) %>
         </ul>
-
         <h4>Publications & Outputs</h4>
-        <div class="pub-list">
-          <% page.academicExcellence.publications.forEach(function(pub) { %>
-            <div class="pub">
-              <strong><%= pub.title %></strong><br>
-              <small class="muted"><%= [pub.publisher, pub.date].filter(Boolean).join(' • ') %></small>
-              <p><%= pub.description %></p>
-            </div>
-          <% }); %>
-        </div>
-      </article>
-
-      <!-- Internship & Industry Exposure -->
-      <article class="card section mb-4">
-        <h2>Internship & Industry Exposure</h2>
-        <% page.internships.forEach(function(i) { %>
-          <div class="internship mb-3">
-            <h4><%= i.leader %> — <small class="muted"><%= i.organization %></small></h4>
-            <p><strong>Mentors:</strong> <%= i.mentors.join(', ') %></p>
-            <p><strong>Team:</strong> <%= i.team.join(', ') %></p>
-            <p><%= i.description %></p>
-            <p><strong>Techniques / Topics:</strong> <%= i.techniques.join(', ') %></p>
+        <% page.academicExcellence.publications.forEach(pub => { %>
+          <div class="pub">
+            <strong><%= pub.title %></strong><br>
+            <small><%= [pub.publisher, pub.date].filter(Boolean).join(' • ') %></small>
+            <p><%= pub.description %></p>
           </div>
         <% }) %>
       </article>
 
-      <!-- Faculty Development & Certifications -->
+      <!-- Internships -->
+      <article class="card section mb-4">
+        <h2>Internship & Industry Exposure</h2>
+        <% page.internships.forEach(i => { %>
+          <div>
+            <h4><%= i.leader %> — <small><%= i.organization %></small></h4>
+            <p><strong>Mentors:</strong> <%= i.mentors.join(', ') %></p>
+            <p><strong>Team:</strong> <%= i.team.join(', ') %></p>
+            <p><%= i.description %></p>
+            <p><strong>Techniques:</strong> <%= i.techniques.join(', ') %></p>
+          </div>
+        <% }) %>
+      </article>
+
+      <!-- Certifications -->
       <article class="card section mb-4">
         <h2>Faculty Development & Certifications</h2>
         <ul class="cert-list">
-          <% page.certifications.forEach(function(c) { %>
+          <% page.certifications.forEach(c => { %>
             <li>
-              <strong><%= c.faculty.join(', ') %></strong> — 
-              <%= c.program %>
-              <span class="muted"> (<%= c.organization %>)</span>
-              — <small class="muted"><%= c.date %></small>
+              <strong><%= c.faculty.join(', ') %></strong> — <%= c.program %>
+              <small> (<%= c.organization %>)</small> — <%= c.date %>
               <span class="badge">Grade: <%= c.grade %></span>
             </li>
-          <% }); %>
+          <% }) %>
         </ul>
       </article>
 
-      <!-- Outreach, Recognition & Engagement -->
+      <!-- Outreach -->
       <article class="card section mb-4">
-        <h2>Outreach, Recognition & Engagement</h2>
-
+        <h2>Outreach & Engagement</h2>
         <h4>Programs</h4>
         <ul>
-          <% page.outreach.programs.forEach(function(p){ %>
-            <li><%= p %></li>
-          <% }) %>
+          <% page.outreach.programs.forEach(p => { %><li><%= p %></li><% }) %>
         </ul>
-
         <h4>Events</h4>
         <ul>
-          <% page.outreach.events.forEach(function(e){ %>
-            <li><%= e %></li>
-          <% }) %>
+          <% page.outreach.events.forEach(e => { %><li><%= e %></li><% }) %>
         </ul>
       </article>
 
-      <!-- International Collaborations -->
+      <!-- Collaborations -->
       <article class="card section mb-4">
         <h2>International Collaborations</h2>
-        <% page.collaborations.forEach(function(col){ %>
-          <div class="collab mb-3">
-            <h4><%= col.partner %> <small class="muted"><%= col.date %></small></h4>
-            <p><%= col.description %></p>
-            <p><strong>Team:</strong> <%= col.participants.join(', ') %></p>
+        <% page.collaborations.forEach(c => { %>
+          <div>
+            <h4><%= c.partner %> — <small><%= c.date %></small></h4>
+            <p><%= c.description %></p>
+            <p><strong>Participants:</strong> <%= c.participants.join(', ') %></p>
           </div>
         <% }) %>
       </article>
 
     </main>
 
-    <!-- Right column: images, quote, quick facts -->
+    <!-- Sidebar -->
     <aside class="side-col">
-      <div class="card mb-4 images">
-        <% page.images.forEach(function(src){ %>
-          <figure class="thumb">
-            <img src="<%= src %>" alt="cyber image" />
-          </figure>
+      <div class="card images">
+        <% page.images.forEach(src => { %>
+          <figure class="thumb"><img src="<%= src %>" alt="cyber image"></figure>
         <% }) %>
       </div>
-
-      <div class="card quote mb-4">
+      <div class="card quote">
         <blockquote>"<%= page.quote %>"</blockquote>
-      </div>
-
-      <div class="card quick mb-4">
-        <h4>Quick Highlights</h4>
-        <ul>
-          <% page.academicExcellence.facultyHighlights.slice(0,5).forEach(function(h){ %>
-            <li><%= h %></li>
-          <% }) %>
-        </ul>
       </div>
     </aside>
   </div>
+  <% } %>
 </section>
 
 <%- include("../partials/footer") %>

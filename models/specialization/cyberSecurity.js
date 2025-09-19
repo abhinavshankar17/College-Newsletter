@@ -1,7 +1,6 @@
-
 import mongoose from "mongoose";
-                              
-const { Schema } = mongoose;   
+
+const { Schema } = mongoose;
 
 const publicationSchema = new Schema({
   title: String,
@@ -41,7 +40,7 @@ const cyberSecuritySchema = new Schema({
 
   academicExcellence: {
     description: String,
-    facultyHighlights: [String], // key achievements
+    facultyHighlights: [String],
     publications: [publicationSchema],
   },
 
@@ -57,7 +56,8 @@ const cyberSecuritySchema = new Schema({
   collaborations: [collaborationSchema],
 
   quote: String,
-  images: [String], // store image URLs
+  images: [String],
 });
 
-export default mongoose.model("CyberSecurity", cyberSecuritySchema);
+// Force Mongoose to use the correct collection
+export default mongoose.model("CyberSecurity", cyberSecuritySchema, "cybersecurities");
