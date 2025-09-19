@@ -1,23 +1,25 @@
 import InformationTechnology from "../../models/specialization/InformationTechnology.js";
 
-export const getInformationTechnology  = async (req, res) => {
+// Get Information Technology page
+export const getInformationTechnology = async (req, res) => {
   try {
-    const data = await InformationTechnology.findOne();
+    // Fetch the first document in the collection
+    const data = await InformationTechnology.findOne().lean(); // use .lean() for EJS
     res.render("specialization/InformationTechnology", { data });
   } catch (err) {
-    console.error(err);
-    res.status(500).send("Error fetching Information Technology  data");
+    console.error("Error fetching Information Technology data:", err);
+    res.status(500).send("Error fetching Information Technology data");
   }
 };
 
-// Add new document (CRUD - Create)
-export const addInformationTechnology  = async (req, res) => {
+// Add new Information Technology document
+export const addInformationTechnology = async (req, res) => {
   try {
     const newData = new InformationTechnology(req.body);
     await newData.save();
-    res.redirect("/specialization/Information-Technology ");
+    res.redirect("/specialization/information-technology");
   } catch (err) {
-    console.error(err);
-    res.status(500).send("Error adding Information Technology  data");
+    console.error("Error adding Information Technology data:", err);
+    res.status(500).send("Error adding Information Technology data");
   }
 };
