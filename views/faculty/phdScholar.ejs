@@ -1,38 +1,99 @@
 
   <%- include("../partials/header", { title: "Phd Scholars" }) %>
   <style>
-    /* body {
-      font-family: Arial, sans-serif;
-      background: #f4f7fb;
-      margin: 20px;
-      padding: 0;
-    } */
-    h1 {
-      text-align: center;
-      color: #2c3e50;
-    }
-    .scholar-card {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      margin: 20px auto;
-      padding: 20px;
-      max-width: 800px;
-    }
-    .scholar-card h2 {
-      margin: 0;
-      color: #34495e;
-    }
-    .scholar-card p {
-      margin: 6px 0;
-      color: #555;
-    }
-    .no-data {
-      text-align: center;
-      font-size: 18px;
-      color: #888;
-      margin-top: 50px;
-    }
+  /* Page Background */
+body {
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: linear-gradient(135deg, #eef2f7, #f9fafc);
+  margin: 0;
+  /* padding: 20px; */
+  color: #2c3e50;
+}
+
+/* Page Title */
+h1 {
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 30px;
+  line-height: 1.4;
+}
+h1::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: #4f46e5;
+  margin: 12px auto 0;
+  border-radius: 2px;
+}
+
+/* Scholar Card */
+.scholar-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+  margin: 20px auto;
+  padding: 24px;
+  max-width: 850px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.scholar-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Scholar Name + RegNo */
+.scholar-card h2 {
+  margin: 0 0 12px;
+  font-size: 1.4rem;
+  color: #111827;
+  font-weight: 600;
+}
+.scholar-card h2 span {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: #64748b;
+}
+
+/* Scholar Details */
+.scholar-card p {
+  margin: 6px 0;
+  font-size: 1rem;
+  color: #374151;
+}
+.scholar-card p strong {
+  color: #4f46e5;
+  font-weight: 600;
+}
+
+/* Techniques (special highlight) */
+.scholar-card p:last-of-type {
+  background: #f3f4f6;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: #1e293b;
+}
+
+/* Empty State */
+.no-data {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #6b7280;
+  margin-top: 60px;
+  padding: 30px;
+}
+.no-data p {
+  background: #f3f4f6;
+  display: inline-block;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-style: italic;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
   </style>
 </head>
 <body>

@@ -6,141 +6,120 @@
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   }
 
-  h1, h2 {
-    font-weight: 600;
+  h1 {
+    text-align: center;
     color: #2c3e50;
-  }
-
-  .section-title {
-    margin-top: 40px;
-    padding-bottom: 8px;
-    border-bottom: 3px solid #3498db;
-    display: inline-block;
+    margin-bottom: 30px;
   }
 
   .card {
-    border-radius: 12px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    border: none;
-    transition: transform 0.2s;
     background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     padding: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    transition: transform 0.2s, box-shadow 0.2s;
   }
 
   .card:hover {
     transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
   }
 
-  .card h3, .card h4 {
+  .card h3 {
     color: #2980b9;
+    margin-top: 0;
     font-weight: 600;
   }
 
   .card p {
-    margin-bottom: 6px;
+    margin: 5px 0;
+    color: #34495e;
   }
 
-  img.img-thumbnail {
+  .card .faculty-img {
+    float: right;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
     border-radius: 8px;
+    border: 2px solid #ddd;
+    margin-left: 20px;
   }
 
-  .quote {
-    background: #fff9c4;
-    padding: 15px;
-    margin-top: 30px;
-    border-left: 5px solid #facc15;
-    font-style: italic;
-    text-align: center;
-    border-radius: 5px;
+  .card ul {
+    margin: 5px 0 0 20px;
+    padding: 0;
   }
 
-  .author {
-    display: block;
-    font-weight: bold;
-    margin-top: 8px;
+  .card ul li {
+    margin-bottom: 4px;
+  }
+
+  .card .section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    border-bottom: 2px solid #3498db;
+    display: inline-block;
+    padding-bottom: 3px;
   }
 </style>
 
 <div class="container py-4">
-  <h1 class="text-center mb-5">
-    <%= achievement?.title || "No Faculty Achievements Found" %>
-  </h1>
+  <h1>Faculty Achievements</h1>
 
-  <% if (achievement) { %>
-    <!-- Faculty Info -->
-    <section>
-      <h2 class="section-title">Faculty Details</h2>
+  <% if (achievements && achievements.length > 0) { %>
+    <% achievements.forEach(achievement => { %>
       <div class="card">
+        <!-- Faculty Info -->
+        <% if (achievement.imageUrl) { %>
+          <img src="<%= achievement.imageUrl %>" alt="Faculty Photo" class="faculty-img">
+        <% } %>
         <h3><%= achievement.facultyName || "N/A" %></h3>
         <p><strong>Designation:</strong> <%= achievement.designation || "N/A" %></p>
         <p><strong>Department:</strong> <%= achievement.department || "N/A" %></p>
         <p><strong>Institution:</strong> <%= achievement.institution || "N/A" %></p>
-        
-        <% if (achievement.imageUrl) { %>
-          <img src="<%= achievement.imageUrl %>" alt="Faculty Photo" class="img-thumbnail mt-3" width="200">
-        <% } %>
-      </div>
-    </section>
 
-    <!-- Achievement Info -->
-    <section>
-      <h2 class="section-title">Achievement Details</h2>
-      <div class="card">
+        <!-- Achievement Info -->
+        <p class="section-title">Achievement Details</p>
+        <p><strong>Title:</strong> <%= achievement.title || "Untitled Achievement" %></p>
         <p><strong>Type:</strong> <%= achievement.achievementType || "N/A" %></p>
         <p><strong>Description:</strong> <%= achievement.description || "No description provided." %></p>
         <p><strong>Organization:</strong> <%= achievement.organization || "N/A" %></p>
         <p><strong>Event:</strong> <%= achievement.event || "N/A" %></p>
         <p><strong>Role:</strong> <%= achievement.role || "N/A" %></p>
         <p><strong>Recognition:</strong> <%= achievement.recognition || "N/A" %></p>
-
-        <p>
-          <strong>Dates:</strong>
+        <p><strong>Dates:</strong> 
           <% if (achievement.startDate) { %>
             <%= new Date(achievement.startDate).toLocaleDateString() %>
           <% } else { %>
             N/A
-          <% } %>
-          -
+          <% } %> -
           <% if (achievement.endDate) { %>
             <%= new Date(achievement.endDate).toLocaleDateString() %>
           <% } else { %>
             Present
           <% } %>
         </p>
-      </div>
-    </section>
 
-    <!-- Collaborators -->
-    <section>
-      <h2 class="section-title">Collaborators</h2>
-      <% if (achievement.collaborators?.length > 0) { %>
-        <% achievement.collaborators.forEach(col => { %>
-          <div class="card">
-            <h4><%= col.name || "N/A" %></h4>
-            <p><strong>Role:</strong> <%= col.role || "N/A" %></p>
-            <% if (col.regNo) { %>
-              <p><strong>Reg No:</strong> <%= col.regNo %></p>
-            <% } %>
-          </div>
-        <% }) %>
-      <% } else { %>
-        <p>No collaborators listed.</p>
-      <% } %>
-    </section>
+        <!-- Collaborators -->
+        <% if (achievement.collaborators?.length > 0) { %>
+          <p class="section-title">Collaborators</p>
+          <ul>
+            <% achievement.collaborators.forEach(col => { %>
+              <li><strong><%= col.name || "N/A" %></strong> - <%= col.role || "N/A" %> 
+              <% if (col.regNo) { %> (Reg No: <%= col.regNo %>) <% } %></li>
+            <% }) %>
+          </ul>
+        <% } %>
+      </div>
+    <% }) %>
   <% } else { %>
     <p class="text-center mt-5">No achievements have been added yet.</p>
   <% } %>
-
-  <!-- Quote (optional for inspiration) -->
-  <section>
-    <h2 class="section-title">Inspirational Note</h2>
-    <div class="quote">
-      “Achievements reflect dedication and teamwork.”
-      <br>
-      <span class="author">– SRMIST</span>
-    </div>
-  </section>
 </div>
 
 <%- include("../partials/footer") %>
