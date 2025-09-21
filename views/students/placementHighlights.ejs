@@ -209,6 +209,136 @@
   color: #1a237e;
   font-weight: 700;
 }
+.offer-card {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  padding: 20px;
+  margin-bottom: 25px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  gap: 20px; /* natural spacing between image and text */
+}
+
+.offer-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+.offer-img {
+  flex: 0 0 120px; /* fixed image column */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.offer-img img {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 4px solid #1a237e;
+  object-fit: cover;
+}
+
+.offer-content {
+  flex: 1; /* take remaining space */
+}
+
+.offer-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.offer-title span {
+  font-size: 0.9rem;
+  font-weight: normal;
+  color: #555;
+}
+
+.super-dream .offer-title {
+  color: #d32f2f;
+}
+
+.dream .offer-title {
+  color: #e67e22;
+}
+
+.dream-role .offer-title {
+  color: #1976d2;
+}
+
+.marquee-offers {
+    margin: 60px auto;
+    max-width: 1200px;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+  }
+
+  .marquee-offers h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a237e;
+    margin-bottom: 40px;
+  }
+
+  .marquee-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+    justify-items: center;
+  }
+
+  .marquee-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 280px;
+  }
+
+  .marquee-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.18);
+  }
+
+  .marquee-card img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid #1a237e;
+    object-fit: cover;
+    margin-bottom: 15px;
+  }
+
+  .marquee-card h4 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 5px;
+  }
+
+  .marquee-card span {
+    font-size: 0.9rem;
+    color: #6b7280;
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .marquee-card p {
+    font-size: 0.9rem;
+    margin: 4px 0;
+    color: #374151;
+  }
+
+  .marquee-card strong {
+    color: #1a237e;
+  }
+
+
 
 </style>
 
@@ -404,6 +534,255 @@
   </p>
 </div>
 
+ 
+<div class="marquee-offers">
+  <h2 class="text-center fw-bold mb-4" style="color:#1a237e;">
+    M.Tech Offers (2026 Batch)
+  </h2>
+
+  <div class="marquee-grid">
+    <!-- Super Dream Offer -->
+    <div class="marquee-card super-dream">
+      <img src="/images/bhavana.jpg" alt="Gangisetti Bhavana Sai Gayathri">
+      <h4>GANGISETTI BHAVANA SAI GAYATHRI</h4>
+      <span>(RA2412033010017)</span>
+      <p>M.Tech. in Cloud Computing</p>
+      <p><strong>Company:</strong> SAP Labs</p>
+      <p><strong>Stipend:</strong> ₹. 35,000 / PM</p>
+    </div>
+
+    <!-- Dream Offer -->
+    <div class="marquee-card dream">
+      <img src="/images/sujan.jpg" alt="Jujjavarapu Sujan Chowdary">
+      <h4>JUJJAVARAPU SUJAN CHOWDARY</h4>
+      <span>(RA2412033010001)</span>
+      <p>M.Tech. in Cloud Computing</p>
+      <p><strong>Company:</strong> Nokia</p>
+      <p><strong>Stipend:</strong> ₹. 35,000 / PM</p>
+    </div>
+
+    <!-- Dream Role -->
+    <div class="marquee-card dream-role">
+      <img src="/images/durga.jpg" alt="Nadipalli Durga Prasad">
+      <h4>NADIPALLI DURGA PRASAD</h4>
+      <span>(RA2412033010019)</span>
+      <p>M.Tech. in Cloud Computing</p>
+      <p><strong>Company:</strong> Nokia</p>
+      <p><strong>Stipend:</strong> ₹. 35,000 / PM</p>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MARQUEE OFFERS SECTION ================= -->
+<div class="marquee-offers">
+  <h2>Marquee Offers</h2>
+  <div class="marquee-grid">
+    
+    <!-- Card 1 -->
+    <div class="marquee-card">
+      <img src="/images/renuka.jpg" alt="Ayineni Chaarvi Sai Renuka Choudary">
+      <h4>AYINENI CHAARVI SAI RENUKA CHOUDARY</h4>
+      <span>(RA2211030010122)</span>
+      <p>B.Tech. in CSE with Cyber Security</p>
+      <p><strong>Company :</strong> Citi Bank</p>
+      <p><strong>Stipend :</strong> ₹. 75,000 / PM</p>
+      <p><strong>CTC :</strong> 18 – 20 LPA</p>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="marquee-card">
+      <img src="/images/afraz.jpg" alt="Afraz M">
+      <h4>AFRAZ M</h4>
+      <span>(RA2211030010132)</span>
+      <p>B.Tech. in CSE with Cyber Security</p>
+      <p><strong>Company :</strong> Citi Bank</p>
+      <p><strong>Stipend :</strong> ₹. 75,000 / PM</p>
+      <p><strong>CTC :</strong> 18 – 20 LPA</p>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="marquee-card">
+      <img src="/images/thamizhiniyan.jpg" alt="Thamizhiniyan C S">
+      <h4>THAMIZHINIYAN C S</h4>
+      <span>(RA2112703010017)</span>
+      <p>M.Tech. (Integrated) in CSE with Cyber Security and Digital Forensics</p>
+      <p><strong>Company :</strong> SAP Labs</p>
+      <p><strong>Stipend :</strong> ₹. 35,000 / PM</p>
+      <p><strong>CTC :</strong> 20 LPA</p>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="marquee-card">
+      <img src="/images/vinay.jpg" alt="Vinay Rajan S">
+      <h4>VINAY RAJAN S</h4>
+      <span>(RA2211028010084)</span>
+      <p>B.Tech. in CSE with Cloud Computing</p>
+      <p><strong>Company :</strong> Morgan Stanley</p>
+      <p><strong>Stipend :</strong> ₹. 87,000 / PM</p>
+      <p><strong>CTC :</strong> 25 LPA</p>
+    </div>
+
+  </div>
+</div>
+<div class="marquee-offers">
+  <h2>NWC - Notable Internship Details</h2>
+  <div class="marquee-grid">
+
+    <div class="marquee-card">
+      <img src="/images/interns/charith.jpg" alt="K L K CHARITH">
+      <h4>K L K CHARITH</h4>
+      <span>(RA2111030010106)</span>
+      <p><strong>Company:</strong> Summer Solutions Pvt. Ltd.</p>
+      <p><strong>Duration:</strong> 20-Jan-2025 to 20-Jul-2025</p>
+      <p><strong>Stipend:</strong> ₹ 7,500 / PM</p>
+    </div>
+
+    <div class="marquee-card">
+      <img src="/images/interns/shashwat.jpg" alt="SHASHWAT AGARWAL">
+      <h4>SHASHWAT AGARWAL</h4>
+      <span>(RA2211031010083)</span>
+      <p><strong>Company:</strong> Shamgar Software Solutions, India</p>
+      <p><strong>Duration:</strong> 29-Apr-2025 to 28-Jul-2025</p>
+      <p><strong>Stipend:</strong> ₹ 15,000 / PM</p>
+    </div>
+
+    <div class="marquee-card">
+      <img src="/images/interns/ramnarayan.jpg" alt="A. RAMNARAYAN">
+      <h4>A. RAMNARAYAN</h4>
+      <span>(RA2211030010022)</span>
+      <p><strong>Company:</strong> Knosfer, India</p>
+      <p><strong>Duration:</strong> 01-May-2025 to 01-Nov-2025</p>
+      <p><strong>Stipend:</strong> ₹ 10,000 / PM</p>
+    </div>
+
+    <div class="marquee-card">
+      <img src="/images/interns/pratyush.jpg" alt="PRATYUSH GOLWALA">
+      <h4>PRATYUSH GOLWALA</h4>
+      <span>(RA2211031010155)</span>
+      <p><strong>Company:</strong> Digital Doge, India</p>
+      <p><strong>Duration:</strong> 16-Jun-2025 to 16-Sep-2025</p>
+      <p><strong>Stipend:</strong> ₹ 10,000 / PM</p>
+    </div>
+
+    <div class="marquee-card">
+      <img src="/images/interns/taseen.jpg" alt="TASEEN IQBAL">
+      <h4>TASEEN IQBAL</h4>
+      <span>(RA2211030010048)</span>
+      <p><strong>Company:</strong> Eaton India</p>
+      <p><strong>Duration:</strong> 05-May-2025 to 11-Aug-2025</p>
+      <p><strong>Stipend:</strong> ₹ 21,000 / PM</p>
+    </div>
+
+    <div class="marquee-card">
+      <img src="/images/interns/ayushman.jpg" alt="AYUSHMAN ANAL">
+      <h4>AYUSHMAN ANAL</h4>
+      <span>(RA2211030010052)</span>
+      <p><strong>Company:</strong> Mintair Corp., India</p>
+      <p><strong>Duration:</strong> 17-Jun-2025 to 18-Jul-2025</p>
+      <p><strong>Stipend:</strong> ₹ 24,950 / PM</p>
+    </div>
+
+    <div class="marquee-card">
+      <img src="/images/interns/pranjali.jpg" alt="PRANJALI SRIVASTAVA">
+      <h4>PRANJALI SRIVASTAVA</h4>
+      <span>(RA2211028010140)</span>
+      <p><strong>Company:</strong> NovelVox, India</p>
+      <p><strong>Duration:</strong> 10-Jun-2025 to 10-Jul-2025</p>
+      <p><strong>Stipend:</strong> ₹ 30,000 / PM</p>
+    </div>
+
+    <div class="marquee-card">
+      <img src="/images/interns/guna.jpg" alt="GUNA SUNDAR">
+      <h4>GUNA SUNDAR</h4>
+      <span>(RA2211032010088)</span>
+      <p><strong>Company:</strong> Kloudportal Technology Solutions Pvt Ltd</p>
+      <p><strong>Duration:</strong> 01-May-2025 to 01-Aug-2025</p>
+      <p><strong>Stipend:</strong> ₹ 20,000 / PM</p>
+    </div>
+
+  </div>
+</div>
+<div class="marquee-offers">
+  <div class="marquee-grid">
+    <!-- Card 1 -->
+    <div class="marquee-card">
+      <img src="/images/interns/vihaan.jpg" alt="Vihaan Gautam">
+      <h4>VIHAAN GAUTAM</h4>
+      <span>(RA2211028010141)</span>
+      <p><strong>Company:</strong> Asiaville Interactive</p>
+      <p><strong>Duration:</strong> 02-Feb-2025 to 01-Aug-2025</p>
+      <p><strong>Stipend:</strong> ₹ 10,000 / PM</p>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="marquee-card">
+      <img src="/images/interns/chirag.jpg" alt="Chirag Jain">
+      <h4>CHIRAG JAIN</h4>
+      <span>(RA2211028010047)</span>
+      <p><strong>Company:</strong> National Informatics Centre</p>
+      <p><strong>Duration:</strong> 01-Jun-2025 to 31-Jul-2025</p>
+      <p><strong>Stipend:</strong> ₹ 10,000 / PM</p>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="marquee-card">
+      <img src="/images/interns/aryan.jpg" alt="Aryan Aminbhave">
+      <h4>ARYAN AMINBHAVE</h4>
+      <span>(RA2211030010094)</span>
+      <p><strong>Company:</strong> AMD Pvt Ltd, India</p>
+      <p><strong>Duration:</strong> 14-Jul-2025 to 15-Jul-2026</p>
+      <p><strong>Stipend:</strong> ₹ 40,000 / PM</p>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="marquee-card">
+      <img src="/images/interns/gopika.jpg" alt="Gopika Nair">
+      <h4>GOPIKA NAIR</h4>
+      <span>(RA2211030010095)</span>
+      <p><strong>Company:</strong> Cy5.io, India</p>
+      <p><strong>Duration:</strong> 07-Jan-2025 to 07-Jul-2025</p>
+      <p><strong>Stipend:</strong> ₹ 8,000 / PM</p>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="marquee-card">
+      <img src="/images/interns/indrayudh.jpg" alt="Indrayudh Mukhopadhyay">
+      <h4>INDRAYUDH MUKHOPADHYAY</h4>
+      <span>(RA2311031010051)</span>
+      <p><strong>Company:</strong> IndieRise Research Labs</p>
+      <p><strong>Duration:</strong> 04-May-2025 to 31-Jul-2025</p>
+      <p><strong>Stipend:</strong> ₹ 5,000 / PM</p>
+    </div>
+
+    <!-- Card 6 -->
+    <div class="marquee-card">
+      <img src="/images/interns/kartik.jpg" alt="Kartik Goyal">
+      <h4>KARTIK GOYAL</h4>
+      <span>(RA2311030010055)</span>
+      <p><strong>Company:</strong> Pi Craft Technology Pvt Ltd</p>
+      <p><strong>Duration:</strong> 24-May-2025 to 24-Jul-2025</p>
+      <p><strong>Stipend:</strong> ₹ 5,000 / PM</p>
+    </div>
+
+    <!-- Card 7 -->
+    <div class="marquee-card">
+      <img src="/images/interns/riya.jpg" alt="Riya Chandrakar">
+      <h4>RIYA CHANDRAKAR</h4>
+      <span>(RA2412033010041)</span>
+      <p><strong>Company:</strong> National Institute of Ocean Technology</p>
+      <p><strong>Duration:</strong> 01-Jul-2025 to 30-Jun-2026</p>
+    </div>
+
+    <!-- Card 8 -->
+    <div class="marquee-card">
+      <img src="/images/interns/prince.jpg" alt="Prince Ayush">
+      <h4>PRINCE AYUSH</h4>
+      <span>(RA2412033010008)</span>
+      <p><strong>Company:</strong> National Institute of Ocean Technology</p>
+      <p><strong>Duration:</strong> 01-Jul-2025 to 30-Jun-2026</p>
+    </div>
+  </div>
+</div>
 
 
 </main>
