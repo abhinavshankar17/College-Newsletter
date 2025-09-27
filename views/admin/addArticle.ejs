@@ -1,4 +1,4 @@
-<%- include('../partials/header') %>   <!-- ✅ This pulls in your head, css, navbar etc. -->
+<%- include('../partials/header') %>
 
 <div class="container mt-4">
   <h2>Add Data</h2>
@@ -6,7 +6,7 @@
   <form action="/admin/add-article" method="POST" enctype="multipart/form-data">
     <div class="mb-3">
       <label for="pageSelect">Select Page</label>
-      <select id="pageSelect" name="page" class="form-select" required>
+      <select id="pageSelect" name="page" class="form-select">
         <option value="">-- Select --</option>
         <% Object.keys(pages || {}).forEach(function(page) { %>
           <option value="<%= page %>"><%= page.charAt(0).toUpperCase() + page.slice(1) %></option>
@@ -16,7 +16,7 @@
 
     <div class="mb-3">
       <label for="modelSelect">Select Model</label>
-      <select id="modelSelect" name="model" class="form-select" required>
+      <select id="modelSelect" name="model" class="form-select">
         <option value="">-- Select --</option>
       </select>
     </div>
@@ -31,25 +31,23 @@
   const pages = JSON.parse('<%- JSON.stringify(pages) %>');
   const schemas = JSON.parse('<%- JSON.stringify(schemas) %>');
   let mouIndex = 1;
-function addMou() {
-  const container = document.getElementById("mou-container");
-  const newItem = document.createElement("div");
-  newItem.classList.add("mou-item", "border", "p-3", "mb-2", "rounded");
 
-  newItem.innerHTML = `
-    <label>Company</label>
-    <input type="text" name="data[memorandumOfUnderstanding][${mouIndex}][company]" class="form-control mb-2" required />
-    <label>Details</label>
-    <textarea name="data[memorandumOfUnderstanding][${mouIndex}][details]" class="form-control" required></textarea>
-  `;
+  function addMou() {
+    const container = document.getElementById("mou-container");
+    const newItem = document.createElement("div");
+    newItem.classList.add("mou-item", "border", "p-3", "mb-2", "rounded");
 
-  container.appendChild(newItem);
-  mouIndex++;
-}
+    newItem.innerHTML = `
+      <label>Company</label>
+      <input type="text" name="data[memorandumOfUnderstanding][${mouIndex}][company]" class="form-control mb-2" />
+      <label>Details</label>
+      <textarea name="data[memorandumOfUnderstanding][${mouIndex}][details]" class="form-control"></textarea>
+    `;
 
-</script>
+    container.appendChild(newItem);
+    mouIndex++;
+  }
 
-<script>
   const pageSelect = document.getElementById("pageSelect");
   const modelSelect = document.getElementById("modelSelect");
   const formFields = document.getElementById("formFields");
@@ -80,47 +78,50 @@ function addMou() {
     if (selectedModel) {
       try {
         const response = await fetch(`/admin/schema/${selectedModel}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch schema fields");
-        }
+        if (!response.ok) throw new Error("Failed to fetch schema fields");
         const fields = await response.json();
 
         fields.forEach(field => {
-  if (field === "_id" || field === "__v") return;
+          if (field === "_id" || field === "__v") return;
 
-  // Special handling for MoU array of objects
-  if (field === "memorandumOfUnderstanding") {
-    formFields.innerHTML += `
-      <div class="mb-3">
-        <label>Memorandum of Understanding</label>
-        <div id="mou-container">
-          <div class="mou-item border p-3 mb-2 rounded">
-            <label>Company</label>
-            <input type="text" name="data[memorandumOfUnderstanding][0][company]" class="form-control mb-2" required />
-            <label>Details</label>
-            <textarea name="data[memorandumOfUnderstanding][0][details]" class="form-control" required></textarea>
-          </div>
-        </div>
-        <button type="button" class="btn btn-sm btn-outline-primary mt-2" onclick="addMou()">+ Add Another MoU</button>
-      </div>
-    `;
-    return; // ✅ Skip normal text input rendering
-  }
+          // Special handling for MoU array
+          if (field === "memorandumOfUnderstanding") {
+            formFields.innerHTML += `
+              <div class="mb-3">
+                <label>Memorandum of Understanding</label>
+                <div id="mou-container">
+                  <div class="mou-item border p-3 mb-2 rounded">
+                    <label>Company</label>
+                    <input type="text" name="data[memorandumOfUnderstanding][0][company]" class="form-control mb-2" />
+                    <label>Details</label>
+                    <textarea name="data[memorandumOfUnderstanding][0][details]" class="form-control"></textarea>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-sm btn-outline-primary mt-2" onclick="addMou()">+ Add Another MoU</button>
+              </div>
+            `;
+            return;
+          }
 
-  // Default handling
-  const isImageField = field.toLowerCase().endsWith("imageurl") || field.toLowerCase().endsWith("url");
-  formFields.innerHTML += `
-    <div class="mb-3">
-      <label>${formatLabel(field)}</label>
-      ${
-        isImageField
-          ? `<input type="file" name="data[${field}]" class="form-control" />`
-          : `<input type="text" name="data[${field}]" class="form-control" required />`
-      }
-    </div>
-  `;
-});
+          // Default handling
+          const isImageField =
+            field.toLowerCase().endsWith("imageurl") ||
+            field.toLowerCase().endsWith("url") ||
+            field.toLowerCase().includes("image") ||
+            field.toLowerCase().includes("photo") ||
+            field.toLowerCase().includes("gallery");
 
+          formFields.innerHTML += `
+            <div class="mb-3">
+              <label>${formatLabel(field)}</label>
+              ${
+                isImageField
+                  ? `<input type="file" name="data[${field}][]" class="form-control" multiple />`
+                  : `<input type="text" name="data[${field}]" class="form-control" />`
+              }
+            </div>
+          `;
+        });
       } catch (error) {
         console.error("Error fetching schema fields:", error);
         alert("Failed to load schema fields. Please try again.");
@@ -129,4 +130,4 @@ function addMou() {
   });
 </script>
 
-<%- include('../partials/footer') %> <!-- ✅ This pulls in your closing tags and scripts -->
+<%- include('../partials/footer') %>

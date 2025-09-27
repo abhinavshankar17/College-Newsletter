@@ -1,4 +1,3 @@
-
 import express from "express";
 import fs from "fs";
 import path from "path";
@@ -81,7 +80,7 @@ async function buildPagesAndSchemas() {
 }
 
 /**
- * ✅ Define routes AFTER buildPagesAndSchemas is defined
+ * ✅ Define routes
  */
 
 // List of folders + models
@@ -118,7 +117,6 @@ router.get("/add-article", async (req, res) => {
 });
 
 // ✅ Handle form submission with Cloudinary upload
-// ✅ accept all files (because field names vary, e.g. data[profileImage])
 router.post("/add-article", upload.any(), async (req, res) => {
   try {
     console.log("🔍 Raw request body:", JSON.stringify(req.body, null, 2));
@@ -131,11 +129,19 @@ router.post("/add-article", upload.any(), async (req, res) => {
     // ✅ Handle uploaded files from dynamic fields
     if (req.files && req.files.length > 0) {
       req.files.forEach(file => {
-        // fieldname is like data[profileImage]
-        const match = file.fieldname.match(/^data\[(.+)\]$/);
+        // fieldname looks like data[profileImage] or data[gallery][]
+        const match = file.fieldname.match(/^data\[(.+?)\](\[\])?$/);
         if (match) {
-          const fieldName = match[1]; // e.g. "profileImage"
-          formData[fieldName] = file.path; // Cloudinary returns secure URL here
+          const fieldName = match[1]; // e.g. "profileImage" or "gallery"
+
+          // If it's a multi-file field (with []), collect into an array
+          if (match[2] === "[]") {
+            if (!Array.isArray(formData[fieldName])) formData[fieldName] = [];
+            formData[fieldName].push(file.path);
+          } else {
+            // Single file field
+            formData[fieldName] = file.path;
+          }
         }
       });
     }
@@ -156,10 +162,7 @@ router.post("/add-article", upload.any(), async (req, res) => {
     }
 
     // ✅ Special handling for memorandumOfUnderstanding array
-    // Check for flat structure first (memorandumOfUnderstanding.company, memorandumOfUnderstanding.details)
     if (formData['memorandumOfUnderstanding.company'] || formData['memorandumOfUnderstanding.details']) {
-      console.log("🔍 Found flat MoU structure");
-      
       const company = formData['memorandumOfUnderstanding.company'];
       const details = formData['memorandumOfUnderstanding.details'];
       
@@ -168,24 +171,14 @@ router.post("/add-article", upload.any(), async (req, res) => {
           company: company.trim(),
           details: details.trim()
         }];
-        
-        // Clean up the flat fields
         delete formData['memorandumOfUnderstanding.company'];
         delete formData['memorandumOfUnderstanding.details'];
-        
-        console.log("✅ Processed flat MoU data:", JSON.stringify(formData.memorandumOfUnderstanding, null, 2));
       }
-    }
-    // Check for nested structure (memorandumOfUnderstanding object)
-    else if (formData.memorandumOfUnderstanding) {
-      console.log("🔍 Raw MoU form data:", JSON.stringify(formData.memorandumOfUnderstanding, null, 2));
-      
+    } else if (formData.memorandumOfUnderstanding) {
       const mouData = formData.memorandumOfUnderstanding;
       const processedMou = [];
       
-      // Handle the nested structure that Express creates
       if (typeof mouData === 'object' && !Array.isArray(mouData)) {
-        // Convert object with numeric keys to array
         Object.keys(mouData).forEach(key => {
           const index = parseInt(key);
           if (!isNaN(index) && mouData[key] && typeof mouData[key] === 'object') {
@@ -193,28 +186,17 @@ router.post("/add-article", upload.any(), async (req, res) => {
           }
         });
       } else if (Array.isArray(mouData)) {
-        // Already an array
         processedMou.push(...mouData);
       }
       
-      // Filter out empty objects and ensure we have valid data
       formData.memorandumOfUnderstanding = processedMou.filter(mou => 
         mou && mou.company && mou.details && mou.company.trim() !== '' && mou.details.trim() !== ''
       );
-      
-      console.log("✅ Processed nested MoU data:", JSON.stringify(formData.memorandumOfUnderstanding, null, 2));
-    } else {
-      console.log("❌ No memorandumOfUnderstanding found in form data");
     }
 
     const Model = mongoose.models[model];
     if (!Model) {
       return res.status(400).send("Invalid model selected");
-    }
-
-    // ✅ Debug logging for memorandumOfUnderstanding
-    if (formData.memorandumOfUnderstanding) {
-      console.log("📋 MoU Data being saved:", JSON.stringify(formData.memorandumOfUnderstanding, null, 2));
     }
 
     const doc = new Model(formData);
@@ -226,7 +208,5 @@ router.post("/add-article", upload.any(), async (req, res) => {
     res.status(500).send("Failed to save data");
   }
 });
-
-
 
 export default router;
