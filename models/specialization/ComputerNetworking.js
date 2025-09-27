@@ -17,12 +17,12 @@ const CloudNetworkingSchema = new mongoose.Schema({
     imageUrl: { type: String }, // path to lab image if you store images
   },
 
-  memorandumOfUnderstanding: [
+ memorandumOfUnderstanding: [
     {
       company: { type: String },
-      year: { type: Number },
-      details: { type: String }, // description of engagements
-    },
+      details: { type: String },
+      _id: false, 
+    }
   ],
 
   quote: {

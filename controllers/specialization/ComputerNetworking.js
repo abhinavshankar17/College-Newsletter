@@ -4,8 +4,14 @@ import ComputerNetworking from '../../models/specialization/ComputerNetworking.j
 export const getComputerNetworking = async (req, res) => {
   try {
     const data = await ComputerNetworking.findOne();  // fetch one document
-
     
+    // ✅ Debug logging to check MoU data
+    console.log("🔍 ComputerNetworking data:", JSON.stringify(data, null, 2));
+    if (data && data.memorandumOfUnderstanding) {
+      console.log("📋 MoU data found:", JSON.stringify(data.memorandumOfUnderstanding, null, 2));
+    } else {
+      console.log("❌ No MoU data found in database");
+    }
 
     res.render("specialization/computerNetworking", { data });
   } catch (error) {

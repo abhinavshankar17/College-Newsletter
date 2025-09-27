@@ -30,6 +30,23 @@
 <script>
   const pages = JSON.parse('<%- JSON.stringify(pages) %>');
   const schemas = JSON.parse('<%- JSON.stringify(schemas) %>');
+  let mouIndex = 1;
+function addMou() {
+  const container = document.getElementById("mou-container");
+  const newItem = document.createElement("div");
+  newItem.classList.add("mou-item", "border", "p-3", "mb-2", "rounded");
+
+  newItem.innerHTML = `
+    <label>Company</label>
+    <input type="text" name="data[memorandumOfUnderstanding][${mouIndex}][company]" class="form-control mb-2" required />
+    <label>Details</label>
+    <textarea name="data[memorandumOfUnderstanding][${mouIndex}][details]" class="form-control" required></textarea>
+  `;
+
+  container.appendChild(newItem);
+  mouIndex++;
+}
+
 </script>
 
 <script>
@@ -69,22 +86,40 @@
         const fields = await response.json();
 
         fields.forEach(field => {
-          // 🚫 Skip MongoDB internal fields
-          if (field === "_id" || field === "__v") return;
+  if (field === "_id" || field === "__v") return;
 
-         const isImageField = field.toLowerCase().endsWith("imageurl") || field.toLowerCase().endsWith("url");
-            formFields.innerHTML += `
-  <div class="mb-3">
-    <label>${formatLabel(field)}</label>
-    ${
-      isImageField
-        ? `<input type="file" name="data[${field}]" class="form-control" />`
-        : `<input type="text" name="data[${field}]" class="form-control" required />`
-    }
-  </div>
-`;
+  // Special handling for MoU array of objects
+  if (field === "memorandumOfUnderstanding") {
+    formFields.innerHTML += `
+      <div class="mb-3">
+        <label>Memorandum of Understanding</label>
+        <div id="mou-container">
+          <div class="mou-item border p-3 mb-2 rounded">
+            <label>Company</label>
+            <input type="text" name="data[memorandumOfUnderstanding][0][company]" class="form-control mb-2" required />
+            <label>Details</label>
+            <textarea name="data[memorandumOfUnderstanding][0][details]" class="form-control" required></textarea>
+          </div>
+        </div>
+        <button type="button" class="btn btn-sm btn-outline-primary mt-2" onclick="addMou()">+ Add Another MoU</button>
+      </div>
+    `;
+    return; // ✅ Skip normal text input rendering
+  }
 
-        });
+  // Default handling
+  const isImageField = field.toLowerCase().endsWith("imageurl") || field.toLowerCase().endsWith("url");
+  formFields.innerHTML += `
+    <div class="mb-3">
+      <label>${formatLabel(field)}</label>
+      ${
+        isImageField
+          ? `<input type="file" name="data[${field}]" class="form-control" />`
+          : `<input type="text" name="data[${field}]" class="form-control" required />`
+      }
+    </div>
+  `;
+});
 
       } catch (error) {
         console.error("Error fetching schema fields:", error);

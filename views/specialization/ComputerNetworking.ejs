@@ -109,19 +109,26 @@
   </section>
 
   <!-- MoUs -->
-  <section>
-    <h2 class="section-title">Memorandum of Understanding (MoU)</h2>
-    <% if (data?.memorandumOfUnderstanding?.length > 0) { %>
-      <% data.memorandumOfUnderstanding.forEach(mou => { %>
+ <section>
+  <h2 class="section-title">Memorandum of Understanding (MoU)</h2>
+  
+  <!-- Debug information -->
+ 
+  
+  <% if (data && data.memorandumOfUnderstanding && data.memorandumOfUnderstanding.length > 0) { %>
+    <% data.memorandumOfUnderstanding.forEach(mou => { %>
+      <% if (mou && mou.company) { %>   <!-- ✅ null check -->
         <div class="card">
-          <h4><%= mou.company %> (<%= mou.year %>)</h4>
+          <h4><%= mou.company %></h4>
           <p><%= mou.details %></p>
         </div>
-      <% }) %>
-    <% } else { %>
-      <p>No MoUs available.</p>
-    <% } %>
-  </section>
+      <% } %>
+    <% }) %>
+  <% } else { %>
+    <p>No MoUs available.</p>
+  <% } %>
+</section>
+
 
   <!-- Quote -->
   <section>

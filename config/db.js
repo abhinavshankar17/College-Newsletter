@@ -3,25 +3,33 @@ import mongoose from "mongoose";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath, pathToFileURL } from "url";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const models = {};
+
+// Connect to MongoDB Atlas
 const connectDB = async () => {
   try {
-    await mongoose.connect("mongodb://127.0.0.1:27017/college_newsletter", {
+    await mongoose.connect(process.env.ATLAS, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log("✅ MongoDB connected successfully (local)");
+    console.log("✅ MongoDB Atlas connected successfully");
+
+    // Load models after connection
+    await loadModels(path.join(__dirname, "../models"));
   } catch (error) {
     console.error("❌ MongoDB connection error:", error.message);
     process.exit(1);
   }
 };
 
-const models = {};
-
+// Load all models from the /models directory
 const loadModels = async (dirPath) => {
   const files = fs.readdirSync(dirPath);
 
@@ -42,9 +50,6 @@ const loadModels = async (dirPath) => {
     }
   }
 };
-
-// Load models from /models
-await loadModels(path.join(__dirname, "../models"));
 
 // Helper to extract schema fields
 const getSchemas = () => {

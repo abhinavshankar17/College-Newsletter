@@ -121,8 +121,12 @@ router.get("/add-article", async (req, res) => {
 // ✅ accept all files (because field names vary, e.g. data[profileImage])
 router.post("/add-article", upload.any(), async (req, res) => {
   try {
+    console.log("🔍 Raw request body:", JSON.stringify(req.body, null, 2));
+    
     const { model } = req.body;
     let formData = req.body.data || {};
+    
+    console.log("🔍 Form data before processing:", JSON.stringify(formData, null, 2));
 
     // ✅ Handle uploaded files from dynamic fields
     if (req.files && req.files.length > 0) {
@@ -151,9 +155,66 @@ router.post("/add-article", upload.any(), async (req, res) => {
       }
     }
 
+    // ✅ Special handling for memorandumOfUnderstanding array
+    // Check for flat structure first (memorandumOfUnderstanding.company, memorandumOfUnderstanding.details)
+    if (formData['memorandumOfUnderstanding.company'] || formData['memorandumOfUnderstanding.details']) {
+      console.log("🔍 Found flat MoU structure");
+      
+      const company = formData['memorandumOfUnderstanding.company'];
+      const details = formData['memorandumOfUnderstanding.details'];
+      
+      if (company && details && company.trim() !== '' && details.trim() !== '') {
+        formData.memorandumOfUnderstanding = [{
+          company: company.trim(),
+          details: details.trim()
+        }];
+        
+        // Clean up the flat fields
+        delete formData['memorandumOfUnderstanding.company'];
+        delete formData['memorandumOfUnderstanding.details'];
+        
+        console.log("✅ Processed flat MoU data:", JSON.stringify(formData.memorandumOfUnderstanding, null, 2));
+      }
+    }
+    // Check for nested structure (memorandumOfUnderstanding object)
+    else if (formData.memorandumOfUnderstanding) {
+      console.log("🔍 Raw MoU form data:", JSON.stringify(formData.memorandumOfUnderstanding, null, 2));
+      
+      const mouData = formData.memorandumOfUnderstanding;
+      const processedMou = [];
+      
+      // Handle the nested structure that Express creates
+      if (typeof mouData === 'object' && !Array.isArray(mouData)) {
+        // Convert object with numeric keys to array
+        Object.keys(mouData).forEach(key => {
+          const index = parseInt(key);
+          if (!isNaN(index) && mouData[key] && typeof mouData[key] === 'object') {
+            processedMou[index] = mouData[key];
+          }
+        });
+      } else if (Array.isArray(mouData)) {
+        // Already an array
+        processedMou.push(...mouData);
+      }
+      
+      // Filter out empty objects and ensure we have valid data
+      formData.memorandumOfUnderstanding = processedMou.filter(mou => 
+        mou && mou.company && mou.details && mou.company.trim() !== '' && mou.details.trim() !== ''
+      );
+      
+      console.log("✅ Processed nested MoU data:", JSON.stringify(formData.memorandumOfUnderstanding, null, 2));
+    } else {
+      console.log("❌ No memorandumOfUnderstanding found in form data");
+    }
+
     const Model = mongoose.models[model];
     if (!Model) {
       return res.status(400).send("Invalid model selected");
+    }
+
+    // ✅ Debug logging for memorandumOfUnderstanding
+    if (formData.memorandumOfUnderstanding) {
+      console.log("📋 MoU Data being saved:", JSON.stringify(formData.memorandumOfUnderstanding, null, 2));
     }
 
     const doc = new Model(formData);

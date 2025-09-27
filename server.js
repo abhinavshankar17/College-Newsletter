@@ -44,15 +44,19 @@ import AlumniActivities from "./routes/events/AlumniActivity.js";
 import OutreachActivities from "./routes/events/OutreachActivity.js";
 const app = express();
 
+dotenv.config(); // loads .env variables
 // Middleware
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 
 // MongoDB Connection
-mongoose.connect("mongodb://127.0.0.1:27017/college_newsletter")
-  .then(() => console.log("✅ MongoDB Connected"))
-  .catch(err => console.log("❌ MongoDB Error:", err));
+mongoose.connect(process.env.ATLAS, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log("✅ MongoDB Connected (Atlas)"))
+.catch(err => console.log("❌ MongoDB Error:", err));
 
 // Routes
 app.use("/research", researchRoutes);
