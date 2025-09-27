@@ -3,14 +3,17 @@ import fs from "fs";
 import path from "path";
 import { pathToFileURL } from "url";
 import mongoose from "mongoose";
-import upload from "../utils/upload.js"; // ✅ cloudinary + multer setup
+import upload from "../utils/upload.js"; // multer + Cloudinary
+import { v2 as cloudinary } from "cloudinary";
 
 const router = express.Router();
 const modelsPath = path.join(process.cwd(), "models");
 
-/**
- * Recursively extract schema fields
- */
+/* ============================
+   Utilities
+============================ */
+
+// Recursively extract schema fields
 function extractSchemaFields(schema, prefix = "") {
   const fields = {};
   schema.eachPath((pathname, schemaType) => {
@@ -29,13 +32,10 @@ function extractSchemaFields(schema, prefix = "") {
   return fields;
 }
 
-/**
- * Build map of folders → models and models → schemas
- */
+// Build pages → models and model → schema map
 async function buildPagesAndSchemas() {
   const pages = {};
   const schemas = {};
-
   const folders = fs.readdirSync(modelsPath);
 
   for (const folder of folders) {
@@ -45,33 +45,20 @@ async function buildPagesAndSchemas() {
     pages[folder] = { models: [] };
 
     const files = fs.readdirSync(folderPath).filter(f => f.endsWith(".js"));
-
     await Promise.all(
       files.map(async (file) => {
         const fileUrl = pathToFileURL(path.join(folderPath, file)).href;
 
         let importedModule;
-        try {
-          importedModule = await import(fileUrl);
-        } catch (err) {
-          console.error(`❌ Error importing model ${file}:`, err);
-          return;
-        }
+        try { importedModule = await import(fileUrl); } 
+        catch (err) { console.error(`❌ Error importing model ${file}:`, err); return; }
 
         const model = importedModule.default;
-        if (!model || !model.modelName) {
-          console.error(`❌ No valid mongoose model in ${file}`);
-          return;
-        }
+        if (!model || !model.modelName) { console.error(`❌ No valid mongoose model in ${file}`); return; }
 
-        const modelName = model.modelName;
-        pages[folder].models.push(modelName);
-
-        try {
-          schemas[modelName] = extractSchemaFields(model.schema);
-        } catch (err) {
-          console.error(`❌ Error extracting schema for ${modelName}:`, err);
-        }
+        pages[folder].models.push(model.modelName);
+        try { schemas[model.modelName] = extractSchemaFields(model.schema); } 
+        catch (err) { console.error(`❌ Error extracting schema for ${model.modelName}:`, err); }
       })
     );
   }
@@ -79,11 +66,11 @@ async function buildPagesAndSchemas() {
   return { pages, schemas };
 }
 
-/**
- * ✅ Define routes
- */
+/* ============================
+   Admin Routes
+============================ */
 
-// List of folders + models
+// GET: List of folders + models
 router.get("/pages", async (req, res) => {
   try {
     const { pages } = await buildPagesAndSchemas();
@@ -93,7 +80,7 @@ router.get("/pages", async (req, res) => {
   }
 });
 
-// Schema fields
+// GET: Schema fields for a model
 router.get("/schema/:modelName", async (req, res) => {
   try {
     const { schemas } = await buildPagesAndSchemas();
@@ -105,7 +92,7 @@ router.get("/schema/:modelName", async (req, res) => {
   }
 });
 
-// ✅ Add Article page
+// GET: Add Article page
 router.get("/add-article", async (req, res) => {
   try {
     const { pages, schemas } = await buildPagesAndSchemas();
@@ -116,88 +103,68 @@ router.get("/add-article", async (req, res) => {
   }
 });
 
-// ✅ Handle form submission with Cloudinary upload
+// POST: Add Article with Cloudinary upload
 router.post("/add-article", upload.any(), async (req, res) => {
   try {
-    console.log("🔍 Raw request body:", JSON.stringify(req.body, null, 2));
-    
     const { model } = req.body;
     let formData = req.body.data || {};
-    
-    console.log("🔍 Form data before processing:", JSON.stringify(formData, null, 2));
 
-    // ✅ Handle uploaded files from dynamic fields
+    // Handle uploaded files (single + multiple)
     if (req.files && req.files.length > 0) {
       req.files.forEach(file => {
-        // fieldname looks like data[profileImage] or data[gallery][]
         const match = file.fieldname.match(/^data\[(.+?)\](\[\])?$/);
         if (match) {
-          const fieldName = match[1]; // e.g. "profileImage" or "gallery"
+          const fieldName = match[1];
+          const fileObj = { url: file.path, public_id: file.filename };
 
-          // If it's a multi-file field (with []), collect into an array
           if (match[2] === "[]") {
             if (!Array.isArray(formData[fieldName])) formData[fieldName] = [];
-            formData[fieldName].push(file.path);
+            formData[fieldName].push(fileObj);
           } else {
-            // Single file field
-            formData[fieldName] = file.path;
+            formData[fieldName] = fileObj;
           }
         }
       });
     }
 
-    // 🚫 Clean reserved fields
+    // Clean reserved fields
     delete formData._id;
     delete formData.__v;
 
-    // ✅ Convert date strings (dd/mm/yyyy → Date)
+    // Convert date strings (dd/mm/yyyy → Date)
     for (const key in formData) {
       if (key.toLowerCase().includes("date") && typeof formData[key] === "string") {
-        const parts = formData[key].split("/");
-        if (parts.length === 3) {
-          const [day, month, year] = parts;
-          formData[key] = new Date(`${year}-${month}-${day}`);
-        }
+        const [day, month, year] = formData[key].split("/");
+        if (day && month && year) formData[key] = new Date(`${year}-${month}-${day}`);
       }
     }
 
-    // ✅ Special handling for memorandumOfUnderstanding array
+    // Handle MoU array (flat or nested)
     if (formData['memorandumOfUnderstanding.company'] || formData['memorandumOfUnderstanding.details']) {
       const company = formData['memorandumOfUnderstanding.company'];
       const details = formData['memorandumOfUnderstanding.details'];
-      
-      if (company && details && company.trim() !== '' && details.trim() !== '') {
-        formData.memorandumOfUnderstanding = [{
-          company: company.trim(),
-          details: details.trim()
-        }];
+      if (company && details && company.trim() && details.trim()) {
+        formData.memorandumOfUnderstanding = [{ company: company.trim(), details: details.trim() }];
         delete formData['memorandumOfUnderstanding.company'];
         delete formData['memorandumOfUnderstanding.details'];
       }
     } else if (formData.memorandumOfUnderstanding) {
       const mouData = formData.memorandumOfUnderstanding;
       const processedMou = [];
-      
       if (typeof mouData === 'object' && !Array.isArray(mouData)) {
         Object.keys(mouData).forEach(key => {
           const index = parseInt(key);
-          if (!isNaN(index) && mouData[key] && typeof mouData[key] === 'object') {
-            processedMou[index] = mouData[key];
-          }
+          if (!isNaN(index) && mouData[key] && typeof mouData[key] === 'object') processedMou[index] = mouData[key];
         });
-      } else if (Array.isArray(mouData)) {
-        processedMou.push(...mouData);
-      }
-      
-      formData.memorandumOfUnderstanding = processedMou.filter(mou => 
-        mou && mou.company && mou.details && mou.company.trim() !== '' && mou.details.trim() !== ''
+      } else if (Array.isArray(mouData)) processedMou.push(...mouData);
+
+      formData.memorandumOfUnderstanding = processedMou.filter(mou =>
+        mou && mou.company && mou.details && mou.company.trim() && mou.details.trim()
       );
     }
 
     const Model = mongoose.models[model];
-    if (!Model) {
-      return res.status(400).send("Invalid model selected");
-    }
+    if (!Model) return res.status(400).send("Invalid model selected");
 
     const doc = new Model(formData);
     await doc.save();
@@ -208,5 +175,59 @@ router.post("/add-article", upload.any(), async (req, res) => {
     res.status(500).send("Failed to save data");
   }
 });
+
+// DELETE: Delete document + associated Cloudinary images (works for all models)
+router.delete("/delete/:model/:id", async (req, res) => {
+  try {
+    const { model, id } = req.params;
+    const Model = mongoose.models[model];
+    if (!Model) return res.status(400).send("Invalid model");
+
+    const doc = await Model.findById(id);
+    if (!doc) return res.status(404).send("Document not found");
+
+    const data = doc.toObject();
+
+    // Delete single and multiple images dynamically
+    for (const key in data) {
+      const value = data[key];
+
+      // Single image object
+      if (value && typeof value === "object" && value.public_id) {
+        await cloudinary.uploader.destroy(value.public_id);
+      }
+
+      // Array of image objects
+      if (Array.isArray(value)) {
+        for (const img of value) {
+          if (img && img.public_id) await cloudinary.uploader.destroy(img.public_id);
+        }
+      }
+    }
+
+    // Delete the document from DB
+    await Model.findByIdAndDelete(id);
+
+    res.json({ message: `${model} deleted successfully` });
+  } catch (err) {
+    console.error("❌ Error deleting document:", err);
+    res.status(500).send("Failed to delete");
+  }
+});
+
+// DELETE single Cloudinary image
+router.post("/delete-image", async (req, res) => {
+  try {
+    const { public_id } = req.body;
+    if (!public_id) return res.status(400).json({ success: false, message: "Missing public_id" });
+
+    await cloudinary.uploader.destroy(public_id);
+    res.json({ success: true });
+  } catch (err) {
+    console.error("❌ Error deleting image:", err);
+    res.status(500).json({ success: false });
+  }
+});
+
 
 export default router;
