@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 
 const researchOrationSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  regNo: { type: String, required: true },
-  supervisor: { type: String, required: true },
-  title: { type: String, required: true },
-  date: { type: Date, required: true },
-  description: { type: String, required: true },
+  name: { type: String, required: false },
+  regNo: { type: String, required: false },
+  supervisor: { type: String, required: false },
+  title: { type: String, required: false },
+  date: { type: Date, required: false },
+  description: { type: String, required: false },
   imageUrl: { type: String },   // Cloudinary URL (optional)
 });
 

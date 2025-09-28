@@ -3,20 +3,20 @@ import mongoose from "mongoose";
 const activitySchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: false,
     trim: true
   },
   rollNumber: {
     type: String,
-    required: true
+    required: false
   },
   description: {
     type: String,
-    required: true
+    required: false
   },
   imageUrl: {
     type: String, // Cloudinary URL
-    required: true
+    required: false
   }
 }, { timestamps: true });
 

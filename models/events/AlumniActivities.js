@@ -3,16 +3,16 @@ import mongoose from "mongoose";
 const alumniActivitySchema = new mongoose.Schema({
   eventTitle: {
     type: String,
-    required: true,   // e.g., "Alumni Reunion 2025"
+    required: false,   // e.g., "Alumni Reunion 2025"
     trim: true
   },
   date: {
     type: Date,
-    required: true    // e.g., "2025-04-26"
+    required: false    // e.g., "2025-04-26"
   },
   participantsCount: {
     type: Number,
-    required: true,   // e.g., 50
+    required: false,   // e.g., 50
   },
   participantsBatchRange: {
     type: String,     // e.g., "2014 to 2023"
@@ -21,7 +21,7 @@ const alumniActivitySchema = new mongoose.Schema({
   convener: {
     name: {
       type: String,
-      required: true, // e.g., "Dr. M. Lakshmi"
+      required: false, // e.g., "Dr. M. Lakshmi"
       trim: true
     },
     designation: {
@@ -39,7 +39,7 @@ const alumniActivitySchema = new mongoose.Schema({
   },
   eventOutcomes: {
     type: String,     // Full paragraph of event outcomes
-    required: true,
+    required: false,
     trim: true
   },
   photos: [
@@ -50,7 +50,7 @@ const alumniActivitySchema = new mongoose.Schema({
       },
       imageUrl: {
         type: String, // URL or path to the photo
-        required: true
+        required: false
       }
     }
   ],
@@ -59,5 +59,5 @@ const alumniActivitySchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-const AlumniActivityModel= mongoose.model("AlumniActivityModel", alumniActivitySchema );
+const AlumniActivityModel = mongoose.model("AlumniActivityModel", alumniActivitySchema);
 export default AlumniActivityModel;

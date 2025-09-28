@@ -1,18 +1,18 @@
 import mongoose from "mongoose";
 
 const guestLectureSchema = new mongoose.Schema({
-  title: { type: String, required: true }, // e.g., "Genesis Mini Hack Web 3.0"
-  date: { type: Date, required: true },
+  title: { type: String, required: false }, // e.g., "Genesis Mini Hack Web 3.0"
+  date: { type: Date, required: false },
 
   conveners: [
     {
-      name: { type: String, required: true },
+      name: { type: String, required: false },
       designation: { type: String }
     }
   ],
 
   resourcePerson: {
-    name: { type: String, required: true },
+    name: { type: String, required: false },
     role: { type: String }
   },
 
@@ -49,6 +49,5 @@ const guestLectureSchema = new mongoose.Schema({
   imageUrl: [{ type: String }] // store image URLs/paths
 });
 
-
-const GuestLectureModel= mongoose.model("GuestLectureModel", guestLectureSchema);
+const GuestLectureModel = mongoose.model("GuestLectureModel", guestLectureSchema);
 export default GuestLectureModel;

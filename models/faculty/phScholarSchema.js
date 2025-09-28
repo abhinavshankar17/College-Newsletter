@@ -4,28 +4,28 @@ import mongoose from "mongoose";
 const phdScholarSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: false,
   },
   regNo: {
     type: String,
-    required: true,
+    required: false,
     unique: true,
   },
   scholarType: {
     type: String, // full-time, part-time internal, part-time external
-    required: true,
+    required: false,
   },
   guide: {
     type: String,
-    required: true,
+    required: false,
   },
   vivaDate: {
     type: Date,
-    required: true,
+    required: false,
   },
   researchTitle: {
     type: String,
-    required: true,
+    required: false,
   },
   researchDomain: {
     type: String, // e.g., Blockchain, Machine Learning, NLP

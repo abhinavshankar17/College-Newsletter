@@ -5,89 +5,105 @@ const internetOfThingsSchema = new mongoose.Schema({
   title: { type: String, default: "Internet of Things (IoT)" },
 
   // Research & Achievements (papers, awards, recognitions)
-  researchWorks: [{
-    title: String,          // e.g., "Smart Path Hold Direction..."
-    description: String,    // paper/award description
-    faculty: [String],      // involved people
-    date: String,
-    award: String           // e.g., "Best Paper Award"
-  }],
+  researchWorks: [
+    {
+      title: { type: String, required: false },
+      description: { type: String, required: false },
+      faculty: [{ type: String, required: false }],
+      date: { type: String, required: false },
+      award: { type: String, required: false },
+    },
+  ],
 
   // Industry + Academia Collaborations / Expert Sessions
-  collaborations: [{
-    company: String,        // e.g., "Embien Technologies"
-    program: String,        // e.g., "Expert Session"
-    description: String,
-    date: String,
-    speakers: [String],     // e.g., "S. A. Saravana Pandian"
-    studentsInvolved: Number,
-    course: String,         // e.g., "21CSE368K"
-    images: [String]
-  }],
+  collaborations: [
+    {
+      company: { type: String, required: false },
+      program: { type: String, required: false },
+      description: { type: String, required: false },
+      date: { type: String, required: false },
+      speakers: [{ type: String, required: false }],
+      studentsInvolved: { type: Number, required: false },
+      course: { type: String, required: false },
+      images: [{ type: String, required: false }],
+    },
+  ],
 
   // Community Engagement (lectures, outreach, healthcare sessions)
-  communityEngagements: [{
-    speaker: String,
-    topic: String,
-    event: String,
-    location: String,
-    date: String,
-    organizer: String
-  }],
+  communityEngagements: [
+    {
+      speaker: { type: String, required: false },
+      topic: { type: String, required: false },
+      event: { type: String, required: false },
+      location: { type: String, required: false },
+      date: { type: String, required: false },
+      organizer: { type: String, required: false },
+    },
+  ],
 
   // Alumni Talks
-  alumniEngagements: [{
-    title: String,          // e.g., "Unlocking Global Higher Studies Insights"
-    description: String,
-    date: String,
-    speaker: String,
-    designation: String,
-    alumniOf: String        // e.g., "NYU (Batch 2020-2024)"
-  }],
+  alumniEngagements: [
+    {
+      title: { type: String, required: false },
+      description: { type: String, required: false },
+      date: { type: String, required: false },
+      speaker: { type: String, required: false },
+      designation: { type: String, required: false },
+      alumniOf: { type: String, required: false },
+    },
+  ],
 
   // Events (seminars, conferences, etc.)
-  upcomingEvents: [{
-    title: String,
-    description: String,
-    dates: [String],        // start & end dates
-    scheme: String,         // e.g., "AICTE VAANI Scheme 2025-26"
-    funding: String         // e.g., "₹2.2 Lakhs"
-  }],
+  upcomingEvents: [
+    {
+      title: { type: String, required: false },
+      description: { type: String, required: false },
+      dates: [{ type: String, required: false }],
+      scheme: { type: String, required: false },
+      funding: { type: String, required: false },
+    },
+  ],
 
   // Faculty Achievements
-  facultyAchievements: [{
-    faculty: String,
-    achievement: String,
-    description: String,
-    year: String,
-    organizer: String,
-    location: String
-  }],
+  facultyAchievements: [
+    {
+      faculty: { type: String, required: false },
+      achievement: { type: String, required: false },
+      description: { type: String, required: false },
+      year: { type: String, required: false },
+      organizer: { type: String, required: false },
+      location: { type: String, required: false },
+    },
+  ],
 
   // Awards & Accolades
-  awards: [{
-    recipient: String,
-    awards: [String],       // ["NPTEL Discipline Star", "NPTEL Motivated Learner"]
-    description: String
-  }],
+  awards: [
+    {
+      recipient: { type: String, required: false },
+      awards: [{ type: String, required: false }],
+      description: { type: String, required: false },
+    },
+  ],
 
   // Labs & Infrastructure
-  labs: [String],           // ["Intel Unnati IoT Lab", "Things of Future Lab"]
+  labs: [{ type: String, required: false }],
 
   // Faculty team
-  expertFaculty: [{
-    name: String,
-    role: String            // e.g., "Professor", "Researcher"
-  }],
+  expertFaculty: [
+    {
+      name: { type: String, required: false },
+      role: { type: String, required: false },
+    },
+  ],
 
   // Gallery Images
-  images: [String],
+  images: [{ type: String, required: false }],
 
   // Quote at the end
   quote: {
-    text: String,
-    author: String
-  }
+    text: { type: String, required: false },
+    author: { type: String, required: false },
+  },
 });
 
 export default mongoose.model("InternetOfThings", internetOfThingsSchema);

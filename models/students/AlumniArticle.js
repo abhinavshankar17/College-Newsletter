@@ -3,13 +3,13 @@ import mongoose from "mongoose";
 const alumniArticleSchema = new mongoose.Schema({
   heading: {
     type: String,
-    required: true,
+    required: false,
     trim: true
   },
   author: {
-    name: { type: String, required: true },
-    batch: { type: String, required: true },
-    department: { type: String, required: true }
+    name: { type: String, required: false },
+    batch: { type: String, required: false },
+    department: { type: String, required: false }
   },
   alumniImage: {
     type: String, // Cloudinary URL
@@ -17,7 +17,7 @@ const alumniArticleSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    required: true,
+    required: false,
     trim: true
   },
   createdAt: {

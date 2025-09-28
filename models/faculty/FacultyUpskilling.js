@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const facultyUpskillingSchema = new mongoose.Schema({
   name: {
     type: String,
-   
+    required: false,
   },
   designation: {
     type: String,

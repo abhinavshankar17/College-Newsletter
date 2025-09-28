@@ -1,37 +1,32 @@
 import mongoose from "mongoose";
 
 const CloudNetworkingSchema = new mongoose.Schema({
-  title: { 
-    type: String, 
-  }, // e.g. "Computer Networking"
+  title: { type: String, required: false },
 
-  description: { 
-    type: String, 
-  }, // the main intro paragraph
+  description: { type: String, required: false },
 
   specializedLab: {
-    name: { type: String }, // "CISCO Center of Excellence (CoE)"
-    description: { type: String }, // lab description
-    equipment: [{ type: String }], // list of equipment
-    supportedLicenses: [{ type: String }], // e.g. "Umbrella Security cloud", "Meraki solutions"
-    imageUrl: { type: String }, // path to lab image if you store images
+    name: { type: String, required: false },
+    description: { type: String, required: false },
+    equipment: [{ type: String, required: false }],
+    supportedLicenses: [{ type: String, required: false }],
+    imageUrl: { type: String, required: false },
   },
 
- memorandumOfUnderstanding: [
+  memorandumOfUnderstanding: [
     {
-      company: { type: String },
-      details: { type: String },
-      _id: false, 
-    }
+      company: { type: String, required: false },
+      details: { type: String, required: false },
+      _id: false,
+    },
   ],
 
   quote: {
-    text: { type: String },
-    author: { type: String },
+    text: { type: String, required: false },
+    author: { type: String, required: false },
   },
 });
 
-// Model name should match schema purpose
 const CloudNetworking = mongoose.model("CloudNetworking", CloudNetworkingSchema);
 
 export default CloudNetworking;

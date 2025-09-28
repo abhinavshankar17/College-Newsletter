@@ -2,9 +2,9 @@ import mongoose from "mongoose";
 
 const facultyAchievementSchema = new mongoose.Schema({
   // Faculty details
-  facultyName: { type: String, required: true },
-  designation: { type: String, required: true }, // e.g., Professor, Associate Professor
-  department: { type: String, required: true },  // e.g., NWC
+  facultyName: { type: String, required: false },
+  designation: { type: String, required: false }, // e.g., Professor, Associate Professor
+  department: { type: String, required: false },  // e.g., NWC
   institution: { type: String, default: "SRMIST" },
   imageUrl: { type: String }, // faculty profile photo
 
@@ -12,7 +12,7 @@ const facultyAchievementSchema = new mongoose.Schema({
   achievementType: {
     type: String,
     enum: ["Project", "Paper", "Internship", "Award", "SessionChair", "Other"],
-    required: true
+    required: false,
   },
   title: { type: String },          // e.g., "LoRaWAN Enabled Smart Landslide Early Detection"
   description: { type: String },    // full description of the achievement
@@ -32,7 +32,7 @@ const facultyAchievementSchema = new mongoose.Schema({
   startDate: { type: Date },
   endDate: { type: Date },
 
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now },
 });
 
 export default mongoose.model("FacultyAchievement", facultyAchievementSchema);

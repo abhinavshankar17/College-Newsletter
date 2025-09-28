@@ -3,20 +3,20 @@ import mongoose from "mongoose";
 const studentArticleSchema = new mongoose.Schema({
   heading: {
     type: String,
-    required: true,
+    required: false,
     trim: true
   },
   description: {
     type: String,
-    required: true,
+    required: false,
     trim: true
   },
   author: {
-    name: { type: String, required: true },
-    rollNumber: { type: String, required: true },
-    year: { type: String, required: true },
-    section: { type: String, required: true },
-    department: { type: String, required: true }
+    name: { type: String, required: false },
+    rollNumber: { type: String, required: false },
+    year: { type: String, required: false },
+    section: { type: String, required: false },
+    department: { type: String, required: false }
   },
   studentImage: {
     type: String, // Cloudinary URL

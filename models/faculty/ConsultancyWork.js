@@ -1,18 +1,18 @@
 import mongoose from "mongoose";
 
 const ConsultancyWorkSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  collaboratingAgency: { type: String, required: true },
-  consultancyAmount: { type: Number, required: true },
+  title: { type: String, required: false },
+  collaboratingAgency: { type: String, required: false },
+  consultancyAmount: { type: Number, required: false },
   department: { type: String, default: "Networking and Communications" },
   duration: {
     start: { type: Date },
     end: { type: Date },
   },
-  projectDescription: { type: String, required: true },
+  projectDescription: { type: String, required: false },
   teamMembers: [
     {
-      name: { type: String, required: true },
+      name: { type: String, required: false },
       designation: { type: String },
       department: { type: String, default: "NWC, SRMIST" },
       imageUrl: { type: String },

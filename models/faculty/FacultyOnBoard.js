@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 const facultySchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: false,
   },
   title: {
     type: String, // e.g. "Dr.", "Ms.", "Mr."
@@ -12,11 +12,11 @@ const facultySchema = new mongoose.Schema({
   },
   fullName: {
     type: String, // e.g. "Dr. K. Kanmani"
-    required: true,
+    required: false,
   },
   designation: {
     type: String, // e.g. "Assistant Professor", "Teaching Assistant"
-    required: true,
+    required: false,
   },
   grade: {
     type: String, // e.g. "Jr.G", can be null if not applicable

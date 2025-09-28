@@ -1,18 +1,18 @@
 import mongoose from "mongoose";
 
 const projectSchema = new mongoose.Schema({
-  headline: String,
-  inventors: [String],
-  status: String,
-  issuingAgency: String,
-  overview: String,
+  headline: { type: String, required: false },
+  inventors: { type: [String], required: false },
+  status: { type: String, required: false },
+  issuingAgency: { type: String, required: false },
+  overview: { type: String, required: false },
 });
 
 const sectionSchema = new mongoose.Schema({
-  title: String,
-  order: Number,
-  themeColor: String,
-  projects: [projectSchema],
+  title: { type: String, required: false },
+  order: { type: Number, required: false },
+  themeColor: { type: String, required: false },
+  projects: { type: [projectSchema], required: false },
 });
 
 const researchProjectsPageSchema = new mongoose.Schema({

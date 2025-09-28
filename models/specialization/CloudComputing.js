@@ -1,54 +1,66 @@
 import mongoose from "mongoose";
 
 const cloudComputingSchema = new mongoose.Schema({
-  title: String,
+  title: { type: String, required: false },
 
-  researchWorks: [{
-    title: String,
-    description: String,
-    faculty: String,
-    mentor: String,
-    date: String
-  }],
+  researchWorks: [
+    {
+      title: { type: String, required: false },
+      description: { type: String, required: false },
+      faculty: { type: String, required: false },
+      mentor: { type: String, required: false },
+      date: { type: String, required: false },
+    },
+  ],
 
-  collaborations: [{
-    company: String,
-    program: String,
-    description: String,
-    date: String,
-    speakers: [String],
-    studentsInvolved: Number,
-    images: [String]
-  }],
+  collaborations: [
+    {
+      company: { type: String, required: false },
+      program: { type: String, required: false },
+      description: { type: String, required: false },
+      date: { type: String, required: false },
+      speakers: [{ type: String, required: false }],
+      studentsInvolved: { type: Number, required: false },
+      images: [{ type: String, required: false }],
+    },
+  ],
 
-  workshops: [{
-    title: String,
-    description: String,
-    dates: [String],
-    resourcePersons: [String],
-    participants: Number,
-    images: [String]
-  }],
+  workshops: [
+    {
+      title: { type: String, required: false },
+      description: { type: String, required: false },
+      dates: [{ type: String, required: false }],
+      resourcePersons: [{ type: String, required: false }],
+      participants: { type: Number, required: false },
+      images: [{ type: String, required: false }],
+    },
+  ],
 
-  facultyAchievements: [{
-    faculty: String,
-    achievement: String,
-    description: String,
-    year: String
-  }],
+  facultyAchievements: [
+    {
+      faculty: { type: String, required: false },
+      achievement: { type: String, required: false },
+      description: { type: String, required: false },
+      year: { type: String, required: false },
+    },
+  ],
 
-  studentAchievements: [{
-    student: String,
-    description: String,
-    outcome: String
-  }],
+  studentAchievements: [
+    {
+      student: { type: String, required: false },
+      description: { type: String, required: false },
+      outcome: { type: String, required: false },
+    },
+  ],
 
-  internships: [{
-    title: String,
-    description: String,
-    sponsor: String,
-    studentsInvolved: Number
-  }]
+  internships: [
+    {
+      title: { type: String, required: false },
+      description: { type: String, required: false },
+      sponsor: { type: String, required: false },
+      studentsInvolved: { type: Number, required: false },
+    },
+  ],
 });
 
 export default mongoose.model("CloudComputing", cloudComputingSchema);

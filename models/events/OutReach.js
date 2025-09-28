@@ -3,19 +3,19 @@ import mongoose from "mongoose";
 const OutreachActivitySchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true,
+    required: false,
   },
   date: {
     type: Date,
-    required: true,
+    required: false,
   },
   time: {
     type: String, // Example: "10:00 AM - 5:00 PM IST"
-    required: true,
+    required: false,
   },
   venue: {
     type: String,
-    required: true,
+    required: false,
   },
   participants: {
     type: String, // Example: "15 students and 6 faculty members"
@@ -46,6 +46,5 @@ const OutreachActivitySchema = new mongoose.Schema({
   ],
 });
 
-
-const OutreachActivityModel = mongoose.model("OutreachActivity", OutreachActivitySchema );
+const OutreachActivityModel = mongoose.model("OutreachActivity", OutreachActivitySchema);
 export default OutreachActivityModel;
