@@ -1,8 +1,53 @@
 <%- include('../partials/header') %>
 
+<style>
+  /* Container styling */
+  .container {
+    max-width: 600px;
+    margin: 60px auto;
+    padding: 30px 25px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    text-align: center;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  /* Message styling */
+  .container h2 {
+    color: #ffcc00; /* dark classy color */
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+
+  /* Button styling */
+  .container .btn-primary {
+    background-color: #0d1b2a; /* elegant dark blue/gray */
+    color: #ffffff;
+    border: none;
+    padding: 10px 25px;
+    font-size: 1rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+  }
+
+  .container .btn-primary:hover {
+    background-color: #0d1b2a; /* slightly darker on hover */
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+
+  /* Optional small detail: link spacing */
+  .container a.btn {
+    margin-top: 15px;
+    display: inline-block;
+  }
+</style>
+
 <div class="container mt-4">
-  <h2 class="text-success"><%= message %></h2>
-  <a href="/admin/add-article" class="btn btn-primary mt-3">Add another</a>
+  <h2><%= message %></h2>
+  <a href="/admin/add-article" class="btn btn-primary">Add another</a>
 </div>
 
 <%- include('../partials/footer') %>

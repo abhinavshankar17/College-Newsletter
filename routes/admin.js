@@ -50,15 +50,25 @@ async function buildPagesAndSchemas() {
         const fileUrl = pathToFileURL(path.join(folderPath, file)).href;
 
         let importedModule;
-        try { importedModule = await import(fileUrl); } 
-        catch (err) { console.error(`❌ Error importing model ${file}:`, err); return; }
+        try {
+          importedModule = await import(fileUrl);
+        } catch (err) {
+          console.error(`❌ Error importing model ${file}:`, err);
+          return;
+        }
 
         const model = importedModule.default;
-        if (!model || !model.modelName) { console.error(`❌ No valid mongoose model in ${file}`); return; }
+        if (!model || !model.modelName) {
+          console.error(`❌ No valid mongoose model in ${file}`);
+          return;
+        }
 
         pages[folder].models.push(model.modelName);
-        try { schemas[model.modelName] = extractSchemaFields(model.schema); } 
-        catch (err) { console.error(`❌ Error extracting schema for ${model.modelName}:`, err); }
+        try {
+          schemas[model.modelName] = extractSchemaFields(model.schema);
+        } catch (err) {
+          console.error(`❌ Error extracting schema for ${model.modelName}:`, err);
+        }
       })
     );
   }
@@ -127,16 +137,34 @@ router.post("/add-article", upload.any(), async (req, res) => {
       });
     }
 
-    // Clean reserved fields
-    delete formData._id;
+    // Clean reserved fields safely
+    if (!formData._id || formData._id.trim() === "") {
+      delete formData._id;
+    }
     delete formData.__v;
 
     // Convert date strings (dd/mm/yyyy → Date)
     for (const key in formData) {
       if (key.toLowerCase().includes("date") && typeof formData[key] === "string") {
         const [day, month, year] = formData[key].split("/");
-        if (day && month && year) formData[key] = new Date(`${year}-${month}-${day}`);
+        if (day && month && year) {
+          formData[key] = new Date(`${year}-${month}-${day}`);
+        }
       }
+    }
+
+    // ✅ Normalize imageUrl (accept array, object, or string)
+    if (formData.imageUrl) {
+      if (Array.isArray(formData.imageUrl)) {
+        if (formData.imageUrl.length > 0 && formData.imageUrl[0].url) {
+          formData.imageUrl = formData.imageUrl[0].url;
+        } else {
+          formData.imageUrl = "";
+        }
+      } else if (typeof formData.imageUrl === "object" && formData.imageUrl.url) {
+        formData.imageUrl = formData.imageUrl.url;
+      }
+      // if string → keep as is
     }
 
     // Handle MoU array (flat or nested)
@@ -144,28 +172,35 @@ router.post("/add-article", upload.any(), async (req, res) => {
       const company = formData['memorandumOfUnderstanding.company'];
       const details = formData['memorandumOfUnderstanding.details'];
       if (company && details && company.trim() && details.trim()) {
-        formData.memorandumOfUnderstanding = [{ company: company.trim(), details: details.trim() }];
+        formData.memorandumOfUnderstanding = [
+          { company: company.trim(), details: details.trim() }
+        ];
         delete formData['memorandumOfUnderstanding.company'];
         delete formData['memorandumOfUnderstanding.details'];
       }
     } else if (formData.memorandumOfUnderstanding) {
       const mouData = formData.memorandumOfUnderstanding;
       const processedMou = [];
-      if (typeof mouData === 'object' && !Array.isArray(mouData)) {
+      if (typeof mouData === "object" && !Array.isArray(mouData)) {
         Object.keys(mouData).forEach(key => {
           const index = parseInt(key);
-          if (!isNaN(index) && mouData[key] && typeof mouData[key] === 'object') processedMou[index] = mouData[key];
+          if (!isNaN(index) && mouData[key] && typeof mouData[key] === "object") {
+            processedMou[index] = mouData[key];
+          }
         });
-      } else if (Array.isArray(mouData)) processedMou.push(...mouData);
+      } else if (Array.isArray(mouData)) {
+        processedMou.push(...mouData);
+      }
 
-      formData.memorandumOfUnderstanding = processedMou.filter(mou =>
-        mou && mou.company && mou.details && mou.company.trim() && mou.details.trim()
+      formData.memorandumOfUnderstanding = processedMou.filter(
+        mou => mou && mou.company && mou.details && mou.company.trim() && mou.details.trim()
       );
     }
 
     const Model = mongoose.models[model];
     if (!Model) return res.status(400).send("Invalid model selected");
 
+    // Always create a fresh document (no _id reuse)
     const doc = new Model(formData);
     await doc.save();
 
@@ -200,7 +235,9 @@ router.delete("/delete/:model/:id", async (req, res) => {
       // Array of image objects
       if (Array.isArray(value)) {
         for (const img of value) {
-          if (img && img.public_id) await cloudinary.uploader.destroy(img.public_id);
+          if (img && img.public_id) {
+            await cloudinary.uploader.destroy(img.public_id);
+          }
         }
       }
     }
@@ -228,6 +265,5 @@ router.post("/delete-image", async (req, res) => {
     res.status(500).json({ success: false });
   }
 });
-
 
 export default router;

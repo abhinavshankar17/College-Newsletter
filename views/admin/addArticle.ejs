@@ -82,7 +82,12 @@
         const fields = await response.json();
 
         fields.forEach(field => {
-          if (field === "_id" || field === "__v") return;
+  // Never allow _id or __v in dynamic form
+  if (field.toLowerCase() === "_id" || field.toLowerCase() === "__v") return;
+
+  // Also block nested _id (like something._id or array._id)
+  if (field.endsWith("._id") || field.endsWith("[]._id")) return;
+
 
           // Special handling for MoU array
           if (field === "memorandumOfUnderstanding") {
