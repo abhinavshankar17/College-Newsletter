@@ -154,18 +154,20 @@ router.post("/add-article", upload.any(), async (req, res) => {
     }
 
     // ✅ Normalize imageUrl (accept array, object, or string)
-    if (formData.imageUrl) {
-      if (Array.isArray(formData.imageUrl)) {
-        if (formData.imageUrl.length > 0 && formData.imageUrl[0].url) {
-          formData.imageUrl = formData.imageUrl[0].url;
-        } else {
-          formData.imageUrl = "";
-        }
-      } else if (typeof formData.imageUrl === "object" && formData.imageUrl.url) {
-        formData.imageUrl = formData.imageUrl.url;
-      }
-      // if string → keep as is
-    }
+    // ✅ Normalize imageUrl (always keep as array of URLs)
+if (formData.imageUrl) {
+  if (Array.isArray(formData.imageUrl)) {
+    // Convert array of objects [{ url, public_id }] → [url, url]
+    formData.imageUrl = formData.imageUrl.map(img =>
+      typeof img === "object" && img.url ? img.url : img
+    );
+  } else if (typeof formData.imageUrl === "object" && formData.imageUrl.url) {
+    formData.imageUrl = [formData.imageUrl.url];
+  } else if (typeof formData.imageUrl === "string") {
+    formData.imageUrl = [formData.imageUrl];
+  }
+}
+
 
     // Handle MoU array (flat or nested)
     if (formData['memorandumOfUnderstanding.company'] || formData['memorandumOfUnderstanding.details']) {

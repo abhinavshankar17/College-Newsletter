@@ -6,19 +6,31 @@
 </p>
 
 <div class="container">
-  <% page.sections.forEach(oration => { %>
-  <div class="card">
-    <p class="name"><%= oration.name %> (Reg. No: <%= oration.regNo %>)</p>
-    <p class="supervisor">Supervisor : <%= oration.supervisor %></p>
-    <p class="title">Title : <%= oration.title %></p>
-    <p class="date">Date : <%= new Date(oration.date).toDateString() %></p>
-    <p class="description"><%= oration.description %></p>
-    <% if (oration.imageUrl) { %>
-      <img src="<%= oration.imageUrl %>" alt="Research Oration image">
-    <% } %>
-  </div>
-<% }) %>
+  <% page.sections.forEach(oration => { 
+       const images = Array.isArray(oration.imageUrl) ? oration.imageUrl : (oration.imageUrl ? [oration.imageUrl] : []); 
+  %>
+    <div class="card <%= images.length === 1 ? 'single-image' : 'multi-image' %>">
+      
+      <!-- Text Section -->
+      <div class="card-text">
+        <p class="name"><%= oration.name %> (Reg. No: <%= oration.regNo %>)</p>
+        <p class="supervisor">Supervisor : <%= oration.supervisor %></p>
+        <p class="title">Title : <%= oration.title %></p>
+        <p class="date">Date : <%= new Date(oration.date).toDateString() %></p>
+        <p class="description"><%= oration.description %></p>
+      </div>
 
+      <!-- Image Section -->
+      <% if (images.length > 0) { %>
+        <div class="card-images">
+          <% images.forEach(img => { %>
+            <img src="<%= img %>" alt="Research Oration image">
+          <% }) %>
+        </div>
+      <% } %>
+
+    </div>
+  <% }) %>
 </div>
 
 <%- include("../partials/footer") %>
@@ -41,17 +53,50 @@
   .card {
     border: 1px solid #ddd;
     border-radius: 8px;
-    width: 350px;
+    width: 100%;
+    max-width: 700px;
     padding: 15px;
     background: #fff;
     box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
-  .card img {
-    width: 100%;
-    height: auto;
-    margin: 10px 0;
-    border-radius: 5px;
+  /* Horizontal layout when only 1 image */
+  .card.single-image {
+    flex-direction: row;
+    align-items: flex-start;
   }
+  .card.single-image .card-text {
+    flex: 2;
+    padding-right: 15px;
+  }
+  .card.single-image .card-images {
+    flex: 1;
+  }
+  /* Vertical layout for multiple images */
+  .card.multi-image {
+    flex-direction: column;
+  }
+  .card-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;  /* ✅ centers images */
+  margin-top: 10px;
+}
+
+.card-images img {
+  max-width: 220px;   /* limit width */
+  max-height: 180px;  /* limit height */
+  width: auto;
+  height: auto;
+  border-radius: 5px;
+  object-fit: cover;
+  display: block;
+}
+
+
   .name {
     font-weight: bold;
     color: #b22222;
@@ -69,5 +114,15 @@
   }
   .description {
     color: #444;
+  }
+
+  /* Responsive: stack even single-image layout on small screens */
+  @media (max-width: 768px) {
+    .card.single-image {
+      flex-direction: column;
+    }
+    .card.single-image .card-text {
+      padding-right: 0;
+    }
   }
 </style>

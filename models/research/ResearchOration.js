@@ -7,7 +7,7 @@ const researchOrationSchema = new mongoose.Schema({
   title: { type: String, required: false },
   date: { type: Date, required: false },
   description: { type: String, required: false },
-  imageUrl: { type: String },   // Cloudinary URL (optional)
+  imageUrl: { type: [String], default: [] },   // Array of Cloudinary URLs (optional)
 });
 
 const ResearchOration = mongoose.model("ResearchOration", researchOrationSchema);
