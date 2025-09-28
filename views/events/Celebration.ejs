@@ -92,8 +92,8 @@
                     <h6 class="fw-bold text-primary">Event Gallery:</h6>
                     <div class="d-flex flex-wrap gap-3">
                       <% event.images.forEach(image => { %>
-                        <img src="<%= image.url || "/default.jpg" %>" 
-                             alt="<%= image.type || "image" %>" 
+                        <img src="<%= image || "/default.jpg" %>" 
+                             alt="Event Image" 
                              class="img-thumbnail event-image" 
                              style="max-width: 180px; border-radius: 12px;">
                       <% }) %>

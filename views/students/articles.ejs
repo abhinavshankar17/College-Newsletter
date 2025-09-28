@@ -11,9 +11,13 @@
     <div class="card article-card shadow-lg border-0 mb-5">
       
       <div class="row g-0">
-        <% if (article.studentImage) { %>
+        <% if (article.studentImage && article.studentImage.length > 0) { %>
           <div class="col-md-4">
-            <img src="<%= article.studentImage %>" class="img-fluid student-img" alt="Student">
+            <img src="<%= article.studentImage[0] %>" class="img-fluid student-img" alt="Student">
+          </div>
+        <% } else { %>
+          <div class="col-md-4">
+            <img src="/images/default-student.png" class="img-fluid student-img" alt="Default Student Image">
           </div>
         <% } %>
 
@@ -90,4 +94,4 @@
   }
 </style>
 
-<%- include("../partials/footer") %>  
+<%- include("../partials/footer") %>

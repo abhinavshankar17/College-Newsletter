@@ -10,9 +10,13 @@
   <% alumniArticles.forEach(article => { %>
     <div class="card article-card shadow-lg border-0 mb-5">
       <div class="row g-0">
-        <% if (article.alumniImage) { %>
+        <% if (article.alumniImage && article.alumniImage.length > 0) { %>
           <div class="col-md-4">
-            <img src="<%= article.alumniImage %>" class="img-fluid alumni-img" alt="Alumni">
+            <img src="<%= article.alumniImage[0] %>" class="img-fluid alumni-img" alt="Alumni">
+          </div>
+        <% } else { %>
+          <div class="col-md-4">
+            <img src="/images/default-alumni.png" class="img-fluid alumni-img" alt="Default Alumni Image">
           </div>
         <% } %>
 

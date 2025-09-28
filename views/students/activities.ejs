@@ -8,9 +8,9 @@
       <div class="col-md-6 col-lg-4">
         <div class="card activity-card h-100 shadow-lg border-0">
           
-          <% if (activity.imageUrl && activity.imageUrl.trim() !== "") { %>
+          <% if (activity.imageUrl && activity.imageUrl.length > 0) { %>
             <!-- Case 1: With Image -->
-            <img src="<%= activity.imageUrl %>" class="card-img-top activity-img" alt="Student Activity">
+            <img src="<%= activity.imageUrl[0] %>" class="card-img-top activity-img" alt="Student Activity">
             <div class="card-body">
               <h5 class="card-title text-dark fw-bold">
                 <%= activity.name %> <small class="text-muted">(<%= activity.rollNumber %>)</small>
@@ -80,4 +80,4 @@
   }
 </style>
 
-<%- include("../partials/footer") %>  
+<%- include("../partials/footer") %>

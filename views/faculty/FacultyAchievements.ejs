@@ -75,8 +75,8 @@
     <% achievements.forEach(achievement => { %>
       <div class="card">
         <!-- Faculty Info -->
-        <% if (achievement.imageUrl) { %>
-          <img src="<%= achievement.imageUrl %>" alt="Faculty Photo" class="faculty-img">
+        <% if (achievement.imageUrl && achievement.imageUrl.length > 0) { %>
+          <img src="<%= achievement.imageUrl[0] %>" alt="Faculty Photo" class="faculty-img">
         <% } %>
         <h3><%= achievement.facultyName || "N/A" %></h3>
         <p><strong>Designation:</strong> <%= achievement.designation || "N/A" %></p>

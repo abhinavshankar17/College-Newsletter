@@ -120,8 +120,8 @@ h1::after {
     <% if (faculties && faculties.length > 0) { %>
       <% faculties.forEach(faculty => { %>
         <div class="card">
-          <% if (faculty.image) { %>
-            <img src="<%= faculty.image %>" alt="<%= faculty.name %>">
+          <% if (faculty.image && faculty.image.length > 0) { %>
+            <img src="<%= faculty.image[0] %>" alt="<%= faculty.name %>">
           <% } else { %>
             <img src="/images/default-avatar.png" alt="No photo">
           <% } %>

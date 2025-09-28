@@ -8,9 +8,13 @@
       <div class="col-12">
         <div class="card achievement-card shadow-lg border-0 p-4 d-flex flex-lg-row <%= index % 2 === 0 ? 'flex-row-reverse' : '' %>">
           
-          <% if (ach.imageUrl) { %>
+          <% if (ach.imageUrl && ach.imageUrl.length > 0) { %>
             <div class="article-image-container">
-              <img src="<%= ach.imageUrl %>" class="article-img" alt="Achievement Image">
+              <img src="<%= ach.imageUrl[0] %>" class="article-img" alt="Achievement Image">
+            </div>
+          <% } else { %>
+            <div class="article-image-container">
+              <img src="/images/default-achievement.png" class="article-img" alt="Default Achievement Image">
             </div>
           <% } %>
 
