@@ -21,12 +21,7 @@ const eventSchema = new mongoose.Schema({
 
   highlights: [{ type: String }],
 
-  images: [
-    {
-      type: { type: String, enum: ["poster", "group_photo", "other"], default: "other" },
-      url: { type: String, required: false }
-    }
-  ],
+  images: { type: [String], default: [] }, // Ensure images is an array
 
   organizers: { type: String, required: false },
   venue: { type: String, required: false }

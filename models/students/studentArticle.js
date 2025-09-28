@@ -18,10 +18,7 @@ const studentArticleSchema = new mongoose.Schema({
     section: { type: String, required: false },
     department: { type: String, required: false }
   },
-  studentImage: {
-    type: String, // Cloudinary URL
-    default: ""
-  },
+  studentImage: { type: [String], default: [] }, // Ensure images is an array
   createdAt: {
     type: Date,
     default: Date.now

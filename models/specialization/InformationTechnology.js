@@ -58,7 +58,7 @@ const informationTechnologySchema = new mongoose.Schema(
     ],
 
     // Page/gallery images
-    images: [{ type: String, required: false }],
+    images: { type: [String], default: [] }, // Ensure images is an array
 
     // Footer quote
     quote: {

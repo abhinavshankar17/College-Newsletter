@@ -21,7 +21,7 @@ const cloudComputingSchema = new mongoose.Schema({
       date: { type: String, required: false },
       speakers: [{ type: String, required: false }],
       studentsInvolved: { type: Number, required: false },
-      images: [{ type: String, required: false }],
+      images: { type: [String], default: [] }, // Ensure images is an array
     },
   ],
 

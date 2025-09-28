@@ -15,7 +15,7 @@ const ConsultancyWorkSchema = new mongoose.Schema({
       name: { type: String, required: false },
       designation: { type: String },
       department: { type: String, default: "NWC, SRMIST" },
-      imageUrl: { type: String },
+      imageUrl: { type: [String], default: [] },
     },
   ],
   closingQuote: {
@@ -24,6 +24,7 @@ const ConsultancyWorkSchema = new mongoose.Schema({
       "Innovation thrives where expertise meets opportunity – consultancy bridges the path from ideas to impactful solutions.",
   },
   createdAt: { type: Date, default: Date.now },
+
 });
 
 const ConsultancyWork = mongoose.model("ConsultancyWork", ConsultancyWorkSchema);

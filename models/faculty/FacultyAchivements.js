@@ -6,7 +6,7 @@ const facultyAchievementSchema = new mongoose.Schema({
   designation: { type: String, required: false }, // e.g., Professor, Associate Professor
   department: { type: String, required: false },  // e.g., NWC
   institution: { type: String, default: "SRMIST" },
-  imageUrl: { type: String }, // faculty profile photo
+  imageUrl: { type: [String], default: [] }, // faculty profile photo
 
   // Achievement details
   achievementType: {
@@ -31,6 +31,7 @@ const facultyAchievementSchema = new mongoose.Schema({
   // Dates (flexible for internship/project/paper/event)
   startDate: { type: Date },
   endDate: { type: Date },
+ // Ensure images is an array
 
   createdAt: { type: Date, default: Date.now },
 });

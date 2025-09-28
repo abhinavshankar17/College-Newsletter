@@ -56,7 +56,7 @@ const cyberSecuritySchema = new Schema({
   collaborations: [collaborationSchema],
 
   quote: { type: String, required: false },
-  images: [{ type: String, required: false }],
+  images: { type: [String], default: [] }, // Ensure images is an array
 });
 
 export default mongoose.model("CyberSecurity", cyberSecuritySchema, "cybersecurities");

@@ -13,7 +13,7 @@ const FacultyArticleSchema = new mongoose.Schema({
     {
       heading: String,
       content: String,
-      images: [String],
+      images: { type: [String], default: [] }, // Ensure images is an array
       listItems: [String],
     },
   ],

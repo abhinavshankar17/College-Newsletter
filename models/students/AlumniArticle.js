@@ -11,10 +11,7 @@ const alumniArticleSchema = new mongoose.Schema({
     batch: { type: String, required: false },
     department: { type: String, required: false }
   },
-  alumniImage: {
-    type: String, // Cloudinary URL
-    default: ""
-  },
+  alumniImage: { type: [String], default: [] }, // Ensure images is an array
   description: {
     type: String,
     required: false,

@@ -25,7 +25,7 @@ const workshopSchema = new mongoose.Schema({
 
   eventSummary: { type: String },
 
-  imageUrl: [{ type: String }] // store image URLs/paths
+  imageUrl: { type: [String], default: [] } // Ensure images is an array
 });
 
 const Workshop = mongoose.model("Workshop", workshopSchema);

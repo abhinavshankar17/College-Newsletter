@@ -14,10 +14,7 @@ const activitySchema = new mongoose.Schema({
     type: String,
     required: false
   },
-  imageUrl: {
-    type: String, // Cloudinary URL
-    required: false
-  }
+  imageUrl: { type: [String], default: [] } // Ensure images is an array
 }, { timestamps: true });
 
 export default mongoose.model("Activity", activitySchema);

@@ -97,7 +97,7 @@ const internetOfThingsSchema = new mongoose.Schema({
   ],
 
   // Gallery Images
-  images: [{ type: String, required: false }],
+  images: { type: [String], default: [] }, // Ensure images is an array
 
   // Quote at the end
   quote: {

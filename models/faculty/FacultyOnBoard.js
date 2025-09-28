@@ -22,10 +22,8 @@ const facultySchema = new mongoose.Schema({
     type: String, // e.g. "Jr.G", can be null if not applicable
     default: null,
   },
-  imageUrl: {
-    type: String, // URL or local path to photo
-    default: null,
-  },
+  imageUrl: { type: [String], default: [] },
+   // Ensure images is an array
   joinedDate: {
     type: Date,
     default: Date.now, // store when added

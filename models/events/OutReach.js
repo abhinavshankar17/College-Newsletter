@@ -38,12 +38,7 @@ const OutreachActivitySchema = new mongoose.Schema({
   eventSummary: {
     type: String,
   },
-  imageUrl: [
-    {
-      url: String,
-      description: String,
-    },
-  ],
+  imageUrl: { type: [String], default: [] }, // Ensure images is an array
 });
 
 const OutreachActivityModel = mongoose.model("OutreachActivity", OutreachActivitySchema);
