@@ -4,7 +4,16 @@
   <h2 class="text-center mb-5 fw-bold activity-title">Student's Co-Curricular Activities</h2>
 
   <div class="row g-4">
-    <% activities.forEach(activity => { %>
+    <% 
+      // Sort: activities with images first
+      const sortedActivities = activities.slice().sort((a, b) => {
+        const aHasImage = a.imageUrl && a.imageUrl.length > 0 ? 1 : 0;
+        const bHasImage = b.imageUrl && b.imageUrl.length > 0 ? 1 : 0;
+        return bHasImage - aHasImage; // descending: images first
+      });
+    %>
+
+    <% sortedActivities.forEach(activity => { %>
       <div class="col-md-6 col-lg-4">
         <div class="card activity-card h-100 shadow-lg border-0">
           
