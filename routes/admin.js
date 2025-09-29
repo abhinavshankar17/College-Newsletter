@@ -144,14 +144,21 @@ router.post("/add-article", upload.any(), async (req, res) => {
     delete formData.__v;
 
     // Convert date strings (dd/mm/yyyy → Date)
-    for (const key in formData) {
-      if (key.toLowerCase().includes("date") && typeof formData[key] === "string") {
-        const [day, month, year] = formData[key].split("/");
-        if (day && month && year) {
-          formData[key] = new Date(`${year}-${month}-${day}`);
-        }
-      }
+    // Convert date strings (handle dd/mm/yyyy or dd-mm-yyyy)
+for (const key in formData) {
+  if (key.toLowerCase().includes("date") && typeof formData[key] === "string") {
+    let rawDate = formData[key].trim();
+
+    // Support both "26-04-2025" and "26/04/2025"
+    const separator = rawDate.includes("-") ? "-" : "/";
+    const [day, month, year] = rawDate.split(separator);
+
+    if (day && month && year) {
+      formData[key] = new Date(`${year}-${month}-${day}`);
     }
+  }
+}
+
 
     // ✅ Normalize imageUrl (accept array, object, or string)
     // ✅ Normalize imageUrl (always keep as array of URLs)
