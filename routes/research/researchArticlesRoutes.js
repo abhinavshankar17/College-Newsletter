@@ -3,10 +3,10 @@ import { getResearchArticles, createResearchArticle } from "../../controllers/re
 
 const router = express.Router();
 
-// GET: fetch all articles
+// GET research articles page
 router.get("/", getResearchArticles);
 
-// POST: add new article
+// POST new article (from your dynamic admin form)
 router.post("/add", createResearchArticle);
 
 export default router;

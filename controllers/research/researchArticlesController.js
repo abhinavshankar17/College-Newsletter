@@ -1,36 +1,33 @@
 import ResearchArticles from "../../models/research/ResearchArticles.js";
 
-// Fetch and render research articles grouped by headline
 export const getResearchArticles = async (req, res) => {
   try {
-    const sections = await ResearchArticles.find().sort({ order: 1 }).lean();
+    const page = await ResearchArticles.findOne().lean();
 
-    // ✅ Flatten all projects across sections
-    let allProjects = [];
-    sections.forEach(wrapper => {
-      (wrapper.sections || []).forEach(sec => {
-        (sec.projects || []).forEach(proj => {
-          allProjects.push({
-            ...proj,
-            sectionTitle: sec.title,
-            themeColor: sec.themeColor
-          });
-        });
+    if (!page) {
+      return res.render("research/ResearchArticles", {
+        page: { pageTitle: "Research Articles", sections: [] }
       });
+    }
+
+    // Group projects by headline for each section
+    const sections = (page.sections || []).map(sec => {
+      const grouped = {};
+      (sec.projects || []).forEach(p => {
+        if (!grouped[p.headline]) grouped[p.headline] = [];
+        grouped[p.headline].push(p);
+      });
+
+      return {
+        ...sec,
+        projectsGrouped: grouped
+      };
     });
 
-    // ✅ Group projects by headline
-    const groupedProjects = {};
-    allProjects.forEach(p => {
-      if (!groupedProjects[p.headline]) groupedProjects[p.headline] = [];
-      groupedProjects[p.headline].push(p);
-    });
-
-    // Render page with grouped projects
     res.render("research/ResearchArticles", {
       page: {
-        pageTitle: "Research Articles",
-        groupedProjects
+        pageTitle: page.pageTitle,
+        sections
       }
     });
   } catch (err) {
@@ -39,34 +36,48 @@ export const getResearchArticles = async (req, res) => {
   }
 };
 
-// Optional: Create a new research article
+// Add article from dynamic admin form
 export const createResearchArticle = async (req, res) => {
   try {
-    const { headline, authors, journal, issn, description, sectionName } = req.body;
+    const { data } = req.body;
 
-    // Find or create section wrapper
-    let sectionWrapper = await ResearchArticles.findOne({ sectionName });
-    if (!sectionWrapper) {
-      sectionWrapper = new ResearchArticles({
-        pageTitle: "Research Articles",
-        sections: [{ title: sectionName, projects: [] }]
-      });
+    if (!data) {
+      return res.status(400).send("No data received");
     }
 
-    // Find or create section inside wrapper
-    let section = sectionWrapper.sections.find(s => s.title === sectionName);
+    // Extract fields dynamically
+    const sectionTitle = data.sectionTitle || "Default Section";
+    const headline = data.headline || "Untitled";
+    const authors = data.authors
+      ? Array.isArray(data.authors)
+        ? data.authors.filter(a => a.trim())
+        : data.authors.split(",").map(a => a.trim())
+      : [];
+    const journal = data.journal || "";
+    const issn = data.issn || "";
+    const description = data.description || "";
+
+    // Find or create the single page document
+    let page = await ResearchArticles.findOne();
+    if (!page) {
+      page = new ResearchArticles({ pageTitle: "Research Articles", sections: [] });
+    }
+
+    // Find the section by title or create new
+    let section = page.sections.find(s => s.title === sectionTitle);
     if (!section) {
-      section = { title: sectionName, projects: [] };
-      sectionWrapper.sections.push(section);
+      section = { title: sectionTitle, order: page.sections.length + 1, projects: [] };
+      page.sections.push(section);
     }
 
-    // Push new project
+    // Add the new article
     section.projects.push({ headline, authors, journal, issn, description });
 
-    await sectionWrapper.save();
-    res.redirect("/research-articles");
+    await page.save();
+
+    res.redirect("/admin/add-article"); // redirect back to admin form
   } catch (err) {
-    console.error("Error in createResearchArticle:", err);
+    console.error("Error saving research article:", err);
     res.status(500).send("Error saving research article");
   }
 };

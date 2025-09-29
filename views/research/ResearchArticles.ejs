@@ -3,55 +3,37 @@
 <div class="container py-4 rp-container">
   <h1 class="mb-4 text-center"><%= page.pageTitle %></h1>
 
-  <% (page.sections || []).forEach(function(wrapper) { %>
-    <% (wrapper.sections || []).sort((a, b) => (a.order || 0) - (b.order || 0)).forEach(function(sec) { %>
+  <% (page.sections || []).sort((a,b) => (a.order||0) - (b.order||0)).forEach(function(sec) { %>
+    <h2 class="rp-section-title" style="color:'(<%= sec.themeColor || '#c62828' %>;)'">
+      <%= sec.title %>
+    </h2>
 
-      <h2 class="rp-section-title" style="color:<%= sec.themeColor || '#c62828' %>;">
-        <%= sec.title %>
-      </h2>
+    <% Object.keys(sec.projectsGrouped || {}).forEach(function(headline) { %>
+      <div class="row g-3 mb-4">
+        <% (sec.projectsGrouped[headline] || []).forEach(function(p) { %>
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0 p-3">
+              <h5 class="card-title rp-card-title mb-2"><%= p.headline %></h5>
 
-      <% 
-        // ✅ Group projects by headline
-        let grouped = {};
-        (sec.projects || []).forEach(function(p) {
-          if (!grouped[p.headline]) grouped[p.headline] = [];
-          grouped[p.headline].push(p);
-        });
-      %>
+              <% if (p.authors && p.authors.length) { %>
+                <p class="mb-1"><strong>Authors:</strong> <%= p.authors.join(", ") %></p>
+              <% } %>
 
-      <div class="row g-3">
-        <% Object.keys(grouped).forEach(function(headline) { %>
-          <div class="col-12">
-            <div class="card h-100 shadow-sm border-0">
-              <div class="card-body">
-                <h5 class="card-title rp-card-title mb-2"><%= headline %></h5>
+              <% if (p.journal) { %>
+                <p class="mb-1"><strong>Journal:</strong> <%= p.journal %></p>
+              <% } %>
 
-                <% grouped[headline].forEach(function(p, idx) { %>
-                  <div class="mb-3 pb-2" style="border-bottom:<%= idx < grouped[headline].length - 1 ? '1px dotted #ccc' : 'none' %>;">
-                    
-                    <% if (p.authors && p.authors.length) { %>
-                      <p class="mb-1"><strong>Authors:</strong> <%= p.authors.join(", ") %></p>
-                    <% } %>
+              <% if (p.issn) { %>
+                <p class="mb-1"><strong>ISSN:</strong> <%= p.issn %></p>
+              <% } %>
 
-                    <% if (p.journal) { %>
-                      <p class="mb-1"><strong>Journal:</strong> <%= p.journal %></p>
-                    <% } %>
-
-                    <% if (p.issn) { %>
-                      <p class="mb-1"><strong>ISSN:</strong> <%= p.issn %></p>
-                    <% } %>
-
-                    <% if (p.description) { %>
-                      <p class="text-muted"><%= p.description %></p>
-                    <% } %>
-                  </div>
-                <% }); %>
-              </div>
+              <% if (p.description) { %>
+                <p class="text-muted"><%= p.description %></p>
+              <% } %>
             </div>
           </div>
         <% }); %>
       </div>
-
       <hr class="my-4">
     <% }); %>
   <% }); %>
@@ -60,47 +42,107 @@
 <%- include("../partials/footer") %>
 
 <style>
-  /* same CSS as before */
-  @media (max-width: 767px) {
-    .rp-container { padding: 1rem; }
-    .card { margin-bottom: 1rem; }
+  /* ===== Container Styling ===== */
+  .rp-container {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 2rem;
   }
 
-  .rp-card-img {
-    width: 100%; height: 140px;
-    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-    border-radius: 10px 10px 0 0;
-    display: flex; align-items: center; justify-content: center;
-    color: #1976d2; font-size: 2.5rem; font-weight: 700;
-    letter-spacing: 2px; margin-bottom: 1rem;
-    transition: background 0.3s;
-  }
-  .card:hover .rp-card-img {
-    background: linear-gradient(135deg, #f8bbd0 0%, #ffcdd2 100%);
-    color: #b71c1c;
+  h1 {
+    text-align: center;
+    font-weight: 700;
+    color: #0d1b2a;
+    margin-bottom: 2rem;
   }
 
-  .card:hover .card-body {
-    background: #fff5f5; border-radius: 0 0 12px 12px;
+  .rp-section-title {
+    font-weight: 600;
+    color: #0d1b2a;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 6px;
+    margin-bottom: 1.5rem;
   }
 
-  hr.my-4 { border-top: 2px dashed #e3e3e3; opacity: 0.7; margin: 2.5rem 0; }
+  .rp-section-title::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 50%;
+    background: #ffb703;
+    border-radius: 2px;
+    transition: width 0.3s ease;
+  }
 
-  .card { box-shadow: 0 2px 8px rgba(33, 150, 243, 0.07); transition: transform 0.25s cubic-bezier(.4,2,.6,1), box-shadow 0.25s; }
+  .rp-section-title:hover::after {
+    width: 100%;
+  }
+
+  .card {
+    border: none;
+    border-radius: 12px;
+    background: #f9fafc;
+    transition: all 0.3s ease, transform 0.25s cubic-bezier(.4,2,.6,1), box-shadow 0.25s;
+    box-shadow: 0 2px 8px rgba(33, 150, 243, 0.07);
+  }
+
   .card:hover {
     transform: translateY(-8px) scale(1.03);
     box-shadow: 0 12px 32px rgba(244, 67, 54, 0.18);
     border: 1px solid #ef9a9a;
+    background: #fff5f5;
   }
 
-  .card-title.rp-card-title { position: relative; z-index: 1; }
+  .card-title.rp-card-title {
+    position: relative;
+    z-index: 1;
+  }
+
   .card-title.rp-card-title::after {
-    content: ""; display: block; position: absolute;
-    left: 0; bottom: -4px; width: 0; height: 3px;
-    background: #b71c1c; border-radius: 2px; transition: width 0.3s;
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0; bottom: -4px;
+    width: 0;
+    height: 3px;
+    background: #b71c1c;
+    border-radius: 2px;
+    transition: width 0.3s;
     z-index: -1;
   }
-  .card:hover .card-title.rp-card-title::after { width: 60%; }
+
+  .card:hover .card-title.rp-card-title::after {
+    width: 60%;
+  }
+
+  .card p {
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+
+  .card strong {
+    color: #0d1b2a;
+  }
+
+  hr.my-4 {
+    border-top: 2px dashed #e3e3e3;
+    opacity: 0.7;
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 767px) {
+    .rp-container {
+      padding: 1rem;
+    }
+    .card {
+      margin-bottom: 1rem;
+    }
+  }
 </style>
 
 <script>

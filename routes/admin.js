@@ -119,23 +119,27 @@ router.post("/add-article", upload.any(), async (req, res) => {
     const { model } = req.body;
     let formData = req.body.data || {};
 
+  
     // Handle uploaded files (single + multiple)
-    if (req.files && req.files.length > 0) {
-      req.files.forEach(file => {
-        const match = file.fieldname.match(/^data\[(.+?)\](\[\])?$/);
-        if (match) {
-          const fieldName = match[1];
-          const fileObj = { url: file.path, public_id: file.filename };
+if (req.files && req.files.length > 0) {
+  req.files.forEach(file => {
+    const match = file.fieldname.match(/^data\[(.+?)\](\[\])?$/);
+    if (match) {
+      const fieldName = match[1];
 
-          if (match[2] === "[]") {
-            if (!Array.isArray(formData[fieldName])) formData[fieldName] = [];
-            formData[fieldName].push(fileObj);
-          } else {
-            formData[fieldName] = fileObj;
-          }
-        }
-      });
+      // Only store the URL string if your schema expects [String]
+      const fileUrl = file.path; // or file.path / file.secure_url depending on your upload method
+
+      if (match[2] === "[]") {
+        if (!Array.isArray(formData[fieldName])) formData[fieldName] = [];
+        formData[fieldName].push(fileUrl); // <-- only the URL string
+      } else {
+        formData[fieldName] = fileUrl;
+      }
     }
+  });
+}
+
 
     // Clean reserved fields safely
     if (!formData._id || formData._id.trim() === "") {
