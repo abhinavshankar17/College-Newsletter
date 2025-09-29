@@ -4,34 +4,48 @@
   <h1 class="mb-4 text-center"><%= page.pageTitle %></h1>
 
   <% (page.sections || []).forEach(function(wrapper) { %>
-    <% (wrapper.sections || []).sort(function(a, b) { return (a.order || 0) - (b.order || 0); }).forEach(function(sec) { %>
+    <% (wrapper.sections || []).sort((a, b) => (a.order || 0) - (b.order || 0)).forEach(function(sec) { %>
 
       <h2 class="rp-section-title" style="color:<%= sec.themeColor || '#c62828' %>;">
         <%= sec.title %>
       </h2>
 
+      <% 
+        // ✅ Group projects by headline
+        let grouped = {};
+        (sec.projects || []).forEach(function(p) {
+          if (!grouped[p.headline]) grouped[p.headline] = [];
+          grouped[p.headline].push(p);
+        });
+      %>
+
       <div class="row g-3">
-        <% (sec.projects || []).forEach(function(p) { %>
-          <div class="col-md-6 col-lg-4">
+        <% Object.keys(grouped).forEach(function(headline) { %>
+          <div class="col-12">
             <div class="card h-100 shadow-sm border-0">
               <div class="card-body">
-                <h5 class="card-title rp-card-title mb-2"><%= p.headline %></h5>
+                <h5 class="card-title rp-card-title mb-2"><%= headline %></h5>
 
-                <% if (p.authors && p.authors.length) { %>
-                  <p class="mb-1"><strong>Authors:</strong> <%= p.authors.join(", ") %></p>
-                <% } %>
+                <% grouped[headline].forEach(function(p, idx) { %>
+                  <div class="mb-3 pb-2" style="border-bottom:<%= idx < grouped[headline].length - 1 ? '1px dotted #ccc' : 'none' %>;">
+                    
+                    <% if (p.authors && p.authors.length) { %>
+                      <p class="mb-1"><strong>Authors:</strong> <%= p.authors.join(", ") %></p>
+                    <% } %>
 
-                <% if (p.journal) { %>
-                  <p class="mb-1"><strong>Journal:</strong> <%= p.journal %></p>
-                <% } %>
+                    <% if (p.journal) { %>
+                      <p class="mb-1"><strong>Journal:</strong> <%= p.journal %></p>
+                    <% } %>
 
-                <% if (p.issn) { %>
-                  <p class="mb-1"><strong>ISSN:</strong> <%= p.issn %></p>
-                <% } %>
+                    <% if (p.issn) { %>
+                      <p class="mb-1"><strong>ISSN:</strong> <%= p.issn %></p>
+                    <% } %>
 
-                <% if (p.description) { %>
-                  <p class="text-muted"><%= p.description %></p>
-                <% } %>
+                    <% if (p.description) { %>
+                      <p class="text-muted"><%= p.description %></p>
+                    <% } %>
+                  </div>
+                <% }); %>
               </div>
             </div>
           </div>
@@ -44,93 +58,52 @@
 </div>
 
 <%- include("../partials/footer") %>
+
 <style>
-  /* Responsive card grid spacing */
+  /* same CSS as before */
   @media (max-width: 767px) {
-    .rp-container {
-      padding: 1rem;
-    }
-    .card {
-      margin-bottom: 1rem;
-    }
+    .rp-container { padding: 1rem; }
+    .card { margin-bottom: 1rem; }
   }
 
-  /* Card image placeholder */
   .rp-card-img {
-    width: 100%;
-    height: 140px;
+    width: 100%; height: 140px;
     background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
     border-radius: 10px 10px 0 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #1976d2;
-    font-size: 2.5rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    margin-bottom: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    color: #1976d2; font-size: 2.5rem; font-weight: 700;
+    letter-spacing: 2px; margin-bottom: 1rem;
     transition: background 0.3s;
   }
   .card:hover .rp-card-img {
-    background: linear-gradient(135deg, #f8bbd0 0%, #ffcdd2 100%); /* Updated to red tint */
+    background: linear-gradient(135deg, #f8bbd0 0%, #ffcdd2 100%);
     color: #b71c1c;
   }
 
-  /* Card body subtle background on hover */
   .card:hover .card-body {
-    background: #fff5f5; /* Subtle red background */
-    border-radius: 0 0 12px 12px;
+    background: #fff5f5; border-radius: 0 0 12px 12px;
   }
 
-  /* Section divider style */
-  hr.my-4 {
-    border-top: 2px dashed #e3e3e3;
-    opacity: 0.7;
-    margin-top: 2.5rem;
-    margin-bottom: 2.5rem;
-  }
+  hr.my-4 { border-top: 2px dashed #e3e3e3; opacity: 0.7; margin: 2.5rem 0; }
 
-  /* Card shadow pop on hover */
-  .card {
-    box-shadow: 0 2px 8px rgba(33, 150, 243, 0.07);
-  }
-  .card:hover {
-    box-shadow: 0 12px 32px rgba(244, 67, 54, 0.18); /* Updated to red shadow */
-    border: 1px solid #ef9a9a; /* Subtle red border */
-  }
-
-  /* Card title underline on hover */
-  .card-title.rp-card-title {
-    position: relative;
-    z-index: 1;
-  }
-  .card-title.rp-card-title::after {
-    content: "";
-    display: block;
-    position: absolute;
-    left: 0; bottom: -4px;
-    width: 0;
-    height: 3px;
-    background: #b71c1c; /* Updated to red */
-    border-radius: 2px;
-    transition: width 0.3s;
-    z-index: -1;
-  }
-  .card:hover .card-title.rp-card-title::after {
-    width: 60%;
-  }
-
-  /* Subtle scale on card hover */
-  .card {
-    transition: transform 0.25s cubic-bezier(.4,2,.6,1), box-shadow 0.25s;
-  }
+  .card { box-shadow: 0 2px 8px rgba(33, 150, 243, 0.07); transition: transform 0.25s cubic-bezier(.4,2,.6,1), box-shadow 0.25s; }
   .card:hover {
     transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 12px 32px rgba(244, 67, 54, 0.18);
+    border: 1px solid #ef9a9a;
   }
+
+  .card-title.rp-card-title { position: relative; z-index: 1; }
+  .card-title.rp-card-title::after {
+    content: ""; display: block; position: absolute;
+    left: 0; bottom: -4px; width: 0; height: 3px;
+    background: #b71c1c; border-radius: 2px; transition: width 0.3s;
+    z-index: -1;
+  }
+  .card:hover .card-title.rp-card-title::after { width: 60%; }
 </style>
 
 <script>
-  // Optional: Animate cards on scroll into view
   document.addEventListener('DOMContentLoaded', function() {
     const cards = document.querySelectorAll('.card');
     const observer = new IntersectionObserver(entries => {
