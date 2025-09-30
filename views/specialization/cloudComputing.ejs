@@ -1,135 +1,104 @@
 <%- include("../partials/header", { title: "Cloud Computing Specialization" }) %>
 
 <style>
-  body {
-    background-color: #f8f9fa;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  }
-
-  h1, h2 {
-    font-weight: 600;
-    color: #2c3e50;
-  }
-
-  .section-title {
-    margin-top: 40px;
-    padding-bottom: 8px;
-    border-bottom: 3px solid #3498db;
-    display: inline-block;
-  }
-
-  .card {
-    border-radius: 12px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    border: none;
-    transition: transform 0.2s;
-  }
-
-  .card:hover {
-    transform: translateY(-4px);
-  }
-
-  .card h4 {
-    color: #2980b9;
-    font-weight: 600;
-  }
-
-  .card p {
-    margin-bottom: 6px;
-  }
-
-  img.img-thumbnail {
-    border-radius: 8px;
-  }
+  body { background-color: #f8f9fa; font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; }
+  h1, h2 { font-weight: 600; color: #2c3e50; }
+  .section-title { margin-top: 40px; padding-bottom: 8px; border-bottom: 3px solid #3498db; display: inline-block; }
+  .card { border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); border: none; transition: transform 0.2s; margin-bottom: 20px; padding: 20px; }
+  .card:hover { transform: translateY(-4px); }
+  .card h4 { color: #2980b9; font-weight: 600; }
+  .card p { margin-bottom: 10px; }
+  .images-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+  img.img-thumbnail { border-radius: 8px; max-width: 200px; }
 </style>
 
 <div class="container py-4">
-  <h1 class="text-center mb-5">Cloud Computing Specialization</h1>
+  <h1 class="text-center mb-5"><%= data?.title || "Cloud Computing Specialization" %></h1>
+  
+  <% if (data?.description) { %>
+    <p class="lead mb-5 text-center"><%= data.description %></p>
+  <% } %>
 
   <!-- Research Works -->
-  <section>
-    <h2 class="section-title">Best Research Work</h2>
-    <% data?.researchWorks?.forEach(work => { %>
-      <div class="card my-3 p-4">
-        <h4><%= work.title %></h4>
-        <p><%= work.description %></p>
-        <p><strong>Faculty:</strong> <%= work.faculty %></p>
-        <p><strong>Mentor:</strong> <%= work.mentor %></p>
-        <p><strong>Date:</strong> <%= work.date %></p>
+  <% if (data?.researchWorks) { %>
+    <section>
+      <h2 class="section-title">Research Works</h2>
+      <div class="card">
+        <h4><%= data.researchWorks.title %></h4>
+        <p><%= data.researchWorks.description %></p>
       </div>
-    <% }) %>
-  </section>
+    </section>
+  <% } %>
 
-  <!-- Industry Collaboration -->
-  <section>
-    <h2 class="section-title">Industry Collaboration & Training</h2>
-    <% data?.collaborations?.forEach(c => { %>
-      <div class="card my-3 p-4">
-        <h4><%= c.company %> - <%= c.program %></h4>
-        <p><%= c.description %></p>
-        <p><strong>Date:</strong> <%= c.date %></p>
-        <p><strong>Speakers:</strong> <%= (c.speakers || []).join(", ") %></p>
-        <p><strong>Students:</strong> <%= c.studentsInvolved %></p>
-        <% (c.images || []).forEach(img => { %>
-          <img src="<%= img %>" class="img-thumbnail m-1" width="200">
-        <% }) %>
+  <!-- Collaborations -->
+  <% if (data?.collaborations) { %>
+    <section>
+      <h2 class="section-title">Industry Collaborations & Training</h2>
+      <div class="card">
+        <h4><%= data.collaborations.title %></h4>
+        <p><%= data.collaborations.description %></p>
+        <% if (data.collaborations.images?.length) { %>
+          <div class="images-container">
+            <% data.collaborations.images.forEach(img => { %>
+              <img src="<%= img %>" class="img-thumbnail">
+            <% }) %>
+          </div>
+        <% } %>
       </div>
-    <% }) %>
-  </section>
+    </section>
+  <% } %>
 
   <!-- Workshops -->
-  <section>
-    <h2 class="section-title">Workshops</h2>
-    <% data?.workshops?.forEach(w => { %>
-      <div class="card my-3 p-4">
-        <h4><%= w.title %></h4>
-        <p><%= w.description %></p>
-        <p><strong>Dates:</strong> <%= (w.dates || []).join(", ") %></p>
-        <p><strong>Resource Persons:</strong> <%= (w.resourcePersons || []).join(", ") %></p>
-        <p><strong>Participants:</strong> <%= w.participants %></p>
-        <% (w.images || []).forEach(img => { %>
-          <img src="<%= img %>" class="img-thumbnail m-1" width="200">
-        <% }) %>
+  <% if (data?.workshops) { %>
+    <section>
+      <h2 class="section-title">Workshops</h2>
+      <div class="card">
+        <h4><%= data.workshops.title %></h4>
+        <p><%= data.workshops.description %></p>
+        <% if (data.workshops.images?.length) { %>
+          <div class="images-container">
+            <% data.workshops.images.forEach(img => { %>
+              <img src="<%= img %>" class="img-thumbnail">
+            <% }) %>
+          </div>
+        <% } %>
       </div>
-    <% }) %>
-  </section>
+    </section>
+  <% } %>
 
   <!-- Faculty Achievements -->
-  <section>
-    <h2 class="section-title">Faculty Achievements</h2>
-    <% data?.facultyAchievements?.forEach(f => { %>
-      <div class="card my-3 p-4">
-        <h4><%= f.faculty %> - <%= f.achievement %></h4>
-        <p><%= f.description %></p>
-        <p><strong>Year:</strong> <%= f.year %></p>
+  <% if (data?.facultyAchievements) { %>
+    <section>
+      <h2 class="section-title">Faculty Achievements</h2>
+      <div class="card">
+        <h4><%= data.facultyAchievements.faculty %></h4>
+        <p><%= data.facultyAchievements.description %></p>
       </div>
-    <% }) %>
-  </section>
+    </section>
+  <% } %>
 
   <!-- Student Achievements -->
-  <section>
-    <h2 class="section-title">Student Achievements</h2>
-    <% data?.studentAchievements?.forEach(s => { %>
-      <div class="card my-3 p-4">
-        <h4><%= s.student %></h4>
-        <p><%= s.description %></p>
-        <p><strong>Outcome:</strong> <%= s.outcome %></p>
+  <% if (data?.studentAchievements) { %>
+    <section>
+      <h2 class="section-title">Student Achievements</h2>
+      <div class="card">
+        <h4><%= data.studentAchievements.student %></h4>
+        <p><%= data.studentAchievements.description %></p>
       </div>
-    <% }) %>
-  </section>
+    </section>
+  <% } %>
 
   <!-- Internships -->
-  <section>
-    <h2 class="section-title">Internships</h2>
-    <% data?.internships?.forEach(i => { %>
-      <div class="card my-3 p-4">
-        <h4><%= i.title %></h4>
-        <p><%= i.description %></p>
-        <p><strong>Sponsor:</strong> <%= i.sponsor %></p>
-        <p><strong>Students:</strong> <%= i.studentsInvolved %></p>
+  <% if (data?.internships) { %>
+    <section>
+      <h2 class="section-title">Internships</h2>
+      <div class="card">
+        <h4><%= data.internships.title %></h4>
+        <p><%= data.internships.description %></p>
       </div>
-    <% }) %>
-  </section>
+    </section>
+  <% } %>
+
 </div>
 
 <%- include("../partials/footer") %>
