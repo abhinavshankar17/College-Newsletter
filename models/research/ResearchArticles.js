@@ -1,35 +1,34 @@
 import mongoose from "mongoose";
 
-// 🎯 Each research article
+// 🎯 Each research article schema
 const articleSchema = new mongoose.Schema({
-  headline: { type: String, required: false },         // 🟢 Article title
-  authors: { type: [String], required: false },        // Authors list
-  journal: { type: String, required: false },          // Journal name
-  issn: { type: String, required: false },             // ISSN number
-  description: { type: String, required: false },      // Description paragraph
+  title: { type: String, required: true },        // 🔴 Title for grouping articles
+  headline: { type: String, required: false },    // 🟢 Article headline
+  authors: { type: [String], required: false },   // Authors list
+  journal: { type: String, required: false },     // Journal name
+  issn: { type: String, required: false },        // ISSN number
+  description: { type: String, required: false }, // Description paragraph
+  createdAt: { type: Date, default: Date.now },   // Timestamp for article creation
 });
 
-// 🎯 Section = Red Heading (Healthcare and Medical AI, etc.)
-const sectionSchema = new mongoose.Schema({
-  title: { type: String, required: false },            // 🔴 Section heading
-  order: { type: Number, required: false },            // For sorting
-  themeColor: { type: String, required: false },       // Accent color
-  projects: { type: [articleSchema], required: false } // Articles under section
-});
-
-// 🎯 Page container schema
-const researchArticlesPageSchema = new mongoose.Schema({
-  pageTitle: { type: String, default: "Research Articles" },
-  sections: { type: [sectionSchema], default: [] },
-  updatedAt: { type: Date, default: Date.now },
-});
-
-// 🔑 Static method for fetching all sections
-researchArticlesPageSchema.statics.getAllSections = async function () {
+// 🔑 Static method for grouping articles by title
+articleSchema.statics.getGroupedArticles = async function () {
   try {
-    return await this.find().sort({ order: 1 }).lean();
+    const articles = await this.find().lean();
+    if (!articles || articles.length === 0) return {};
+
+    // Group articles by title
+    const groupedArticles = articles.reduce((groups, article) => {
+      if (!groups[article.title]) {
+        groups[article.title] = [];
+      }
+      groups[article.title].push(article);
+      return groups;
+    }, {});
+
+    return groupedArticles;
   } catch (error) {
-    console.error("Error fetching sections:", error);
+    console.error("Error grouping articles:", error);
     throw error;
   }
 };
@@ -37,7 +36,7 @@ researchArticlesPageSchema.statics.getAllSections = async function () {
 // 👇 Explicit collection name
 const ResearchArticles = mongoose.model(
   "ResearchArticles",
-  researchArticlesPageSchema,
+  articleSchema,
   "research_articles"
 );
 

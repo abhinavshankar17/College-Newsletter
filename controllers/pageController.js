@@ -17,6 +17,22 @@ export const addArticle = async (req, res) => {
       return res.status(400).json({ message: "Invalid model name" });
     }
 
+    // 🔧 Step 1: look at schema
+    const schemaPaths = models[model].schema.paths;
+
+    // 🔧 Step 2: normalize data
+    Object.keys(data).forEach(key => {
+      if (Array.isArray(schemaPaths[key]?.options?.type)) {
+        // if field is array in schema, but came as string → split on commas
+        if (typeof data[key] === "string") {
+          data[key] = data[key]
+            .split(",")
+            .map(s => s.trim())
+            .filter(Boolean);
+        }
+      }
+    });
+
     const newDoc = new models[model](data);
     await newDoc.save();
 
@@ -26,6 +42,7 @@ export const addArticle = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
 
 // 📖 Read
 export const getPageData = async (req, res) => {

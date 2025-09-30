@@ -1,46 +1,41 @@
-<%- include("../partials/header", { title: page.pageTitle }) %>
+<%- include("../partials/header", { title: "Research Articles" }) %>
 
 <div class="container py-4 rp-container">
-  <h1 class="mb-4 text-center"><%= page.pageTitle %></h1>
+  <h1 class="mb-4 text-center">Research Articles</h1>
 
-  <% (page.sections || []).sort((a,b) => (a.order||0) - (b.order||0)).forEach(function(sec) { %>
-    <h2 class="rp-section-title" style="color:'(<%= sec.themeColor || '#c62828' %>;)'">
-      <%= sec.title %>
-    </h2>
+  <% Object.keys(groupedArticles || {}).forEach(function(headline) { %>
+    <h2 class="rp-section-title"><%= headline %></h2>
+    <div class="row g-3 mb-4">
+      <% (groupedArticles[headline] || []).forEach(function(p) { %>
+        <div class="col-md-6 col-lg-4">
+          <div class="card h-100 shadow-sm border-0 p-3">
+            <h5 class="card-title rp-card-title mb-2"><%= p.headline %></h5>
 
-    <% Object.keys(sec.projectsGrouped || {}).forEach(function(headline) { %>
-      <h3 class="rp-headline-title"><%= headline === "Uncategorized" ? "Uncategorized Articles" : headline %></h3>
-      <div class="row g-3 mb-4">
-        <% (sec.projectsGrouped[headline] || []).forEach(function(p) { %>
-          <div class="col-md-6 col-lg-4">
-            <div class="card h-100 shadow-sm border-0 p-3">
-              <h5 class="card-title rp-card-title mb-2"><%= p.headline %></h5>
+            <% if (p.authors && p.authors.length) { %>
+              <p class="mb-1"><strong>Authors:</strong> <%= p.authors.join(", ") %></p>
+            <% } %>
 
-              <% if (p.authors && p.authors.length) { %>
-                <p class="mb-1"><strong>Authors:</strong> <%= p.authors.join(", ") %></p>
-              <% } %>
+            <% if (p.journal) { %>
+              <p class="mb-1"><strong>Journal:</strong> <%= p.journal %></p>
+            <% } %>
 
-              <% if (p.journal) { %>
-                <p class="mb-1"><strong>Journal:</strong> <%= p.journal %></p>
-              <% } %>
+            <% if (p.issn) { %>
+              <p class="mb-1"><strong>ISSN:</strong> <%= p.issn %></p>
+            <% } %>
 
-              <% if (p.issn) { %>
-                <p class="mb-1"><strong>ISSN:</strong> <%= p.issn %></p>
-              <% } %>
-
-              <% if (p.description) { %>
-                <p class="text-muted"><%= p.description %></p>
-              <% } %>
-            </div>
+            <% if (p.description) { %>
+              <p class="text-muted"><%= p.description %></p>
+            <% } %>
           </div>
-        <% }); %>
-      </div>
-      <hr class="my-4">
-    <% }); %>
+        </div>
+      <% }); %>
+    </div>
+    <hr class="my-4">
   <% }); %>
 </div>
 
 <%- include("../partials/footer") %>
+
 
 <style>
   /* ===== Container Styling ===== */
