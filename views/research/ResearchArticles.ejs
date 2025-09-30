@@ -36,7 +36,6 @@
 
 <%- include("../partials/footer") %>
 
-
 <style>
   /* ===== Container Styling ===== */
   .rp-container {
@@ -68,7 +67,7 @@
     bottom: 0;
     height: 3px;
     width: 50%;
-    background: #ffb703;
+    background: #ffcc00;
     border-radius: 2px;
     transition: width 0.3s ease;
   }
@@ -87,9 +86,9 @@
 
   .card:hover {
     transform: translateY(-8px) scale(1.03);
-    box-shadow: 0 12px 32px rgba(244, 67, 54, 0.18);
-    border: 1px solid #ef9a9a;
-    background: #fff5f5;
+    box-shadow: 0 12px 32px rgba(255, 204, 0, 0.18); /* Yellow glow */
+    border: 1px solid #ffeb99; /* Soft yellow border */
+    background: #fff9e6; /* Light yellow background */
   }
 
   .card-title.rp-card-title {
@@ -101,10 +100,11 @@
     content: "";
     display: block;
     position: absolute;
-    left: 0; bottom: -4px;
+    left: 0;
+    bottom: -4px;
     width: 0;
     height: 3px;
-    background: #b71c1c;
+    background: #ffcc00; /* Yellow underline */
     border-radius: 2px;
     transition: width 0.3s;
     z-index: -1;
