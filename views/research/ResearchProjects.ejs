@@ -43,30 +43,29 @@
   }
 
   /* ===== Card Styling ===== */
-.card {
-  border: none;
-  border-radius: 12px;
-  background: #f9fafc;
-  transition: all 0.3s ease;
-}
+  .card {
+    border: none;
+    border-radius: 12px;
+    background: #f9fafc;
+    transition: all 0.3s ease;
+  }
 
-.card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-  background: #ffffff;
-}
+  .card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    background: #ffffff;
+  }
 
-/* ===== Status Badge (subtle) ===== */
-.status-badge {
-  display: inline-block;
-  background: rgba(13, 27, 42, 0.08); /* light navy tint */
-  color: #0d1b2a; /* navy text */
-  padding: 3px 10px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 500;
-}
-
+  /* ===== Status Badge (subtle) ===== */
+  .status-badge {
+    display: inline-block;
+    background: rgba(13, 27, 42, 0.08); /* light navy tint */
+    color: #0d1b2a; /* navy text */
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
 
   /* ===== Card Headline ===== */
   .card h5 {
@@ -88,29 +87,21 @@
   .card strong {
     color: #0d1b2a;
   }
-
-  /* ===== Accent Badge (Optional for Status) ===== */
-  
 </style>
 
 <div class="container py-4 rp-container">
   <h1><%= page.pageTitle %></h1>
 
-  <% const sections = (page.sections || []).sort((a, b) => (a.order || 0) - (b.order || 0)); %>
-
-  <% sections.forEach(function(sec){ %>
-    <!-- 🔴 Section Title -->
-    <h2 class="rp-section-title"><%= sec.title %></h2>
+  <% Object.keys(page.sections).forEach(function(sectionTitle){ %>
+    <!-- Section Title -->
+    <h2 class="rp-section-title"><%= sectionTitle %></h2>
 
     <!-- Projects Grid -->
     <div class="row g-3">
-      <% (sec.projects || []).forEach(function(p){ %>
+      <% page.sections[sectionTitle].forEach(function(p){ %>
         <div class="col-md-6 col-lg-4">
           <div class="card h-100 shadow-sm p-3">
-            <!-- 🟢 Headline -->
             <h5><%= p.headline %></h5>
-
-            <!-- Details -->
             <p><strong>Inventor(s):</strong> <%= (p.inventors || []).join(", ") %></p>
             <p><strong>Status:</strong> <span class="status-badge"><%= p.status %></span></p>
             <p><strong>Issuing Agency:</strong> <%= p.issuingAgency %></p>
