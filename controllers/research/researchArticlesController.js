@@ -47,7 +47,7 @@ export const createResearchArticle = async (req, res) => {
 
     // Extract fields dynamically
     const sectionTitle = data.sectionTitle || "Default Section";
-    const headline = data.headline || "Untitled";
+    const headline = data.headline || null; // Null if no headline is provided
     const authors = data.authors
       ? Array.isArray(data.authors)
         ? data.authors.filter(a => a.trim())
@@ -70,8 +70,29 @@ export const createResearchArticle = async (req, res) => {
       page.sections.push(section);
     }
 
-    // Add the new article
-    section.projects.push({ headline, authors, journal, issn, description });
+    if (headline) {
+      // Find the headline group within the section or create new
+      let headlineGroup = section.projects.find(p => p.headline === headline);
+      if (!headlineGroup) {
+        headlineGroup = { headline, authors: [], journal: "", issn: "", description: "" };
+        section.projects.push(headlineGroup);
+      }
+
+      // Add the new article details to the headline group
+      headlineGroup.authors = [...new Set([...headlineGroup.authors, ...authors])]; // Merge authors
+      headlineGroup.journal = journal || headlineGroup.journal; // Update journal if provided
+      headlineGroup.issn = issn || headlineGroup.issn; // Update ISSN if provided
+      headlineGroup.description = description || headlineGroup.description; // Update description if provided
+    } else {
+      // Add articles without a headline at the bottom
+      section.projects.push({
+        headline: "Uncategorized", // Default headline for articles without a headline
+        authors,
+        journal,
+        issn,
+        description,
+      });
+    }
 
     await page.save();
 
