@@ -1,9 +1,10 @@
 <%- include("../partials/header", { title: "Faculty Upskilling" }) %>
-  <style>
- /* Page Background */
+
+<style>
+/* Page Background */
 body {
   font-family: "Segoe UI", Roboto, Arial, sans-serif;
-  background: #f0f2f5; /* light gray */
+  background: #f0f2f5;
   margin: 0;
   padding: 0;
   color: #2c3e50;
@@ -21,7 +22,7 @@ h1 {
   text-align: center;
   font-size: 2.2rem;
   font-weight: 700;
-  color: #1f2933; /* dark gray */
+  color: #1f2933;
   margin-bottom: 30px;
   line-height: 1.4;
 }
@@ -30,14 +31,14 @@ h1::after {
   display: block;
   width: 80px;
   height: 4px;
-  background: #6b7280; /* medium gray accent */
+  background: #6b7280;
   margin: 12px auto 0;
   border-radius: 2px;
 }
 
 /* Faculty Card */
 .card {
-  background: #ffffff; /* keep cards white for contrast */
+  background: #ffffff;
   border-radius: 14px;
   padding: 20px;
   margin: 20px 0;
@@ -58,7 +59,7 @@ h1::after {
   border-radius: 50%;
   object-fit: cover;
   margin-right: 20px;
-  border: 2px solid #d1d5db; /* light gray border */
+  border: 2px solid #d1d5db;
   transition: transform 0.3s ease;
 }
 .card img:hover {
@@ -78,28 +79,19 @@ h1::after {
 .card .info p {
   margin: 4px 0;
   font-size: 1rem;
-  color: #4b5563; /* gray text */
+  color: #4b5563;
 }
 .card .info p strong {
-  color: #374151; /* darker gray accent */
+  color: #374151;
   font-weight: 600;
 }
 
-/* Achievements List */
-.achievements {
-  margin-top: 10px;
+/* Description Section */
+.card .description {
+  margin-top: 8px;
   font-size: 0.95rem;
   color: #4b5563;
-}
-.achievements ul {
-  padding-left: 20px;
-  margin: 0;
-}
-.achievements li {
-  margin-bottom: 6px;
-}
-.achievements li strong {
-  color: #6b7280; /* medium gray accent */
+  font-style: italic;
 }
 
 /* Empty Message */
@@ -110,48 +102,40 @@ h1::after {
   margin-top: 50px;
   font-size: 1.1rem;
 }
+</style>
 
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>Faculty Upskilling</h1>
+<div class="container">
+  <h1>Faculty Upskilling</h1>
 
-    <% if (faculties && faculties.length > 0) { %>
-      <% faculties.forEach(faculty => { %>
+  <% if (faculties && faculties.length > 0) { %>
+    <% faculties.forEach(doc => { %>
+      <% for (let i = 1; i <= 5; i++) {
+           const member = doc[`faculty${i}`];
+           if (member && (member.name || (member.images && member.images.length > 0))) {
+             const imgSrc = (member.images && member.images.length > 0) 
+                            ? (Array.isArray(member.images) ? member.images[0] : member.images)
+                            : '/images/default-avatar.png';
+      %>
         <div class="card">
-          <% if (faculty.image && faculty.image.length > 0) { %>
-            <img src="<%= faculty.image[0] %>" alt="<%= faculty.name %>">
-          <% } else { %>
-            <img src="/images/default-avatar.png" alt="No photo">
-          <% } %>
+          <img src="<%= imgSrc %>" alt="<%= member.name || 'No photo' %>">
 
           <div class="info">
-            <h2><%= faculty.name %></h2>
-            <p><%= faculty.designation %>, <%= faculty.department %></p>
+            <% if (member.name) { %>
+              <h2><%= member.name %></h2>
+            <% } %>
+            <p><%= member.designation %>, <%= member.department %></p>
 
-            <div class="achievements">
-              <% if (faculty.achievements && faculty.achievements.length > 0) { %>
-                <ul>
-                  <% faculty.achievements.forEach(ach => { %>
-                    <li>
-                      <strong><%= ach.title || "Achievement" %></strong> - 
-                      <%= ach.description || "" %>
-                      <% if (ach.organization) { %> (<%= ach.organization %>) <% } %>
-                      <% if (ach.monthYear) { %> - <%= ach.monthYear %> <% } %>
-                    </li>
-                  <% }) %>
-                </ul>
-              <% } else { %>
-                <p>No achievements listed.</p>
-              <% } %>
-            </div>
+            <% if (member.description) { %>
+              <div class="description"><%= member.description %></div>
+            <% } %>
           </div>
         </div>
-      <% }) %>
-    <% } else { %>
-      <p class="empty-message">No faculty upskilling records available yet.</p>
+      <% } %>
     <% } %>
-  </div>
+  <% }) %>
+  <% } else { %>
+    <p class="empty-message">No faculty upskilling records available yet.</p>
+  <% } %>
+</div>
 
 <%- include("../partials/footer") %>

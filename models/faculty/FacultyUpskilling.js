@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
 
 const facultyUpskillingSchema = new mongoose.Schema({
-  name: {
+  faculty1:{
+    images: { type: [String], default: [] },
+    name: {
     type: String,
     required: false,
   },
@@ -13,20 +15,100 @@ const facultyUpskillingSchema = new mongoose.Schema({
     type: String,
     default: "NWC, SRMIST",
   },
-  achievements: [
-    {
-      title: { type: String },        // e.g., "NPTEL DISCIPLINE STAR"
-      description: { type: String },  // detailed description (certificates, awards, etc.)
-      organization: { type: String }, // e.g., NPTEL, WIPRO, MSME Govt of India
-      date: { type: Date },           // exact date if available
-      monthYear: { type: String },    // alternative for "April 2025"
+  description: 
+  { type: String,
+     required: false
     },
-  ],
-  image: { type: [String], default: [] }, // Ensure images is an array
-  createdAt: {
-    type: Date,
-    default: Date.now,
+
   },
+  
+  faculty2:{
+    images: { type: [String], default: [] },
+    name: {
+    type: String,
+    required: false,
+  },
+  designation: {
+    type: String,
+    default: "Assistant Professor",
+  },
+  department: {
+    type: String,
+    default: "NWC, SRMIST",
+  },
+  description:
+  { type: String,
+      required: false
+    },
+  },
+  
+  faculty3:{
+    images: { type: [String], default: [] },
+    name: {
+    type: String,
+    required: false,
+  },
+  designation: {
+    type: String,
+    default: "Assistant Professor",
+  },
+  department: {
+    type: String,
+    default: "NWC, SRMIST",
+  },
+  description:
+  { type: String,
+      required: false
+    },
+  },
+    
+  faculty4:{
+    images: { type: [String], default: [] },
+    name: {
+    type: String,
+    required: false,
+  },
+  designation: {
+    type: String,
+    default: "Assistant Professor",
+  },
+  department: {
+    type: String,
+    default: "NWC, SRMIST",
+  },
+  description:
+  { type: String,
+      required: false
+    },
+  },
+
+  faculty5:{
+    images: { type: [String], default: [] },
+    name: {
+    type: String,
+    required: false,
+  },
+  designation: {
+    type: String,
+    default: "Assistant Professor",
+  },
+  department: {
+    type: String,
+    default: "NWC, SRMIST",
+  },
+  description:
+  { type: String,
+      required: false
+    },
+  },
+
+
+
+
+
+
+
+
 });
 
 const FacultyUpskilling = mongoose.model(
