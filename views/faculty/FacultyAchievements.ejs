@@ -68,58 +68,55 @@
   }
 </style>
 
-<div class="container py-4">
-  <h1>Faculty Achievements</h1>
+
+<div class="container my-5">
+  <h2 class="text-center fw-bold mb-4">Faculty Achievements</h2>
 
   <% if (achievements && achievements.length > 0) { %>
     <% achievements.forEach(achievement => { %>
-      <div class="card">
-        <!-- Faculty Info -->
-        <% if (achievement.imageUrl && achievement.imageUrl.length > 0) { %>
-          <img src="<%= achievement.imageUrl[0] %>" alt="Faculty Photo" class="faculty-img">
-        <% } %>
-        <h3><%= achievement.facultyName || "N/A" %></h3>
-        <p><strong>Designation:</strong> <%= achievement.designation || "N/A" %></p>
-        <p><strong>Department:</strong> <%= achievement.department || "N/A" %></p>
-        <p><strong>Institution:</strong> <%= achievement.institution || "N/A" %></p>
+      <div class="card shadow-lg p-4 rounded-3 mb-5">
+        <hr class="my-4 border border-2 border-dashed">
 
-        <!-- Achievement Info -->
-        <p class="section-title">Achievement Details</p>
-        <p><strong>Title:</strong> <%= achievement.title || "Untitled Achievement" %></p>
-        <p><strong>Type:</strong> <%= achievement.achievementType || "N/A" %></p>
-        <p><strong>Description:</strong> <%= achievement.description || "No description provided." %></p>
-        <p><strong>Organization:</strong> <%= achievement.organization || "N/A" %></p>
-        <p><strong>Event:</strong> <%= achievement.event || "N/A" %></p>
-        <p><strong>Role:</strong> <%= achievement.role || "N/A" %></p>
-        <p><strong>Recognition:</strong> <%= achievement.recognition || "N/A" %></p>
-        <p><strong>Dates:</strong> 
-          <% if (achievement.startDate) { %>
-            <%= new Date(achievement.startDate).toLocaleDateString() %>
-          <% } else { %>
-            N/A
-          <% } %> -
-          <% if (achievement.endDate) { %>
-            <%= new Date(achievement.endDate).toLocaleDateString() %>
-          <% } else { %>
-            Present
-          <% } %>
-        </p>
-
-        <!-- Collaborators -->
-        <% if (achievement.collaborators?.length > 0) { %>
-          <p class="section-title">Collaborators</p>
-          <ul>
-            <% achievement.collaborators.forEach(col => { %>
-              <li><strong><%= col.name || "N/A" %></strong> - <%= col.role || "N/A" %> 
-              <% if (col.regNo) { %> (Reg No: <%= col.regNo %>) <% } %></li>
+        <!-- Faculty Members -->
+        <div class="mb-5">
+          <h4 class="text-center fw-semibold mb-3">Faculty Members</h4>
+          <div class="row justify-content-center g-4">
+            <% const members = [achievement.faculty1, achievement.faculty2, achievement.faculty3, achievement.faculty4, achievement.faculty5, achievement.faculty6]; %>
+            <% members.forEach(member => { %>
+              <% if (member && (member.name || member.designamtion || member.description)) { %>
+                <div class="col-md-3 col-sm-6 text-center team-member">
+                  <% 
+                    // Handle single image safely
+                    const imgSrc = member.images 
+                                   ? (Array.isArray(member.images) ? member.images[0] : member.images) 
+                                   : null;
+                  %>
+                  <% if (imgSrc) { %>
+                    <img src="<%= imgSrc %>" 
+                         alt="<%= member.name || 'Faculty' %>" 
+                         class="rounded-circle shadow mb-2" 
+                         style="width: 100px; height: 100px; object-fit: cover;">
+                  <% } else { %>
+                    <div class="rounded-circle placeholder mb-2" 
+                         style="width: 100px; height: 100px; display:flex; align-items:center; justify-content:center; background:#9ca3af; color:#fff;">
+                      No Photo
+                    </div>
+                  <% } %>
+                  <p class="fw-bold mb-0"><%= member.name || "Unknown" %></p>
+                  <p class="text-muted small mb-0"><%= member.designamtion || "N/A" %></p>
+                  <p class="text-muted small"><%= member.description || "" %></p>
+                </div>
+              <% } %>
             <% }) %>
-          </ul>
-        <% } %>
+          </div>
+        </div>
       </div>
     <% }) %>
   <% } else { %>
-    <p class="text-center mt-5">No achievements have been added yet.</p>
+    <p class="text-center fst-italic text-muted">No faculty achievements available yet.</p>
   <% } %>
 </div>
+
+
 
 <%- include("../partials/footer") %>
