@@ -48,6 +48,7 @@ dotenv.config(); // loads .env variables
 // Middleware
 app.set("view engine", "ejs");
 app.use(express.static("public"));
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // MongoDB Connection
