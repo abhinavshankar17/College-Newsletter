@@ -2,32 +2,59 @@ import mongoose from "mongoose";
 
 
 const facultySchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: false,
+  faculty1:{
+    images: { type: [String], default: [] }, 
+  name1: { type: String, required: false },
+  designation1: { type: String, required: false },
+ 
   },
-  title: {
-    type: String, // e.g. "Dr.", "Ms.", "Mr."
-    required: false,
+  faculty2:{
+     images: { type: [String], default: [] }, 
+  name2: { type: String, required: false },
+  designation2: { type: String, required: false },
+   },
+ faculty3:{
+   images: { type: [String], default: [] }, 
+  name3: { type: String, required: false },
+  designation3: { type: String, required: false },
+ },
+
+  faculty4:{
+     images: { type: [String], default: [] }, 
+  name4: { type: String, required: false },
+  designation4: { type: String, required: false },
   },
-  fullName: {
-    type: String, // e.g. "Dr. K. Kanmani"
-    required: false,
+  faculty5:{
+     images: { type: [String], default: [] }, 
+  name5: { type: String, required: false },
+  designation5: { type: String, required: false },
   },
-  designation: {
-    type: String, // e.g. "Assistant Professor", "Teaching Assistant"
-    required: false,
+  faculty6:{
+     images: { type: [String], default: [] }, 
+  name6: { type: String, required: false },
+  designation6: { type: String, required: false },
   },
-  grade: {
-    type: String, // e.g. "Jr.G", can be null if not applicable
-    default: null,
-  },
-  imageUrl: { type: [String], default: [] },
-   // Ensure images is an array
-  joinedDate: {
-    type: Date,
-    default: Date.now, // store when added
-  },
+   faculty7:{
+     images: { type: [String], default: [] }, 
+  name7: { type: String, required: false },
+  designation7: { type: String, required: false },
+   },
+   faculty8:{
+     images: { type: [String], default: [] }, 
+  name8: { type: String, required: false },
+  designation8: { type: String, required: false },
+   },
+   faculty9:{
+     images: { type: [String], default: [] }, 
+  name9: { type: String, required: false },
+  designation9: { type: String, required: false },
+   },
+   faculty10:{
+     images: { type: [String], default: [] }, 
+  name10: { type: String, required: false },
+  designation10: { type: String, required: false },
+   },
+
 });
 
 const FacultyOnBoard = mongoose.model("FacultyonBoard", facultySchema);

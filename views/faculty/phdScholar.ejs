@@ -1,127 +1,126 @@
+<%- include("../partials/header", { title: "Ph.D. Scholars" }) %>
 
-  <%- include("../partials/header", { title: "Phd Scholars" }) %>
-  <style>
-  /* Page Background */
+<style>
 body {
   font-family: "Segoe UI", Roboto, Arial, sans-serif;
-  background: linear-gradient(135deg, #eef2f7, #f9fafc);
+  background: linear-gradient(135deg, #f0f4f8, #ffffff);
   margin: 0;
-  /* padding: 20px; */
   color: #2c3e50;
 }
 
-/* Page Title */
 h1 {
   text-align: center;
-  font-size: 2.2rem;
+  font-size: 2.4rem;
   font-weight: 700;
   color: #1e293b;
-  margin-bottom: 30px;
-  line-height: 1.4;
+  margin: 40px 20px 40px;
+  line-height: 1.3;
+  position: relative;
 }
+
 h1::after {
   content: "";
   display: block;
-  width: 80px;
+  width: 100px;
   height: 4px;
-  background: #4f46e5;
-  margin: 12px auto 0;
+  background: linear-gradient(to right, #4f46e5, #6366f1);
+  margin: 16px auto 0;
   border-radius: 2px;
 }
 
-/* Scholar Card */
-.scholar-card {
-  background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
-  margin: 20px auto;
-  padding: 24px;
-  max-width: 850px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.scholar-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+.scholar-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  padding: 0 20px 60px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* Scholar Name + RegNo */
+.scholar-card {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  padding: 28px 24px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.scholar-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+
 .scholar-card h2 {
-  margin: 0 0 12px;
-  font-size: 1.4rem;
+  margin: 0 0 14px;
+  font-size: 1.5rem;
   color: #111827;
   font-weight: 600;
 }
-.scholar-card h2 span {
-  font-size: 0.95rem;
-  font-weight: 400;
-  color: #64748b;
+
+.scholar-card p {
+  margin: 8px 0;
+  font-size: 1rem;
+  color: #4b5563;
+  line-height: 1.5;
 }
 
-/* Scholar Details */
-.scholar-card p {
-  margin: 6px 0;
-  font-size: 1rem;
-  color: #374151;
-}
 .scholar-card p strong {
   color: #4f46e5;
   font-weight: 600;
 }
 
-/* Techniques (special highlight) */
-.scholar-card p:last-of-type {
-  background: #f3f4f6;
-  padding: 10px 12px;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  color: #1e293b;
-}
-
-/* Empty State */
 .no-data {
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   color: #6b7280;
-  margin-top: 60px;
-  padding: 30px;
+  margin-top: 80px;
+  padding: 40px 20px;
 }
+
 .no-data p {
   background: #f3f4f6;
   display: inline-block;
-  padding: 12px 18px;
-  border-radius: 12px;
+  padding: 16px 24px;
+  border-radius: 14px;
   font-style: italic;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.05);
 }
 
-  </style>
-</head>
+@media (max-width: 480px) {
+  h1 {
+    font-size: 2rem;
+  }
+  .scholar-card {
+    padding: 20px 16px;
+  }
+}
+</style>
+
+
 <body>
   <h1>Ph.D. Powerhouse!<br>Driving Scholarly Achievement</h1>
 
-  <% if (scholars && scholars.length > 0) { %>
-    <% scholars.forEach(function(scholar) { %>
-      <div class="scholar-card">
-        <h2><%= scholar.name %> (Reg. No: <%= scholar.regNo %>)</h2>
-        <p><strong>Type:</strong> <%= scholar.scholarType %></p>
-        <p><strong>Guide:</strong> <%= scholar.guide %></p>
-        <p><strong>Viva Date:</strong> 
-          <%= scholar.vivaDate ? scholar.vivaDate.toDateString() : "Not available" %>
-        </p>
-        <p><strong>Research Title:</strong> <%= scholar.researchTitle %></p>
-        <% if (scholar.researchDomain) { %>
-          <p><strong>Domain:</strong> <%= scholar.researchDomain %></p>
+ <div class="scholar-container">
+  <% scholars.forEach(function(scholar) { %>
+    <div class="scholar-card">
+      <% for (let i = 1; i <= 6; i++) { %>
+        <% const nameKey = `name${i}`; %>
+        <% const descKey = `description${i}`; %>
+        <% if (scholar[nameKey] || scholar[descKey]) { %>
+          <p>
+            <% if (scholar[nameKey]) { %>
+              <strong> <%= scholar[nameKey] %><br></strong>
+            <% } %>
+            <% if (scholar[descKey]) { %>
+             <%= scholar[descKey] %>
+            <% } %>
+          </p>
         <% } %>
-        <% if (scholar.techniquesUsed && scholar.techniquesUsed.length > 0) { %>
-          <p><strong>Techniques Used:</strong> <%= scholar.techniquesUsed.join(", ") %></p>
-        <% } %>
-      </div>
-    <% }) %>
-  <% } else { %>
-    <div class="no-data">
-      <p>No Ph.D. scholar records found.</p>
+      <% } %>
     </div>
-  <% } %>
+  <% }) %>
+</div>
+
 </body>
-</html>
+
 <%- include("../partials/footer") %>

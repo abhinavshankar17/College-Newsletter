@@ -1,19 +1,20 @@
 <%- include("../partials/header", { title: "Faculty On Board" }) %>
 
 <style>
-  /* === Page Theme === */
   body {
     background: #f8f9fa;
   }
 
   /* Title */
   .faculty-title {
-    background: #0d1b2a; /* deep navy */
-    color: #ffcc00;      /* golden yellow */
+    background: #0d1b2a;
+    color: #ffcc00;
     font-size: 2rem;
     letter-spacing: 1px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     transition: all 0.3s ease;
+    padding: 15px;
+    border-radius: 10px;
   }
   .faculty-title:hover {
     background: #142d4c;
@@ -26,6 +27,7 @@
     border: none;
     border-radius: 15px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
   }
   .faculty-card:hover {
     transform: translateY(-8px);
@@ -42,17 +44,15 @@
     border-color: #ffd84f;
   }
 
-  /* Name */
+  /* Name & Designation */
   .faculty-name {
     color: #0d1b2a;
     font-weight: 700;
-    transition: color 0.3s ease;
+    margin-top: 12px;
   }
   .faculty-card:hover .faculty-name {
     color: #ffcc00;
   }
-
-  /* Designation */
   .faculty-designation {
     color: #555;
     font-style: italic;
@@ -67,6 +67,7 @@
     border-radius: 30px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
+    margin-top: 40px;
   }
   .congrats:hover {
     background: #ffd84f;
@@ -75,43 +76,49 @@
 </style>
 
 <div class="container my-5">
-  <!-- Title -->
-  <h1 class="faculty-title px-4 py-3 rounded mb-5 text-center fw-bold">
-    New On Board
-  </h1>
+  <h1 class="faculty-title text-center mb-5">New On Board</h1>
 
-  <!-- Faculty Grid -->
   <div class="row g-4">
     <% if (faculty && faculty.length > 0) { %>
-      <% faculty.forEach(member => { %>
-        <div class="col-12 col-sm-6 col-md-4">
-          <div class="card faculty-card h-100 text-center shadow-sm">
-            <!-- Photo -->
-            <div class="d-flex justify-content-center mt-3">
-              <% if (member.imageUrl && member.imageUrl.length > 0) { %>
-                <img src="<%= member.imageUrl[0] %>" 
-                     alt="<%= member.fullName %>" 
-                     class="faculty-photo rounded-circle shadow-sm"
-                     style="width: 130px; height: 130px; object-fit: cover;">
-              <% } else { %>
-                <div class="d-flex align-items-center justify-content-center bg-light border text-muted"
-                     style="width: 130px; height: 130px; border-radius: 50%;">
-                  No Photo
-                </div>
-              <% } %>
-            </div>
+      <% faculty.forEach(doc => { %>
+        <% for (let i = 1; i <= 10; i++) { 
+             const member = doc[`faculty${i}`]; 
+             const nameKey = `name${i}`; 
+             const designationKey = `designation${i}`; 
+             if (member && (member[nameKey] || (member.images && member.images.length > 0))) { 
+               const imgSrc = (member.images && member.images.length > 0) ? member.images[0] : null;
+        %>
+          <div class="col-12 col-sm-6 col-md-4">
+            <div class="card faculty-card h-100 text-center shadow-sm">
 
-            <!-- Name + Designation -->
-            <div class="card-body">
-              <h5 class="faculty-name"><%= member.fullName %></h5>
-              <p class="faculty-designation">
-                <%= member.designation %> 
-                <% if (member.grade) { %> (<%= member.grade %>) <% } %>
-              </p>
+              <!-- Photo -->
+              <div class="d-flex justify-content-center mt-3">
+                <% if (imgSrc) { %>
+                  <img src="<%= imgSrc %>"
+                       alt="<%= member[nameKey] %>"
+                       class="faculty-photo rounded-circle shadow-sm"
+                       style="width: 130px; height: 130px; object-fit: cover;">
+                <% } else { %>
+                  <div class="d-flex align-items-center justify-content-center bg-light border text-muted"
+                       style="width: 130px; height: 130px; border-radius: 50%;">
+                    No Photo
+                  </div>
+                <% } %>
+              </div>
+
+              <!-- Name + Designation -->
+              <div class="card-body">
+                <% if (member[nameKey]) { %>
+                  <h5 class="faculty-name"><%= member[nameKey] %></h5>
+                <% } %>
+                <% if (member[designationKey]) { %>
+                  <p class="faculty-designation"><%= member[designationKey] %></p>
+                <% } %>
+              </div>
             </div>
           </div>
-        </div>
-      <% }) %>
+        <% } } %>
+      <% }); %>
     <% } else { %>
       <div class="col-12">
         <p class="text-center text-muted fst-italic">No new faculty members added.</p>
@@ -120,7 +127,7 @@
   </div>
 
   <!-- Congratulations Footer -->
-  <div class="mt-5 text-center">
+  <div class="text-center">
     <h2 class="fw-bold congrats">🎉 Congratulations 🎉</h2>
   </div>
 </div>

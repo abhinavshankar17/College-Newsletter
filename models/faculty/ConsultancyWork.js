@@ -2,28 +2,33 @@ import mongoose from "mongoose";
 
 const ConsultancyWorkSchema = new mongoose.Schema({
   title: { type: String, required: false },
-  collaboratingAgency: { type: String, required: false },
+  description1: { type: String, required: false },
+    consultancyCompany: { type: String, required: false },
   consultancyAmount: { type: Number, required: false },
-  department: { type: String, default: "Networking and Communications" },
-  duration: {
-    start: { type: Date },
-    end: { type: Date },
-  },
-  projectDescription: { type: String, required: false },
-  teamMembers: [
-    {
-      name: { type: String, required: false },
+  Member1:{
+     name: { type: String, required: false },
       designation: { type: String },
       department: { type: String, default: "NWC, SRMIST" },
-      imageUrl: { type: [String], default: [] },
-    },
-  ],
+      images: { type: [String], default: [] },
+  },
+   Member2:{
+     name: { type: String, required: false },
+      designation: { type: String },
+      department: { type: String, default: "NWC, SRMIST" },
+      images: { type: [String], default: [] },
+  },
+   Member3:{
+     name: { type: String, required: false },
+      designation: { type: String },
+      department: { type: String, default: "NWC, SRMIST" },
+      images: { type: [String], default: [] },
+  },
   closingQuote: {
     type: String,
     default:
       "Innovation thrives where expertise meets opportunity – consultancy bridges the path from ideas to impactful solutions.",
   },
-  createdAt: { type: Date, default: Date.now },
+
 
 });
 

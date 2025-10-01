@@ -13,26 +13,24 @@
           <!-- Project Info -->
           <div class="mb-4">
             <h4 class="fw-semibold">Project: <%= consultancy.title || "Untitled Project" %></h4>
-            <p><strong>Department:</strong> <%= consultancy.department || "N/A" %></p>
-            <p><strong>Collaborating Agency:</strong> <%= consultancy.collaboratingAgency || "Not Specified" %></p>
+            <p><strong>Department:</strong> NWC, SRMIST</p>
+            <p><strong>Collaborating Agency:</strong> <%= consultancy.consultancyCompany || "Not Specified" %></p>
             <p><strong>Consultancy Amount:</strong> ₹ <%= consultancy.consultancyAmount ? consultancy.consultancyAmount.toLocaleString() : "0" %></p>
-            <p>
-              <strong>Duration:</strong>
-              <%= consultancy.duration?.start ? consultancy.duration.start.toDateString() : "Start Date" %>
-              -
-              <%= consultancy.duration?.end ? consultancy.duration.end.toDateString() : "End Date" %>
-            </p>
           </div>
 
           <!-- Team Members -->
           <div class="mb-5">
             <h4 class="text-center fw-semibold mb-3">Team Members</h4>
             <div class="row justify-content-center g-4">
-              <% if (consultancy.teamMembers && consultancy.teamMembers.length > 0) { %>
-                <% consultancy.teamMembers.forEach(member => { %>
+              <% const members = [consultancy.Member1, consultancy.Member2, consultancy.Member3]; %>
+              <% members.forEach(member => { %>
+                <% if (member && (member.name || member.designation)) { %>
                   <div class="col-md-3 col-sm-6 text-center team-member">
-                    <% if (member.imageUrl && member.imageUrl.length > 0) { %>
-                      <img src="<%= member.imageUrl[0] %>" alt="<%= member.name %>" class="rounded-circle shadow mb-2">
+                    <% 
+                      const imgSrc = (member.images && member.images.length > 0) ? member.images[0] : null; 
+                    %>
+                    <% if (imgSrc) { %>
+                      <img src="<%= imgSrc %>" alt="<%= member.name %>" class="rounded-circle shadow mb-2">
                     <% } else { %>
                       <div class="rounded-circle placeholder mb-2">No Photo</div>
                     <% } %>
@@ -40,17 +38,15 @@
                     <p class="text-muted small mb-0"><%= member.designation || "N/A" %></p>
                     <p class="text-muted small"><%= member.department || "N/A" %></p>
                   </div>
-                <% }) %>
-              <% } else { %>
-                <p class="text-center text-muted fst-italic">No team members available.</p>
-              <% } %>
+                <% } %>
+              <% }) %>
             </div>
           </div>
 
           <!-- Project Description -->
           <div class="mb-4">
             <p class="text-muted">
-              <%= consultancy.projectDescription || "Project description will be added soon." %>
+              <%= consultancy.description1 || "Project description will be added soon." %>
             </p>
           </div>
 

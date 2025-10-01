@@ -2,39 +2,54 @@
 import mongoose from "mongoose";
 
 const phdScholarSchema = new mongoose.Schema({
-  name: {
+  name1: {
     type: String,
     required: false,
   },
-  regNo: {
-    type: String,
-    required: false,
-    unique: true,
-  },
-  scholarType: {
-    type: String, // full-time, part-time internal, part-time external
-    required: false,
-  },
-  guide: {
+  description1:{
     type: String,
     required: false,
   },
-  vivaDate: {
-    type: Date,
-    required: false,
-  },
-  researchTitle: {
+  name2: {
     type: String,
     required: false,
   },
-  researchDomain: {
-    type: String, // e.g., Blockchain, Machine Learning, NLP
+  description2:{
+    type: String,
     required: false,
   },
-  techniquesUsed: {
-    type: [String], // array of techniques/methods used
+  name3: {
+    type: String,
     required: false,
   },
+  description3:{
+    type: String,
+    required: false,
+  },
+  name4: {
+    type: String,
+    required: false,
+  },
+  description4:{
+    type: String,
+    required: false,
+  },
+  name5: {
+    type: String,
+    required: false,
+  },
+  description5:{
+    type: String,
+    required: false,
+  },
+  name6: {
+    type: String,
+    required: false,
+  },
+  description6:{
+    type: String,
+    required: false,
+  }
 });
 
 const PhdScholar = mongoose.model("PhdScholar", phdScholarSchema);
