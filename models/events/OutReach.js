@@ -6,7 +6,7 @@ const OutreachActivitySchema = new mongoose.Schema({
     required: false,
   },
   date: {
-    type: Date,
+    type: String,
     required: false,
   },
   time: {
@@ -20,25 +20,16 @@ const OutreachActivitySchema = new mongoose.Schema({
   participants: {
     type: String, // Example: "15 students and 6 faculty members"
   },
-  convener: {
-    type: String, // For events where a single convener exists
-  },
-  coordinators: [
+  coordinators: 
     {
       name: String,
-      designation: String, // Example: "Assistant Professor, NWC"
+     // Example: "Assistant Professor, NWC"
     },
-  ],
-  coConveners: [
-    {
-      name: String,
-      designation: String,
-    },
-  ],
+
   eventSummary: {
     type: String,
   },
-  imageUrl: { type: [String], default: [] }, // Ensure images is an array
+  images: { type: [String], default: [] }, // Ensure images is an array
 });
 
 const OutreachActivityModel = mongoose.model("OutreachActivity", OutreachActivitySchema);
