@@ -99,55 +99,11 @@
         <div class="card shadow-lg">
           <div class="card-body">
             <!-- Title -->
-            <h2 class="card-title"><%= workshop.title %></h2>
+            <h2 class="card-title"><%= workshop.title || "No Title" %></h2>
 
-            <!-- Dates -->
-            <div class="info-box">
-              <strong>Date:</strong>
-              <% if (workshop.startDate && workshop.endDate) { %>
-                <%= new Date(workshop.startDate).toDateString() %> –
-                <%= new Date(workshop.endDate).toDateString() %>
-              <% } else { %>
-                Not Available
-              <% } %>
-            </div>
-
-            <!-- Conveners -->
-            <h5>Conveners:</h5>
-            <ul>
-              <% if (workshop.conveners?.length > 0) { %>
-                <% workshop.conveners.forEach(c => { %>
-                  <li><%= c.name %> (<%= c.designation || "No designation" %>)</li>
-                <% }) %>
-              <% } else { %>
-                <li>No conveners listed</li>
-              <% } %>
-            </ul>
-
-            <!-- Resource Person -->
-            <h5>Resource Person:</h5>
-            <% if (workshop.resourcePerson) { %>
-              <p>
-                <%= workshop.resourcePerson.name %>
-                - <%= workshop.resourcePerson.role || "Role not available" %>
-                <% if (workshop.resourcePerson.organization) { %>
-                  , <%= workshop.resourcePerson.organization %>
-                <% } %>
-              </p>
-            <% } else { %>
-              <p>No resource person info</p>
-            <% } %>
-
-            <!-- Registered Participants -->
-            <div class="info-box">
-              <strong>Registered Participants:</strong>
-              <%= workshop.numberOfRegisteredParticipants || 0 %>
-            </div>
-
-            <!-- Venue -->
-            <div class="info-box">
-              <strong>Venue:</strong> <%= workshop.venue || "Not specified" %>
-            </div>
+            <!-- Description -->
+          
+            <p><%= workshop.description.replace(/\n/g, "<br>") || "No description available" %></p>
 
             <!-- Event Summary -->
             <h5>Event Summary:</h5>
@@ -156,8 +112,8 @@
             <!-- Images -->
             <h5>Images:</h5>
             <div class="row">
-              <% if (workshop.imageUrl?.length > 0) { %>
-                <% workshop.imageUrl.forEach(url => { %>
+              <% if (workshop.images && workshop.images.length > 0) { %>
+                <% workshop.images.forEach(url => { %>
                   <div class="col-md-4 mb-3">
                     <img src="<%= url %>" class="img-fluid rounded shadow-sm" alt="Workshop Image">
                   </div>

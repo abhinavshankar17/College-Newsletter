@@ -144,106 +144,112 @@
   }
 </style>
 
-<section class="container page-cyber py-5">
-  <% if (!page) { %>
-    <p class="text-center">No Cyber Security data found.</p>
-  <% } else { %>
+<section class="container py-5">
+  <h1>Add Cyber Security Data</h1>
+  <form action="/specialization/cyber-security/add" method="POST">
 
-  <header class="page-header mb-4">
-    <h1 class="title"><%= page.title %></h1>
-    <p class="lead"><%= page.introduction %></p>
-  </header>
+    <!-- Specialization Name & Description -->
+    <div class="form-group mb-3">
+      <label>Specialization Name</label>
+      <input type="text" name="specializationName" class="form-control" required>
+    </div>
 
-  <div class="grid">
-    <main class="main-col">
+    <div class="form-group mb-3">
+      <label>Specialization Description</label>
+      <textarea name="specializationDescription" class="form-control" rows="3" required></textarea>
+    </div>
 
-      <!-- Academic Excellence -->
-      <article class="card section mb-4">
-        <h2>Academic Excellence & Research Output</h2>
-        <p><%= page.academicExcellence.description %></p>
-        <ul>
-          <% page.academicExcellence.facultyHighlights.forEach(h => { %>
-            <li><%= h %></li>
-          <% }) %>
-        </ul>
-        <h4>Publications & Outputs</h4>
-        <% page.academicExcellence.publications.forEach(pub => { %>
-          <div class="pub">
-            <strong><%= pub.title %></strong><br>
-            <small><%= [pub.publisher, pub.date].filter(Boolean).join(' • ') %></small>
-            <p><%= pub.description %></p>
-          </div>
-        <% }) %>
-      </article>
+    <!-- Academic Excellence -->
+    <h4>Academic Excellence</h4>
+    <div class="form-group mb-3">
+      <label>Topic Name</label>
+      <input type="text" name="academicExcellence[topicName]" class="form-control">
+    </div>
+    <div class="form-group mb-3">
+      <label>Description</label>
+      <textarea name="academicExcellence[description]" class="form-control" rows="3"></textarea>
+    </div>
 
-      <!-- Internships -->
-      <article class="card section mb-4">
-        <h2>Internship & Industry Exposure</h2>
-        <% page.internships.forEach(i => { %>
-          <div>
-            <h4><%= i.leader %> — <small><%= i.organization %></small></h4>
-            <p><strong>Mentors:</strong> <%= i.mentors.join(', ') %></p>
-            <p><strong>Team:</strong> <%= i.team.join(', ') %></p>
-            <p><%= i.description %></p>
-            <p><strong>Techniques:</strong> <%= i.techniques.join(', ') %></p>
-          </div>
-        <% }) %>
-      </article>
+    <!-- Internships (Single Image) -->
+    <h4>Internship & Industry Exposure</h4>
+    <div class="form-group mb-3">
+      <label>Topic Name</label>
+      <input type="text" name="internshipsIndustryExposure[topicName]" class="form-control">
+    </div>
+    <div class="form-group mb-3">
+      <label>Description</label>
+      <textarea name="internshipsIndustryExposure[description]" class="form-control" rows="3"></textarea>
+    </div>
+    <div class="form-group mb-3">
+      <label>Image URL (Single)</label>
+      <input type="text" name="internshipsIndustryExposure[imageUrl]" class="form-control" placeholder="e.g., internship1.jpg">
+    </div>
 
-      <!-- Certifications -->
-      <article class="card section mb-4">
-        <h2>Faculty Development & Certifications</h2>
-        <ul class="cert-list">
-          <% page.certifications.forEach(c => { %>
-            <li>
-              <strong><%= c.faculty.join(', ') %></strong> — <%= c.program %>
-              <small> (<%= c.organization %>)</small> — <%= c.date %>
-              <span class="badge">Grade: <%= c.grade %></span>
-            </li>
-          <% }) %>
-        </ul>
-      </article>
+    <!-- Faculty Development & Certifications -->
+    <h4>Faculty Development & Certifications</h4>
+    <div class="form-group mb-3">
+      <label>Topic Name</label>
+      <input type="text" name="facultyDevelopmentCertifications[topicName]" class="form-control">
+    </div>
+    <div class="form-group mb-3">
+      <label>Description</label>
+      <textarea name="facultyDevelopmentCertifications[description]" class="form-control" rows="3"></textarea>
+    </div>
 
-      <!-- Outreach -->
-      <article class="card section mb-4">
-        <h2>Outreach & Engagement</h2>
-        <h4>Programs</h4>
-        <ul>
-          <% page.outreach.programs.forEach(p => { %><li><%= p %></li><% }) %>
-        </ul>
-        <h4>Events</h4>
-        <ul>
-          <% page.outreach.events.forEach(e => { %><li><%= e %></li><% }) %>
-        </ul>
-      </article>
+    <!-- Outreach & Engagement -->
+    <h4>Outreach, Recognition & Engagement</h4>
+    <div class="form-group mb-3">
+      <label>Topic Name</label>
+      <input type="text" name="outreachRecognitionEngagement[topicName]" class="form-control">
+    </div>
+    <div class="form-group mb-3">
+      <label>Description</label>
+      <textarea name="outreachRecognitionEngagement[description]" class="form-control" rows="3"></textarea>
+    </div>
 
-      <!-- Collaborations -->
-      <article class="card section mb-4">
-        <h2>International Collaborations</h2>
-        <% page.collaborations.forEach(c => { %>
-          <div>
-            <h4><%= c.partner %> — <small><%= c.date %></small></h4>
-            <p><%= c.description %></p>
-            <p><strong>Participants:</strong> <%= c.participants.join(', ') %></p>
-          </div>
-        <% }) %>
-      </article>
+    <!-- International Collaborations (Multiple Images) -->
+    <h4>International Collaborations</h4>
+    <div class="form-group mb-3">
+      <label>Topic Name</label>
+      <input type="text" name="internationalCollaborations[topicName]" class="form-control">
+    </div>
+    <div class="form-group mb-3">
+      <label>Description</label>
+      <textarea name="internationalCollaborations[description]" class="form-control" rows="3"></textarea>
+    </div>
 
-    </main>
-
-    <!-- Sidebar -->
-    <aside class="side-col">
-      <div class="card images">
-        <% page.images.forEach(src => { %>
-          <figure class="thumb"><img src="<%= src %>" alt="cyber image"></figure>
-        <% }) %>
+    <div id="collab-images">
+      <div class="form-group mb-2">
+        <label>Image URL</label>
+        <input type="text" name="internationalCollaborations[images][]" class="form-control" placeholder="Image URL 1">
       </div>
-      <div class="card quote">
-        <blockquote>"<%= page.quote %>"</blockquote>
-      </div>
-    </aside>
-  </div>
-  <% } %>
+    </div>
+    <button type="button" id="addImage" class="btn btn-sm btn-secondary mb-3">Add Another Image</button>
+
+    <!-- Quote -->
+    <div class="form-group mb-3">
+      <label>Quote</label>
+      <input type="text" name="quote" class="form-control">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Data</button>
+  </form>
 </section>
 
+<script>
+  const addBtn = document.getElementById("addImage");
+  const container = document.getElementById("collab-images");
+  let count = 2;
+
+  addBtn.addEventListener("click", () => {
+    const div = document.createElement("div");
+    div.classList.add("form-group", "mb-2");
+    div.innerHTML = `
+      <label>Image URL</label>
+      <input type="text" name="internationalCollaborations[images][]" class="form-control" placeholder="Image URL ${count}">
+    `;
+    container.appendChild(div);
+    count++;
+  });
+</script>
 <%- include("../partials/footer") %>

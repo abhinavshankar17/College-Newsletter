@@ -4,7 +4,7 @@ import GuestLectureModel from "../../models/events/GuestLecture.js";
 export const getAllLectures = async (req, res) => {
   try {
     const guestLectures = await GuestLectureModel.find().lean(); // fetch all
-    res.render("events/GuestLecture.ejs", { guestLectures });
+    res.render("events/GuestLecture.ejs", { guestLectures  });
   } catch (error) {
     console.log("The error occurred is: " + error);
     res.status(500).render("error", { message: "Server Error" });
@@ -14,7 +14,21 @@ export const getAllLectures = async (req, res) => {
 // Add new lecture
 export const addAllLectures = async (req, res) => {
   try {
-    const newLecture = new GuestLectureModel(req.body);
+const { title, conveners, resourcePerson, numberOfRegisteredParticipants, tracks, prizes, venue, registration, eventSummary, images } = req.body;
+
+const newLecture = new GuestLectureModel({
+  title,
+  conveners,
+  resourcePerson,
+  numberOfRegisteredParticipants: numberOfRegisteredParticipants || 0,
+  tracks,
+  prizes,
+  venue,
+  registration,
+  eventSummary,
+  images: images || []
+});
+
     await newLecture.save();
     res.redirect("/GuestLecture");
   } catch (error) {

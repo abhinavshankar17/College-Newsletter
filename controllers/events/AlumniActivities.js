@@ -3,10 +3,10 @@ import AlumniModel from "../../models/events/AlumniActivities.js";
 // Get all alumni activities
 export const getAllAlumniActivities = async (req, res) => {
   try {
-    const AlumniActivities = await AlumniModel.find().lean(); // fetch all records as array
-    res.render("events/AlumniActivities.ejs", { AlumniActivities });
+    const activities = await AlumniModel.find().lean();
+    res.render("events/AlumniActivities.ejs", { activities });
   } catch (error) {
-    console.log("The error occurred is: " + error);
+    console.error("Error fetching Alumni Activities:", error);
     res.status(500).render("error", { message: "Server Error" });
   }
 };
@@ -14,8 +14,29 @@ export const getAllAlumniActivities = async (req, res) => {
 // Add new alumni activity
 export const addAllAlumniActivities = async (req, res) => {
   try {
-    const AlumniActivity = new AlumniModel(req.body);
-    await AlumniActivity.save();
+    let {
+      eventTitle,
+      participantsCount,
+      participantsBatchRange,
+      convenername,
+      convenerdesignation,
+      convenerdepartment,
+      eventOutcomes,
+      images
+    } = req.body;
+
+    const newAlumniActivity = new AlumniModel({
+      eventTitle,
+      participantsCount,
+      participantsBatchRange,
+      convenername,
+      convenerdesignation,
+      convenerdepartment,
+      eventOutcomes,
+      images: images || []
+    });
+
+    await newAlumniActivity.save();
     res.redirect("/AlumniActivities");
   } catch (error) {
     console.error("Error adding AlumniActivity:", error);

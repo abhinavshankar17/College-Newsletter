@@ -21,6 +21,7 @@
       background: #ffffff;
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
+      margin-bottom: 2rem;
     }
 
     .card:hover {
@@ -52,12 +53,6 @@
       margin-bottom: 12px;
     }
 
-    .alert-warning {
-      font-weight: 500;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    }
-
     img {
       transition: transform 0.3s ease;
       border-radius: 10px;
@@ -76,54 +71,42 @@
   <div class="container my-5">
     <h1 class="text-center mb-4">🎓 Alumni Activities</h1>
 
-    <% if (!AlumniActivities || AlumniActivities.length === 0) { %>
-      <!-- When no data is in DB -->
+    <% if (!activities || activities.length === 0) { %>
       <div class="alert alert-warning text-center">
         No Alumni Activities found. Please add one.
       </div>
     <% } else { %>
-      <!-- Loop over each alumni activity -->
-      <% AlumniActivities.forEach(activity => { %>
-        <div class="card shadow mb-4">
+      <% activities.forEach(activity => { %>
+        <div class="card shadow">
           <div class="card-body">
-            <h2 class="card-title mb-3"><%= activity.eventTitle %></h2>
-            
-            <p><strong>Date:</strong> 
-              <%= activity.date ? new Date(activity.date).toLocaleDateString() : "N/A" %>
-            </p>
-            
+            <h2 class="card-title mb-3"><%= activity.eventTitle || "Untitled Event" %></h2>
+
             <p><strong>Participants:</strong> 
               <%= activity.participantsCount || "N/A" %> 
               (Batches: <%= activity.participantsBatchRange || "N/A" %>)
             </p>
 
-            <h5 class="mt-4">Convener</h5>
+            <h5>Convener</h5>
             <ul class="list-group list-group-flush mb-3">
-              <li class="list-group-item"><strong>Name:</strong> <%= activity.convener?.name || "N/A" %></li>
-              <li class="list-group-item"><strong>Designation:</strong> <%= activity.convener?.designation || "N/A" %></li>
-              <li class="list-group-item"><strong>Department:</strong> <%= activity.convener?.department || "N/A" %></li>
-              <li class="list-group-item"><strong>Institution:</strong> <%= activity.convener?.institution || "N/A" %></li>
+              <li class="list-group-item"><strong>Name:</strong> <%= activity.convenername || "N/A" %></li>
+              <li class="list-group-item"><strong>Designation:</strong> <%= activity.convenerdesignation || "N/A" %></li>
+              <li class="list-group-item"><strong>Department:</strong> <%= activity.convenerdepartment || "N/A" %></li>
             </ul>
 
-            <h5 class="mt-4">Event Outcomes</h5>
+            <h5>Event Outcomes</h5>
             <p><%= activity.eventOutcomes || "No outcomes provided." %></p>
 
-            <% if (activity.photos && activity.photos.length > 0) { %>
+            <% if (activity.images && activity.images.length > 0) { %>
               <h5 class="mt-4">📸 Photos</h5>
               <div class="row">
-                <% activity.photos.forEach(photo => { %>
+                <% activity.images.forEach(image => { %>
                   <div class="col-md-4 text-center mb-3">
-                    <img src="<%= photo.imageUrl %>" alt="<%= photo.name %>" class="img-fluid rounded">
-                    <p class="mt-2"><%= photo.name %></p>
+                    <img src="<%= image %>" alt="Alumni Activity Image" class="img-fluid rounded">
                   </div>
                 <% }) %>
               </div>
             <% } else { %>
               <p class="text-muted">No photos available.</p>
-            <% } %>
-
-            <% if (activity.pageNumber) { %>
-              <p class="text-muted">Page No: <%= activity.pageNumber %></p>
             <% } %>
           </div>
         </div>

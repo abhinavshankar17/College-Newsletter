@@ -14,8 +14,10 @@ export const getAllWorkshops = async (req, res) => {
 // Add new workshop
 export const addAllWorkshops = async (req, res) => {
   try {
-    const newWorkshop = new WorkshopModel(req.body);
-    await newWorkshop.save();
+   const { title, description, eventSummary, images } = req.body;
+const newWorkshop = new WorkshopModel({ title, description, eventSummary, images });
+await newWorkshop.save();
+
     res.redirect("/Workshops");
   } catch (error) {
     console.error("Error adding Workshop:", error);

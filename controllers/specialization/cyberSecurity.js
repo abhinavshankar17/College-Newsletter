@@ -1,6 +1,6 @@
 import CyberSecurity from "../../models/specialization/cyberSecurity.js";
 
-// Show page
+// Show Cyber Security Page
 export const getCyberSecurity = async (req, res) => {
   try {
     const raw = await CyberSecurity.findOne().lean();
@@ -9,22 +9,14 @@ export const getCyberSecurity = async (req, res) => {
     }
 
     const page = {
-      title: raw.title || "Cyber Security",
-      introduction: raw.introduction || "",
-      academicExcellence: {
-        description: raw.academicExcellence?.description || "",
-        facultyHighlights: raw.academicExcellence?.facultyHighlights || [],
-        publications: raw.academicExcellence?.publications || [],
-      },
-      internships: raw.internships || [],
-      certifications: raw.certifications || [],
-      outreach: {
-        programs: raw.outreach?.programs || [],
-        events: raw.outreach?.events || [],
-      },
-      collaborations: raw.collaborations || [],
+      specializationName: raw.specializationName,
+      specializationDescription: raw.specializationDescription,
+      academicExcellence: raw.academicExcellence || {},
+      internshipsIndustryExposure: raw.internshipsIndustryExposure || {},
+      facultyDevelopmentCertifications: raw.facultyDevelopmentCertifications || {},
+      outreachRecognitionEngagement: raw.outreachRecognitionEngagement || {},
+      internationalCollaborations: raw.internationalCollaborations || { images: [] },
       quote: raw.quote || "",
-      images: raw.images || [],
     };
 
     res.render("specialization/cyberSecurity", { page });
@@ -34,7 +26,7 @@ export const getCyberSecurity = async (req, res) => {
   }
 };
 
-// Add new document
+// Add Cyber Security Data
 export const addCyberSecurity = async (req, res) => {
   try {
     const doc = new CyberSecurity(req.body);
