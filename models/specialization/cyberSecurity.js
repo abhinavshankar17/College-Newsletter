@@ -1,37 +1,28 @@
 import mongoose from "mongoose";
 
 const cyberSecuritySchema = new mongoose.Schema({
-  specializationName: { type: String, required: true }, // e.g., "Cyber Security"
-  specializationDescription: { type: String, required: true }, // overall description
+  title: { type: String, required: false }, // e.g., "Cyber Security"
+  description: { type: String, required: false }, // Overview of the specialization
+  AcademicExcellenceAndResearchOutput: {
 
-  academicExcellence: {
-    topicName: { type: String, required: false }, // e.g., "Academic Excellence and Research Output"
-    description: { type: String, required: false },
+     type: String, required: false
+     },
+  InternshiptAndIndustryExposure: { 
+    description:{
+     type: String, required: false 
+    },
+      images: { type: [String], default: [] },
   },
-
-  internshipsIndustryExposure: {
-    topicName: { type: String, required: false }, // e.g., "Internship & Industry Exposure"
-    description: { type: String, required: false },
-    imageUrl: { type: String, required: false },
+ 
+  FacultyDevelopmentAndCertifications:{ type: String, required: false },
+  OutreachRecognitionAndEngagement:{type:String,required:false},
+  InternationalCollaboration:{
+    description:{
+     type: String, required: false 
+    },
+      images: { type: [String], default: [] },
   },
-
-  facultyDevelopmentCertifications: {
-    topicName: { type: String, required: false }, // e.g., "Faculty Development & Certifications"
-    description: { type: String, required: false },
-
-  },
-
-  outreachRecognitionEngagement: {
-    topicName: { type: String, required: false }, // e.g., "Outreach, Recognition, and Engagement"
-    description: { type: String, required: false },
-  },
-
-  internationalCollaborations: {
-    topicName: { type: String, required: false }, // e.g., "International Collaborations"
-    description: { type: String, required: false },
-    images: { type: [String], default: [] },
-  },
-
+  
   quote: { type: String, required: false }, // e.g., “The best defense against cyber threats is not just technology…”
 });
 

@@ -1,273 +1,209 @@
-<%- include("../partials/header", { title: "Internet of Things Specialization" }) %>
+<%- include("../partials/header", { title: "Internet of Things" }) %>
 
 <style>
-  body {
-    background-color: #f8f9fa;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    color: #333;
-    line-height: 1.6;
-  }
+body {
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: #f8f9fa;
+  color: #2c3e50;
+  margin: 0;
+  padding: 0;
+}
 
-  h1, h2 {
-    font-weight: 600;
-    color: #2c3e50;
-  }
+.container {
+  max-width: 1000px;
+  margin: 50px auto;
+  padding: 0 20px;
+}
 
-  .section-title {
-    margin-top: 40px;
-    padding-bottom: 6px;
-    border-bottom: 3px solid #16a085;
-    display: inline-block;
-    font-size: 1.5rem;
-  }
+/* Section Title */
+.section-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #0d1b2a;
+  margin-bottom: 15px;
+  position: relative;
+}
 
-  .card {
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    border: none;
-    transition: transform 0.2s, box-shadow 0.2s;
-    background: #fff;
-    padding: 20px;
-    margin-bottom: 20px;
-  }
+.section-title::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: #4f46e5;
+  margin-top: 6px;
+  border-radius: 2px;
+}
 
-  .card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
-  }
+/* Paragraphs */
+.section-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #374151;
+  margin-bottom: 25px;
+  white-space: pre-line; /* preserves \n from DB */
+}
 
-  .card h4 {
-    color: #16a085;
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
+/* Images */
+.image-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 25px;
+}
 
-  .card p {
-    margin-bottom: 6px;
-    color: #555;
-  }
+.image-gallery img {
+  width: calc(33% - 10px);
+  max-width: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease;
+}
 
-  .img-thumbnail {
-    border-radius: 8px;
-    margin: 5px;
-    max-width: 100%;
-    height: auto;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  }
+.image-gallery img:hover {
+  transform: scale(1.05);
+}
 
-  .quote {
-    background: #e8f6f3;
-    padding: 20px;
-    margin: 40px 0;
-    border-left: 6px solid #16a085;
-    font-style: italic;
-    text-align: center;
-    border-radius: 6px;
-    font-size: 1.1rem;
-  }
+/* Quote */
+.quote-block {
+  background: #f3f4f6;
+  border-left: 6px solid #4f46e5;
+  padding: 15px 20px;
+  font-style: italic;
+  color: #1f2937;
+  margin-bottom: 40px;
+  border-radius: 8px;
+}
 
-  .author {
-    display: block;
-    font-weight: bold;
-    margin-top: 10px;
-    color: #2c3e50;
-  }
+.quote-author {
+  text-align: right;
+  font-weight: 600;
+  margin-top: 10px;
+  color: #4f46e5;
+}
 
-  .container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 20px;
-  }
+/* Card */
+.card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
 
-  @media (max-width: 768px) {
-    .card {
-      padding: 15px;
-    }
-    .section-title {
-      font-size: 1.3rem;
-    }
-  }
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.card h3 {
+  margin-bottom: 12px;
+  font-size: 1.4rem;
+  color: #111827;
+  font-weight: 600;
+}
 </style>
 
 <div class="container">
-  <h1 class="text-center mb-5"><%= data?.title || "Internet of Things Specialization" %></h1>
+  <h1 class="text-center mb-5"><%= iotData?.title || "Internet of Things" %></h1>
+  <% if (iotData) { %>
 
-  <!-- Research Works -->
-  <section>
-    <h2 class="section-title">Research & Achievements</h2>
-    <% if (data?.researchWorks?.length > 0) { %>
-      <% data.researchWorks.forEach(r => { %>
-        <div class="card">
-          <h4><%= r.title %></h4>
-          <p><strong>Faculty:</strong> <%= (r.faculty || []).join(", ") %></p>
-          <p><strong>Date:</strong> <%= r.date %></p>
-          <% if (r.award) { %><p><strong>Award:</strong> <%= r.award %></p><% } %>
-          <p><%= r.description %></p>
-        </div>
-      <% }) %>
-    <% } else { %>
-      <p>No research works available.</p>
+    <!-- Overview -->
+    <% if (iotData.description) { %>
+      <div class="card">
+        <h3 class="section-title">Overview</h3>
+        <p class="section-text"><%= iotData.description %></p>
+      </div>
     <% } %>
-  </section>
 
-  <!-- Collaborations -->
-  <section>
-    <h2 class="section-title">Industry & Academic Collaborations</h2>
-    <% if (data?.collaborations?.length > 0) { %>
-      <% data.collaborations.forEach(c => { %>
-        <div class="card">
-          <h4><%= c.company %> — <small><%= c.program %></small></h4>
-          <p><strong>Speakers:</strong> <%= (c.speakers || []).join(", ") %></p>
-          <p><strong>Students Involved:</strong> <%= c.studentsInvolved %></p>
-          <p><strong>Course:</strong> <%= c.course %></p>
-          <p><strong>Date:</strong> <%= c.date %></p>
-          <p><%= c.description %></p>
-          <% if (c.images?.length > 0) { %>
-            <% c.images.forEach(img => { %>
-              <img src="<%= img %>" class="img-thumbnail" alt="collaboration image">
+    <!-- Expert Faculty & Infrastructure -->
+    <% if (iotData.ExpertFacultyAndInfrastructure) { %>
+      <div class="card">
+        <h3 class="section-title">Expert Faculty & Infrastructure</h3>
+        <p class="section-text"><%= iotData.ExpertFacultyAndInfrastructure %></p>
+      </div>
+    <% } %>
+
+    <!-- Academic & Industry Integration -->
+    <% if (iotData.AcademicAndIndustryIntegration) { %>
+      <div class="card">
+        <h3 class="section-title">Academic & Industry Integration</h3>
+        <% if (iotData.AcademicAndIndustryIntegration.description) { %>
+          <p class="section-text"><%= iotData.AcademicAndIndustryIntegration.description %></p>
+        <% } %>
+        <% if (iotData.AcademicAndIndustryIntegration.images && iotData.AcademicAndIndustryIntegration.images.length > 0) { %>
+          <div class="image-gallery">
+            <% iotData.AcademicAndIndustryIntegration.images.forEach(img => { %>
+              <img src="<%= img %>" alt="Integration Image">
             <% }) %>
-          <% } %>
-        </div>
-      <% }) %>
-    <% } else { %>
-      <p>No collaborations available.</p>
+          </div>
+        <% } %>
+      </div>
     <% } %>
-  </section>
 
-  <!-- Community Engagements -->
-  <section>
-    <h2 class="section-title">Community Engagement</h2>
-    <% if (data?.communityEngagements?.length > 0) { %>
-      <% data.communityEngagements.forEach(c => { %>
-        <div class="card">
-          <h4><%= c.topic %> — <small><%= c.event %></small></h4>
-          <p><strong>Speaker:</strong> <%= c.speaker %></p>
-          <p><strong>Location:</strong> <%= c.location %></p>
-          <p><strong>Date:</strong> <%= c.date %></p>
-          <p><strong>Organizer:</strong> <%= c.organizer %></p>
-        </div>
-      <% }) %>
-    <% } else { %>
-      <p>No community engagements available.</p>
+    <!-- Research Excellence & Recognition -->
+    <% if (iotData.ResearchExcellenceAndRecognition) { %>
+      <div class="card">
+        <h3 class="section-title">Research Excellence & Recognition</h3>
+        <p class="section-text"><%= iotData.ResearchExcellenceAndRecognition %></p>
+      </div>
     <% } %>
-  </section>
 
-  <!-- Alumni Talks -->
-  <section>
-    <h2 class="section-title">Alumni Talks</h2>
-    <% if (data?.alumniEngagements?.length > 0) { %>
-      <% data.alumniEngagements.forEach(a => { %>
-        <div class="card">
-          <h4><%= a.title %></h4>
-          <p><strong>Speaker:</strong> <%= a.speaker %> (<%= a.designation %>)</p>
-          <p><strong>Alumni Of:</strong> <%= a.alumniOf %></p>
-          <p><strong>Date:</strong> <%= a.date %></p>
-          <p><%= a.description %></p>
-        </div>
-      <% }) %>
-    <% } else { %>
-      <p>No alumni talks available.</p>
+    <!-- Community Engagement & Professional Excellence -->
+  <!-- Community Engagement & Professional Excellence -->
+<% if (iotData.CommunityEngagementAndProfessionalExcellence) { %>
+  <div class="card">
+    <h3 class="section-title">Community Engagement & Professional Excellence</h3>
+    <p class="section-text"><%= iotData.CommunityEngagementAndProfessionalExcellence %></p>
+  </div>
+<% } %>
+
+<!-- Alumni Engagement & Global Exposure -->
+<% if (iotData.AlumniEngagementAndGlobalExposure) { %>
+  <div class="card">
+    <h3 class="section-title">Alumni Engagement & Global Exposure</h3>
+    <p class="section-text"><%= iotData.AlumniEngagementAndGlobalExposure %></p>
+  </div>
+<% } %>
+
+
+    <!-- Upcoming Events -->
+    <% if (iotData.UpcomingEvents) { %>
+      <div class="card">
+        <h3 class="section-title">Upcoming Events</h3>
+        <p class="section-text"><%= iotData.UpcomingEvents %></p>
+      </div>
     <% } %>
-  </section>
 
-  <!-- Upcoming Events -->
-  <section>
-    <h2 class="section-title">Upcoming Events</h2>
-    <% if (data?.upcomingEvents?.length > 0) { %>
-      <% data.upcomingEvents.forEach(e => { %>
-        <div class="card">
-          <h4><%= e.title %></h4>
-          <p><strong>Scheme:</strong> <%= e.scheme %> | <strong>Funding:</strong> <%= e.funding %></p>
-          <p><strong>Dates:</strong> <%= (e.dates || []).join(" - ") %></p>
-          <p><%= e.description %></p>
-        </div>
-      <% }) %>
-    <% } else { %>
-      <p>No upcoming events.</p>
+    <!-- Faculty Achievements -->
+    <% if (iotData.FacultyAchievements) { %>
+      <div class="card">
+        <h3 class="section-title">Faculty Achievements</h3>
+        <p class="section-text"><%= iotData.FacultyAchievements %></p>
+      </div>
     <% } %>
-  </section>
 
-  <!-- Faculty Achievements -->
-  <section>
-    <h2 class="section-title">Faculty Achievements</h2>
-    <% if (data?.facultyAchievements?.length > 0) { %>
-      <% data.facultyAchievements.forEach(f => { %>
-        <div class="card">
-          <h4><%= f.faculty %></h4>
-          <p><strong>Achievement:</strong> <%= f.achievement %></p>
-          <p><strong>Description:</strong> <%= f.description %></p>
-          <p><strong>Year:</strong> <%= f.year %> | <strong>Organizer:</strong> <%= f.organizer %> | <strong>Location:</strong> <%= f.location %></p>
-        </div>
-      <% }) %>
-    <% } else { %>
-      <p>No faculty achievements available.</p>
+    <!-- Awards & Rewards -->
+    <% if (iotData.AwardsAndRewards) { %>
+      <div class="card">
+        <h3 class="section-title">Awards & Rewards</h3>
+        <p class="section-text"><%= iotData.AwardsAndRewards %></p>
+      </div>
     <% } %>
-  </section>
 
-  <!-- Awards -->
-  <section>
-    <h2 class="section-title">Awards & Accolades</h2>
-    <% if (data?.awards?.length > 0) { %>
-      <% data.awards.forEach(a => { %>
-        <div class="card">
-          <h4><%= a.recipient %></h4>
-          <p><strong>Awards:</strong> <%= (a.awards || []).join(", ") %></p>
-          <p><%= a.description %></p>
-        </div>
-      <% }) %>
-    <% } else { %>
-      <p>No awards available.</p>
+    <!-- Quote -->
+    <% if (iotData.Quote && iotData.Quote.quote) { %>
+      <div class="quote-block">
+        <p>"<%= iotData.Quote.quote %>"</p>
+        <% if (iotData.Quote.Author) { %>
+          <p class="quote-author"><%= iotData.Quote.Author %></p>
+        <% } %>
+      </div>
     <% } %>
-  </section>
 
-  <!-- Labs -->
-  <section>
-    <h2 class="section-title">Labs & Infrastructure</h2>
-    <% if (data?.labs?.length > 0) { %>
-      <ul>
-        <% data.labs.forEach(l => { %>
-          <li><%= l %></li>
-        <% }) %>
-      </ul>
-    <% } else { %>
-      <p>No lab information available.</p>
-    <% } %>
-  </section>
-
-  <!-- Expert Faculty -->
-  <section>
-    <h2 class="section-title">Expert Faculty</h2>
-    <% if (data?.expertFaculty?.length > 0) { %>
-      <ul>
-        <% data.expertFaculty.forEach(f => { %>
-          <li><strong><%= f.name %></strong> — <%= f.role %></li>
-        <% }) %>
-      </ul>
-    <% } else { %>
-      <p>No expert faculty listed.</p>
-    <% } %>
-  </section>
-
-  <!-- Gallery -->
-  <section>
-    <h2 class="section-title">Gallery</h2>
-    <% if (data?.images?.length > 0) { %>
-      <% data.images.forEach(img => { %>
-        <img src="<%= img %>" class="img-thumbnail" alt="IoT image">
-      <% }) %>
-    <% } else { %>
-      <p>No images uploaded.</p>
-    <% } %>
-  </section>
-
-  <!-- Quote -->
-  <% if (data?.quote?.text) { %>
-    <div class="quote">
-      “ <%= data.quote.text %> ”
-      <span class="author">– <%= data.quote.author %></span>
-    </div>
   <% } else { %>
-    <p class="quote">No inspirational quote yet.</p>
+    <p class="text-center text-muted fst-italic">No Internet of Things data available.</p>
   <% } %>
 </div>
 

@@ -26,16 +26,16 @@
                 </p>
 
                 <!-- Description -->
-                <% if (event.description) { %>
-                  <h6 class="section-title">Description:</h6>
-                  <p><%= event.description.replace(/\n/g, "<br>") %></p>
-                <% } %>
+               <% if (event.description) { %>
+  <h6 class="section-title">Description:</h6>
+  <p><%- event.description.replace(/\n/g, "<br>") %></p>
+<% } %>
 
-                <!-- Event Summary -->
-                <% if (event.eventSummary) { %>
-                  <h6 class="section-title">Summary:</h6>
-                  <p><%= event.eventSummary.replace(/\n/g, "<br>") %></p>
-                <% } %>
+<% if (event.eventSummary) { %>
+  <h6 class="section-title">Summary:</h6>
+  <p><%- event.eventSummary.replace(/\n/g, "<br>") %></p>
+<% } %>
+
 
                 <!-- Images -->
                   <div class="image-grid-container">
