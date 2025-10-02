@@ -11,42 +11,65 @@ export const getArticles = async (req, res) => {
   }
 };
 
-// Add new faculty article
+
+
 export const addArticle = async (req, res) => {
   try {
     const {
-      title,
-      authorName,
-      authorDesignation,
-      content,
-      images,     // Can be single string or array of strings
-      quotesText
+      // Article 1
+      title1,
+      authorName1,
+      authorDesignation1,
+      images1,       // single string or array
+      content1,
+      quotesText1,
+      // Article 2
+      title2,
+      authorName2,
+      authorDesignation2,
+      images2,       // single string or array
+      content2,
+      quotesText2
     } = req.body;
 
-    console.log("Incoming Data:", req.body);
-
-    // Ensure images is always an array of strings
-    let safeImages = [];
-    if (Array.isArray(images)) {
-      safeImages = images.map(img => img.trim()).filter(Boolean);
-    } else if (typeof images === "string" && images.trim() !== "") {
-      safeImages = [images.trim()];
-    }
-
-    const newArticleData = {
-      title: title?.trim() || undefined,
-      author: authorName
-        ? {
-            name: authorName.trim(),
-            designation: authorDesignation?.trim() || undefined
-          }
-        : undefined,
-      content: content?.trim() || undefined,
-      images: safeImages,
-      quotes: quotesText && quotesText.trim() !== "" ? { text: quotesText.trim() } : undefined
+    // Helper function to normalize images
+    const normalizeImages = (images) => {
+      if (!images) return [];
+      if (Array.isArray(images)) return images.map(img => img.trim()).filter(Boolean);
+      if (typeof images === "string" && images.trim() !== "") return [images.trim()];
+      return [];
     };
 
-    console.log("Prepared Article Data:", newArticleData);
+    // Prepare first article
+    const article1 = {
+      title1: title1?.trim() || undefined,
+      author1: authorName1
+        ? {
+            name: authorName1.trim(),
+            designation: authorDesignation1?.trim() || undefined,
+            images: normalizeImages(images1)
+          }
+        : undefined,
+      content1: content1?.trim() || undefined,
+      quotes1: quotesText1?.trim() ? { text: quotesText1.trim() } : undefined
+    };
+
+    // Prepare second article
+    const article2 = {
+      title2: title2?.trim() || undefined,
+      author2: authorName2
+        ? {
+            name: authorName2.trim(),
+            designation: authorDesignation2?.trim() || undefined,
+            images: normalizeImages(images2)
+          }
+        : undefined,
+      content2: content2?.trim() || undefined,
+      quotes2: quotesText2?.trim() ? { text: quotesText2.trim() } : undefined
+    };
+
+    // Merge articles into one object
+    const newArticleData = { ...article1, ...article2 };
 
     const newArticle = new FacultyArticle(newArticleData);
     await newArticle.save();

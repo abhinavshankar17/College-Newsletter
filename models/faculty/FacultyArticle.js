@@ -1,19 +1,37 @@
 import mongoose from "mongoose";
 
 const FacultyArticleSchema = new mongoose.Schema({
-  title: { type: String, required: false },
-  author: {
+  title1: { type: String, required: false },
+  author1: {
     name: String,
     designation: String,
+    images: { type: [String], default: [] },
   },
-  images: { type: [String], default: [] },
-  content: { 
+  
+  content1: { 
     type: String, 
     required: false
    },
   
      
-  quotes: 
+  quotes1: 
+    {
+      text: String,
+    },
+      title2: { type: String, required: false },
+  author2: {
+    name: String,
+    designation: String,
+    images: { type: [String], default: [] },
+  },
+  
+  content2: { 
+    type: String, 
+    required: false
+   },
+  
+     
+  quotes2: 
     {
       text: String,
     },

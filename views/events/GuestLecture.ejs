@@ -19,57 +19,67 @@
               <!-- Card Body -->
               <div class="card-body p-4">
 
+                <!-- Date -->
+                <% if (lecture.date) { %>
+                  <h6 class="section-title">Date:</h6>
+                  <span><i class="bi bi-calendar-event"></i> <%= lecture.date %></span>
+                <% } %>
+
                 <!-- Conveners -->
                 <% if (lecture.conveners && lecture.conveners.name) { %>
-                  <h6 class="section-title">Convener:</h6>
-                  <p><i class="bi bi-person-badge"></i> <%= lecture.conveners.name %></p>
+                  <h6 class="section-title">Convener(s):</h6>
+                  <div class="conveners-list">
+                    <% lecture.conveners.name.split(',').forEach(convener => { %>
+                      <span><%= convener.trim() %></span>
+                    <% }) %>
+                  </div>
                 <% } %>
 
                 <!-- Resource Person -->
                 <% if (lecture.resourcePerson && lecture.resourcePerson.name) { %>
                   <h6 class="section-title">Resource Person:</h6>
-                  <p><i class="bi bi-person-circle"></i> <%= lecture.resourcePerson.name %></p>
+                  <span><i class="bi bi-person-circle"></i> <%= lecture.resourcePerson.name %></span>
                 <% } %>
 
                 <!-- Number of Participants -->
                 <p class="mb-3">
                   <span class="badge participants-badge fs-6">
-                    👥 <%= lecture.numberOfRegisteredParticipants || 0 %> Registered
+                     <%= lecture.numberOfRegisteredParticipants || 0 %> Registered
                   </span>
                 </p>
 
                 <!-- Tracks -->
                 <% if (lecture.tracks) { %>
                   <h6 class="section-title">Tracks:</h6>
-                  <p><%= lecture.tracks %></p>
+                  <span><%= lecture.tracks %></span>
                 <% } %>
 
                 <!-- Prizes -->
                 <% if (lecture.prizes) { %>
                   <h6 class="section-title">Prizes:</h6>
                   <ul>
-                    <% if (lecture.prizes.firstPrize) { %><li>🏆 First Prize: <%= lecture.prizes.firstPrize %></li><% } %>
-                    <% if (lecture.prizes.secondPrize) { %><li>🥈 Second Prize: <%= lecture.prizes.secondPrize %></li><% } %>
-                    <% if (lecture.prizes.participation) { %><li>🎖 Participation: <%= lecture.prizes.participation %></li><% } %>
+                    <% if (lecture.prizes.firstPrize) { %><li>First Prize: <%= lecture.prizes.firstPrize %></li><% } %>
+                    <% if (lecture.prizes.secondPrize) { %><li>Second Prize: <%= lecture.prizes.secondPrize %></li><% } %>
+                    <% if (lecture.prizes.participation) { %><li> Participation: <%= lecture.prizes.participation %></li><% } %>
                   </ul>
                 <% } %>
 
                 <!-- Venue -->
                 <% if (lecture.venue) { %>
                   <h6 class="section-title">Venue:</h6>
-                  <p><i class="bi bi-geo-alt"></i> <%= lecture.venue %></p>
+                  <span><i class="bi bi-geo-alt"></i> <%= lecture.venue %></span>
                 <% } %>
 
                 <!-- Registration -->
                 <% if (lecture.registration) { %>
                   <h6 class="section-title">Registration:</h6>
-                  <p>Fee: ₹<%= lecture.registration.fee || 0 %> | Team Size: <%= lecture.registration.teamSize || 1 %></p>
+                  <span>Fee: ₹<%= lecture.registration.fee || 0 %> | Team Size: <%= lecture.registration.teamSize || 1 %></span>
                 <% } %>
 
                 <!-- Event Summary -->
                 <% if (lecture.eventSummary) { %>
                   <h6 class="section-title">Summary:</h6>
-                  <p><%= lecture.eventSummary.replace(/\n/g, "<br>") %></p>
+                  <span><%= lecture.eventSummary.replace(/\\n/g, "<br>") %></span>
                 <% } %>
 
                 <!-- Images -->
@@ -130,8 +140,8 @@
       font-size: 1.1rem;
       font-weight: 600;
       color: var(--title-color);
-      margin-top: 1.2rem;
-      margin-bottom: 0.5rem;
+      margin-top: 1rem;
+      margin-bottom: 0.3rem;
       border-left: 5px solid var(--accent-color);
       padding-left: 10px;
     }
@@ -170,9 +180,31 @@
     .guest-lecture-image:hover {
       transform: scale(1.05);
     }
+
+    /* Make all p and span lines block */
+    .guest-lecture-card p, 
+    .guest-lecture-card span {
+      display: block;
+      margin: 4px 0;
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+
+    /* Multiple conveners in separate lines */
+    .guest-lecture-card .conveners-list span {
+      display: block;
+    }
+
+    /* Icons spacing */
+    .guest-lecture-card p i, 
+    .guest-lecture-card span i {
+      margin-right: 6px;
+      color: #3498db;
+    }
   </style>
 
   <!-- Bootstrap JS and Icons -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 </body>
+
