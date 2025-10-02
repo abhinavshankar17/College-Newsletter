@@ -1,122 +1,181 @@
 <%- include("../partials/header", { title: "Faculty Achievement" }) %>
 
 <style>
-  body {
-    background-color: #f8f9fa;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  }
+/* Base Styles */
+body {
+  background-color: #f8f9fa;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #1f2937;
+  margin: 0;
+  padding: 0;
+}
 
-  h1 {
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+/* Page Heading */
+h2 {
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 40px;
+  color: #111827;
+}
+
+/* Achievement Card */
+.card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 30px 25px;
+  margin-bottom: 50px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.15);
+}
+
+/* Section Title */
+.card .section-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #4f46e5;
+  display: inline-block;
+  padding-bottom: 3px;
+}
+
+/* Faculty Member Card */
+.faculty-card {
+  background: #fefefe;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.faculty-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+.faculty-card img,
+.faculty-card .placeholder {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #d1d5db;
+  flex-shrink: 0;
+}
+
+.faculty-card img:hover {
+  transform: scale(1.05);
+  border-color: #4f46e5;
+}
+
+.faculty-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.faculty-info p {
+  margin: 4px 0;
+}
+
+.faculty-info p.name {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #4f46e5;
+}
+
+.faculty-info p.designation {
+  font-size: 0.95rem;
+  color: #6b7280;
+}
+
+.faculty-info p.description {
+  font-size: 0.9rem;
+  color: #4b5563;
+  margin-top: 5px;
+}
+
+/* Placeholder for missing image */
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #9ca3af;
+  color: #fff;
+  font-size: 0.9rem;
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .faculty-card {
+    flex-direction: column;
+    align-items: center;
     text-align: center;
-    color: #2c3e50;
-    margin-bottom: 30px;
   }
 
-  .card {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    padding: 20px;
-    margin-bottom: 25px;
-    transition: transform 0.2s, box-shadow 0.2s;
+  .faculty-card img,
+  .faculty-card .placeholder {
+    margin-bottom: 12px;
   }
-
-  .card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-  }
-
-  .card h3 {
-    color: #2980b9;
-    margin-top: 0;
-    font-weight: 600;
-  }
-
-  .card p {
-    margin: 5px 0;
-    color: #34495e;
-  }
-
-  .card .faculty-img {
-    float: right;
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 8px;
-    border: 2px solid #ddd;
-    margin-left: 20px;
-  }
-
-  .card ul {
-    margin: 5px 0 0 20px;
-    padding: 0;
-  }
-
-  .card ul li {
-    margin-bottom: 4px;
-  }
-
-  .card .section-title {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #1f2937;
-    margin-top: 15px;
-    margin-bottom: 8px;
-    border-bottom: 2px solid #3498db;
-    display: inline-block;
-    padding-bottom: 3px;
-  }
+}
 </style>
-
 
 <div class="container my-5">
   <h2 class="text-center fw-bold mb-4">Faculty Achievements</h2>
 
   <% if (achievements && achievements.length > 0) { %>
     <% achievements.forEach(achievement => { %>
-      <div class="card shadow-lg p-4 rounded-3 mb-5">
-        <hr class="my-4 border border-2 border-dashed">
+      <div class="card">
+        <h3 class="section-title">Faculty Members</h3>
 
-        <!-- Faculty Members -->
-        <div class="mb-5">
-          <h4 class="text-center fw-semibold mb-3">Faculty Members</h4>
-          <div class="row justify-content-center g-4">
-            <% const members = [achievement.faculty1, achievement.faculty2, achievement.faculty3, achievement.faculty4, achievement.faculty5, achievement.faculty6]; %>
-            <% members.forEach(member => { %>
-              <% if (member && (member.name || member.designamtion || member.description)) { %>
-                <div class="col-md-3 col-sm-6 text-center team-member">
-                  <% 
-                    // Handle single image safely
-                    const imgSrc = member.images 
-                                   ? (Array.isArray(member.images) ? member.images[0] : member.images) 
-                                   : null;
-                  %>
-                  <% if (imgSrc) { %>
-                    <img src="<%= imgSrc %>" 
-                         alt="<%= member.name || 'Faculty' %>" 
-                         class="rounded-circle shadow mb-2" 
-                         style="width: 100px; height: 100px; object-fit: cover;">
-                  <% } else { %>
-                    <div class="rounded-circle placeholder mb-2" 
-                         style="width: 100px; height: 100px; display:flex; align-items:center; justify-content:center; background:#9ca3af; color:#fff;">
-                      No Photo
-                    </div>
-                  <% } %>
-                  <p class="fw-bold mb-0"><%= member.name || "Unknown" %></p>
-                  <p class="text-muted small mb-0"><%= member.designamtion || "N/A" %></p>
-                  <p class="text-muted small"><%= member.description || "" %></p>
-                </div>
+        <% const members = [achievement.faculty1, achievement.faculty2, achievement.faculty3, achievement.faculty4, achievement.faculty5, achievement.faculty6]; %>
+
+        <% members.forEach(member => { %>
+          <% if (member && (member.name || member.designamtion || member.description)) { %>
+            <div class="faculty-card">
+              <% const imgSrc = member.images 
+                   ? (Array.isArray(member.images) ? member.images[0] : member.images) 
+                   : null;
+              %>
+
+              <% if (imgSrc) { %>
+                <img src="<%= imgSrc %>" alt="<%= member.name || 'Faculty' %>">
+              <% } else { %>
+                <div class="placeholder">No Photo</div>
               <% } %>
-            <% }) %>
-          </div>
-        </div>
+
+              <div class="faculty-info">
+                <p class="name"><%= member.name || "Unknown" %></p>
+                <p class="designation"><%= member.designamtion || "N/A" %></p>
+                <% if (member.description) { %>
+                  <p class="description"><%= member.description %></p>
+                <% } %>
+              </div>
+            </div>
+          <% } %>
+        <% }) %>
       </div>
     <% }) %>
   <% } else { %>
     <p class="text-center fst-italic text-muted">No faculty achievements available yet.</p>
   <% } %>
 </div>
-
-
 
 <%- include("../partials/footer") %>
