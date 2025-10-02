@@ -1,12 +1,10 @@
 <%- include("../partials/header", { title: page.title || "Cyber Security" }) %>
 
 <div class="container">
-    <h1><%= page.title %></h1>
+    <h1 class="page-title"><%= page.title %></h1>
 
     <!-- Quote -->
-    <% if (page.quote) { %>
-        <blockquote><%= page.quote %></blockquote>
-    <% } %>
+
 
     <!-- Description -->
     <% if (page.description) { %>
@@ -36,7 +34,6 @@
             <% if (page.InternshiptAndIndustryExposure.images && page.InternshiptAndIndustryExposure.images.length > 0) { %>
                 <div class="images">
                     <% 
-                        // If only single image uploaded, wrap in array
                         let internshipImages = Array.isArray(page.InternshiptAndIndustryExposure.images)
                                                 ? page.InternshiptAndIndustryExposure.images
                                                 : [page.InternshiptAndIndustryExposure.images];
@@ -77,10 +74,9 @@
             <% if (page.InternationalCollaboration.images && page.InternationalCollaboration.images.length > 0) { %>
                 <div class="images">
                     <% 
-                        // If only single image uploaded, wrap in array
                         let intlImages = Array.isArray(page.InternationalCollaboration.images)
-                                                ? page.InternationalCollaboration.images
-                                                : [page.InternationalCollaboration.images];
+                                            ? page.InternationalCollaboration.images
+                                            : [page.InternationalCollaboration.images];
                     %>
                     <% intlImages.forEach((img) => { %>
                         <img src="<%= img %>" alt="International Collaboration" />
@@ -89,31 +85,101 @@
             <% } %>
         </section>
     <% } %>
+        <% if (page.quote) { %>
+        <blockquote><%= page.quote %></blockquote>
+    <% } %>
 </div>
 
 <style>
+    /* General Layout */
     .container {
-        max-width: 900px;
+        max-width: 1000px;
         margin: auto;
         padding: 20px;
-        font-family: Arial, sans-serif;
+        font-family: "Segoe UI", Roboto, Arial, sans-serif;
+        line-height: 1.7;
+        color: #2c3e50;
     }
-    h1, h2 {
-        color: #0d1b2a;
+
+    .page-title {
+        text-align: center;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #0a1f44;
+        margin-bottom: 40px;
     }
+
+    section {
+        background: #ffffff;
+        padding: 25px;
+        margin: 25px 0;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        transition: transform 0.2s ease-in-out;
+    }
+
+    section:hover {
+        transform: translateY(-3px);
+    }
+
+    h2 {
+        font-size: 1.4rem;
+        margin-bottom: 15px;
+        color: #1d3557;
+        border-bottom: 2px solid #457b9d;
+        display: inline-block;
+        padding-bottom: 5px;
+    }
+
+    p {
+        font-size: 1rem;
+        margin-bottom: 10px;
+        color: #34495e;
+    }
+
+    /* Blockquote Styling */
     blockquote {
         font-style: italic;
-        background: #f0f0f0;
-        padding: 10px 20px;
-        border-left: 5px solid #0d1b2a;
-        margin: 20px 0;
+        background: #f1f7fd;
+        padding: 15px 20px;
+        border-left: 6px solid #1d3557;
+        margin: 30px 0;
+        border-radius: 8px;
+        color: #0a1f44;
     }
+
+    /* Image Styling */
+    .images {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 15px;
+    }
+
     .images img {
-        max-width: 100%;
+        max-width: 280px;
+        width: 100%;
         height: auto;
-        margin: 10px 0;
-        border-radius: 5px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        border-radius: 10px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .images img:hover {
+        transform: scale(1.05);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .page-title {
+            font-size: 2rem;
+        }
+        section {
+            padding: 20px;
+        }
+        .images img {
+            max-width: 100%;
+        }
     }
 </style>
 

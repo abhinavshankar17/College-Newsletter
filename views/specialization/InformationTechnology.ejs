@@ -34,12 +34,27 @@
     <% } %>
 
     <!-- PhD Awardees -->
-    <% if (data.phdAwardees) { %>
-      <section>
-        <h2 class="section-title">PhD Awardees</h2>
-        <p><%= data.phdAwardees %></p>
-      </section>
-    <% } %>
+ <% if (data.phdAwardees) { %>
+  <section>
+    <h2 class="section-title">PhD Awardees</h2>
+
+    <% 
+      const parts = data.phdAwardees.split("•").map(p => p.trim()).filter(Boolean);
+      const intro = parts[0];   // first part is intro
+      const awardees = parts.slice(1); // rest are awardees
+    %>
+
+    <!-- Intro -->
+    <p><%= intro %></p>
+
+    <!-- Awardees -->
+    <ul>
+      <% awardees.forEach(text => { %>
+        <li><%- text.replace(/\n/g, " ") %></li>
+      <% }) %>
+    </ul>
+  </section>
+<% } %>
 
     <!-- Images -->
     <% if (data.images?.length) { %>
@@ -57,15 +72,35 @@
     <% if (data.researchPublications) { %>
       <section>
         <h2 class="section-title">Research Publications</h2>
-        <p><%= data.researchPublications %></p>
+        <% 
+          const publications = data.researchPublications
+            .split("•")              // split on bullet
+            .map(p => p.trim())
+            .filter(Boolean);
+        %>
+        <ul>
+          <% publications.forEach(pub => { %>
+            <li><%- pub.replace(/\n/g, " ") %></li>
+          <% }) %>
+        </ul>
       </section>
     <% } %>
 
     <!-- Workshops -->
     <% if (data.Workshops) { %>
-      <section>
+        <section>
         <h2 class="section-title">Workshops & FDPs</h2>
-        <p><%= data.Workshops %></p>
+        <% 
+          const workshops = data.Workshops
+            .split("•")
+            .map(p => p.trim())
+            .filter(Boolean);
+        %>
+        <ul>
+          <% workshops.forEach(ws => { %>
+            <li><%- ws.replace(/\n/g, " ") %></li>
+          <% }) %>
+        </ul>
       </section>
     <% } %>
 

@@ -89,31 +89,31 @@
   </style>
 </head>
 <body>
-
   <!-- Header -->
   <%- include("../partials/header", { title: "Workshops" }) %>
 
   <div class="container my-5">
-    <% if (workshops && workshops.length > 0) { %>
-      <% workshops.forEach(workshop => { %>
+    <% if (workshops) { %>
+      <% ['workshop1', 'workshop2'].forEach(key => { 
+           const w = workshops[key]; 
+           if (w) { %>
         <div class="card shadow-lg">
           <div class="card-body">
             <!-- Title -->
-            <h2 class="card-title"><%= workshop.title || "No Title" %></h2>
+            <h2 class="card-title"><%= w.title || "No Title" %></h2>
 
             <!-- Description -->
-          
-            <p><%= workshop.description.replace(/\n/g, "<br>") || "No description available" %></p>
+            <p><%- (w.description ? w.description.replace(/\n/g, "<br>") : "No description available") %></p>
 
             <!-- Event Summary -->
             <h5>Event Summary:</h5>
-            <p><%= workshop.eventSummary || "No summary provided" %></p>
+            <p><%- (w.eventSummary ? w.eventSummary.replace(/\n/g, "<br>") : "No summary provided") %></p>
 
             <!-- Images -->
             <h5>Images:</h5>
             <div class="row">
-              <% if (workshop.images && workshop.images.length > 0) { %>
-                <% workshop.images.forEach(url => { %>
+              <% if (w.images && w.images.length > 0) { %>
+                <% w.images.forEach(url => { %>
                   <div class="col-md-4 mb-3">
                     <img src="<%= url %>" class="img-fluid rounded shadow-sm" alt="Workshop Image">
                   </div>
@@ -124,7 +124,7 @@
             </div>
           </div>
         </div>
-      <% }) %>
+      <% } }) %>
     <% } else { %>
       <p>No workshops found.</p>
     <% } %>
@@ -132,6 +132,5 @@
 
   <!-- Footer -->
   <%- include("../partials/footer") %>
-
 </body>
 </html>
