@@ -69,39 +69,22 @@ img {
 
 /* ---------------- HERO SECTION ---------------- */
 .hero-section {
-  background: linear-gradient(135deg, #f9fbff, #eef3ff);
-  padding: 100px 20px;
+  background: 
+    linear-gradient(rgba(10, 20, 40, 0.7), rgba(10, 20, 40, 0.7)), 
+    url("/images/bgimg.jpg") no-repeat center center/cover;
+  padding: 120px 20px;
   text-align: center;
   position: relative;
   overflow: hidden;
-}
+  color: white;
+  margin-top: 0px;
 
-.hero-section::before {
-  content: "";
-  position: absolute;
-  top: -50px;
-  left: -50px;
-  width: 200px;
-  height: 200px;
-  background: rgba(13, 27, 42, 0.08); /* navy transparent circle */
-  border-radius: 50%;
-}
-
-.hero-section::after {
-  content: "";
-  position: absolute;
-  bottom: -60px;
-  right: -60px;
-  width: 250px;
-  height: 250px;
-  background: rgba(255, 204, 0, 0.12); /* soft yellow transparent circle */
-  border-radius: 50%;
 }
 
 .hero-heading {
   font-size: 3rem;
   font-weight: 800;
-  color: #0d1b2a; /* navy */
+  color: #ffcc00;
   text-transform: uppercase;
   letter-spacing: 2px;
   margin-bottom: 20px;
@@ -113,7 +96,7 @@ img {
 .hero-quote {
   font-size: 1.5rem;
   font-style: italic;
-  color: #ffcc00; /* golden yellow */
+  color: #ffffff;
   margin: 20px auto;
   max-width: 700px;
   position: relative;
@@ -123,7 +106,7 @@ img {
 .hero-message {
   font-size: 1.1rem;
   line-height: 1.8;
-  color: #444;
+  color: #e0e0e0;
   max-width: 850px;
   margin: 20px auto 40px;
   position: relative;
@@ -131,7 +114,7 @@ img {
 }
 
 .hero-message .highlight {
-  color: #ffcc00; /* golden yellow */
+  color: #ffcc00;
   font-weight: bold;
 }
 
@@ -139,23 +122,29 @@ img {
   margin: 30px auto 0;
   width: 140px;
   height: 5px;
-  background: linear-gradient(90deg, #0d1b2a, #ffcc00);
+  background: linear-gradient(90deg, #ffcc00, #ffffff);
   border-radius: 3px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
   position: relative;
   z-index: 2;
   transition: all 0.4s ease;
 }
 
-/* ---------------- HERO SECTION HOVER ---------------- */
+/* Hover Effects */
 .hero-section:hover .hero-heading {
-  background: linear-gradient(90deg, #0d1b2a, #1b263b, #34495e);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #ffffff;
+  text-shadow: 
+    -1px -1px 2px #000, 
+    1px -1px 2px #000, 
+    -1px 1px 2px #000, 
+    1px 1px 2px #000,
+    0 0 12px #ffcc00;
 }
+
 .hero-section:hover .divider {
-  background: linear-gradient(90deg, #0d1b2a, #1b263b, #34495e);
+  background: linear-gradient(90deg, #ffffff, #ffcc00);
 }
+
 
 
 
