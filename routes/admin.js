@@ -3,15 +3,126 @@ import fs from "fs";
 import path from "path";
 import { pathToFileURL } from "url";
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 import upload from "../utils/upload.js"; // multer + Cloudinary
 import { v2 as cloudinary } from "cloudinary";
 
 const router = express.Router();
 const modelsPath = path.join(process.cwd(), "models");
 
-/* ============================
-   Utilities
-============================ */
+// ============================
+// Admin Model
+// ============================
+const adminSchema = new mongoose.Schema({
+  username: { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+});
+const Admin = mongoose.models.Admin || mongoose.model("Admin", adminSchema);
+
+// ============================
+// Middleware to protect routes
+// ============================
+async function isAuthenticated(req, res, next) {
+  const adminCount = await Admin.countDocuments();
+  if (adminCount === 0) {
+    return res.redirect("/admin/signup"); // if no admin, redirect to signup
+  }
+
+  if (req.session && req.session.admin) {
+    return next(); // admin is logged in
+  }
+  res.redirect("/admin/login"); // not logged in
+}
+
+// ============================
+// Admin Authentication Routes
+// ============================
+
+// GET signup page (allow only if no admin exists)
+router.get("/signup", async (req, res) => {
+  const adminCount = await Admin.countDocuments();
+  if (adminCount >= 1) {
+    return res.redirect("/admin/login");
+  }
+  res.render("admin/signup");
+});
+
+
+
+// POST signup (allow only one admin)
+router.post("/signup", async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+    if (!username || !email || !password)
+      return res.status(400).send("All fields are required!");
+
+    const adminCount = await Admin.countDocuments();
+    if (adminCount >= 1) {
+      // Only one admin allowed
+      return res.send("Admin already exists. Please login.");
+    }
+
+    const existingAdmin = await Admin.findOne({ email: email.toLowerCase() });
+    if (existingAdmin) return res.status(400).send("Email already exists!");
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const admin = new Admin({
+      username,
+      email: email.toLowerCase(),
+      password: hashedPassword,
+    });
+
+    await admin.save();
+    res.redirect("/admin/login");
+  } catch (err) {
+    console.error("Signup error:", err);
+    res.status(500).send(`Error creating admin account: ${err.message}`);
+  }
+});
+
+
+// GET login page
+router.get("/login", async (req, res) => {
+  const adminCount = await Admin.countDocuments();
+  if (adminCount === 0) {
+    return res.redirect("/admin/signup"); // if no admin exists, go to signup
+  }
+  res.render("admin/login");
+});
+
+// POST login
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password)
+      return res.status(400).send("Email and password required");
+
+    const admin = await Admin.findOne({ email: email.toLowerCase() });
+    if (!admin) return res.send("Admin not found");
+
+    const match = await bcrypt.compare(password, admin.password);
+    if (!match) return res.send("Incorrect password");
+
+    req.session.admin = admin;
+    res.redirect("/admin/add-article");
+  } catch (err) {
+    console.error("Login error:", err);
+    res.status(500).send("Error logging in");
+  }
+});
+
+// GET logout
+router.get("/logout", (req, res) => {
+  req.session.destroy(() => {
+    res.redirect("/admin/login");
+  });
+});
+
+// ============================
+// Utilities (Unchanged)
+// ============================
 
 // Recursively extract schema fields
 function extractSchemaFields(schema, prefix = "") {
@@ -76,12 +187,12 @@ async function buildPagesAndSchemas() {
   return { pages, schemas };
 }
 
-/* ============================
-   Admin Routes
-============================ */
+// ============================
+// Admin Routes (Protected)
+// ============================
 
 // GET: List of folders + models
-router.get("/pages", async (req, res) => {
+router.get("/pages", isAuthenticated, async (req, res) => {
   try {
     const { pages } = await buildPagesAndSchemas();
     res.json(pages);
@@ -91,7 +202,7 @@ router.get("/pages", async (req, res) => {
 });
 
 // GET: Schema fields for a model
-router.get("/schema/:modelName", async (req, res) => {
+router.get("/schema/:modelName", isAuthenticated, async (req, res) => {
   try {
     const { schemas } = await buildPagesAndSchemas();
     const schema = schemas[req.params.modelName];
@@ -103,7 +214,7 @@ router.get("/schema/:modelName", async (req, res) => {
 });
 
 // GET: Add Article page
-router.get("/add-article", async (req, res) => {
+router.get("/add-article", isAuthenticated, async (req, res) => {
   try {
     const { pages, schemas } = await buildPagesAndSchemas();
     res.render("admin/addArticle", { pages, schemas });
@@ -114,82 +225,65 @@ router.get("/add-article", async (req, res) => {
 });
 
 // POST: Add Article with Cloudinary upload
-router.post("/add-article", upload.any(), async (req, res) => {
+router.post("/add-article", isAuthenticated, upload.any(), async (req, res) => {
   try {
     const { model } = req.body;
     let formData = req.body.data || {};
 
-  
-    // Handle uploaded files (single + multiple)
-if (req.files && req.files.length > 0) {
-  req.files.forEach(file => {
-    const match = file.fieldname.match(/^data\[(.+?)\](\[\])?$/);
-    if (match) {
-      const fieldName = match[1];
+    if (req.files && req.files.length > 0) {
+      req.files.forEach(file => {
+        const match = file.fieldname.match(/^data\[(.+?)\](\[\])?$/);
+        if (match) {
+          const fieldName = match[1];
+          const fileUrl = file.path;
 
-      // Only store the URL string if your schema expects [String]
-      const fileUrl = file.path; // or file.path / file.secure_url depending on your upload method
-
-      if (match[2] === "[]") {
-        if (!Array.isArray(formData[fieldName])) formData[fieldName] = [];
-        formData[fieldName].push(fileUrl); // <-- only the URL string
-      } else {
-        formData[fieldName] = fileUrl;
-      }
+          if (match[2] === "[]") {
+            if (!Array.isArray(formData[fieldName])) formData[fieldName] = [];
+            formData[fieldName].push(fileUrl);
+          } else {
+            formData[fieldName] = fileUrl;
+          }
+        }
+      });
     }
-  });
-}
 
-
-    // Clean reserved fields safely
     if (!formData._id || formData._id.trim() === "") {
       delete formData._id;
     }
     delete formData.__v;
 
-    // Convert date strings (dd/mm/yyyy → Date)
-    // Convert date strings (handle dd/mm/yyyy or dd-mm-yyyy)
-for (const key in formData) {
-  if (key.toLowerCase().includes("date") && typeof formData[key] === "string") {
-    let rawDate = formData[key].trim();
-
-    // Support both "26-04-2025" and "26/04/2025"
-    const separator = rawDate.includes("-") ? "-" : "/";
-    const [day, month, year] = rawDate.split(separator);
-
-    if (day && month && year) {
-      formData[key] = new Date(`${year}-${month}-${day}`);
+    for (const key in formData) {
+      if (key.toLowerCase().includes("date") && typeof formData[key] === "string") {
+        let rawDate = formData[key].trim();
+        const separator = rawDate.includes("-") ? "-" : "/";
+        const [day, month, year] = rawDate.split(separator);
+        if (day && month && year) {
+          formData[key] = new Date(`${year}-${month}-${day}`);
+        }
+      }
     }
-  }
-}
 
+    if (formData.imageUrl) {
+      if (Array.isArray(formData.imageUrl)) {
+        formData.imageUrl = formData.imageUrl.map(img =>
+          typeof img === "object" && img.url ? img.url : img
+        );
+      } else if (typeof formData.imageUrl === "object" && formData.imageUrl.url) {
+        formData.imageUrl = [formData.imageUrl.url];
+      } else if (typeof formData.imageUrl === "string") {
+        formData.imageUrl = [formData.imageUrl];
+      }
+    }
 
-    // ✅ Normalize imageUrl (accept array, object, or string)
-    // ✅ Normalize imageUrl (always keep as array of URLs)
-if (formData.imageUrl) {
-  if (Array.isArray(formData.imageUrl)) {
-    // Convert array of objects [{ url, public_id }] → [url, url]
-    formData.imageUrl = formData.imageUrl.map(img =>
-      typeof img === "object" && img.url ? img.url : img
-    );
-  } else if (typeof formData.imageUrl === "object" && formData.imageUrl.url) {
-    formData.imageUrl = [formData.imageUrl.url];
-  } else if (typeof formData.imageUrl === "string") {
-    formData.imageUrl = [formData.imageUrl];
-  }
-}
-
-
-    // Handle MoU array (flat or nested)
-    if (formData['memorandumOfUnderstanding.company'] || formData['memorandumOfUnderstanding.details']) {
-      const company = formData['memorandumOfUnderstanding.company'];
-      const details = formData['memorandumOfUnderstanding.details'];
+    if (formData["memorandumOfUnderstanding.company"] || formData["memorandumOfUnderstanding.details"]) {
+      const company = formData["memorandumOfUnderstanding.company"];
+      const details = formData["memorandumOfUnderstanding.details"];
       if (company && details && company.trim() && details.trim()) {
         formData.memorandumOfUnderstanding = [
-          { company: company.trim(), details: details.trim() }
+          { company: company.trim(), details: details.trim() },
         ];
-        delete formData['memorandumOfUnderstanding.company'];
-        delete formData['memorandumOfUnderstanding.details'];
+        delete formData["memorandumOfUnderstanding.company"];
+        delete formData["memorandumOfUnderstanding.details"];
       }
     } else if (formData.memorandumOfUnderstanding) {
       const mouData = formData.memorandumOfUnderstanding;
@@ -206,14 +300,18 @@ if (formData.imageUrl) {
       }
 
       formData.memorandumOfUnderstanding = processedMou.filter(
-        mou => mou && mou.company && mou.details && mou.company.trim() && mou.details.trim()
+        mou =>
+          mou &&
+          mou.company &&
+          mou.details &&
+          mou.company.trim() &&
+          mou.details.trim()
       );
     }
 
     const Model = mongoose.models[model];
     if (!Model) return res.status(400).send("Invalid model selected");
 
-    // Always create a fresh document (no _id reuse)
     const doc = new Model(formData);
     await doc.save();
 
@@ -224,8 +322,8 @@ if (formData.imageUrl) {
   }
 });
 
-// DELETE: Delete document + associated Cloudinary images (works for all models)
-router.delete("/delete/:model/:id", async (req, res) => {
+// DELETE routes (unchanged)
+router.delete("/delete/:model/:id", isAuthenticated, async (req, res) => {
   try {
     const { model, id } = req.params;
     const Model = mongoose.models[model];
@@ -236,16 +334,11 @@ router.delete("/delete/:model/:id", async (req, res) => {
 
     const data = doc.toObject();
 
-    // Delete single and multiple images dynamically
     for (const key in data) {
       const value = data[key];
-
-      // Single image object
       if (value && typeof value === "object" && value.public_id) {
         await cloudinary.uploader.destroy(value.public_id);
       }
-
-      // Array of image objects
       if (Array.isArray(value)) {
         for (const img of value) {
           if (img && img.public_id) {
@@ -255,9 +348,7 @@ router.delete("/delete/:model/:id", async (req, res) => {
       }
     }
 
-    // Delete the document from DB
     await Model.findByIdAndDelete(id);
-
     res.json({ message: `${model} deleted successfully` });
   } catch (err) {
     console.error("❌ Error deleting document:", err);
@@ -265,11 +356,11 @@ router.delete("/delete/:model/:id", async (req, res) => {
   }
 });
 
-// DELETE single Cloudinary image
-router.post("/delete-image", async (req, res) => {
+router.post("/delete-image", isAuthenticated, async (req, res) => {
   try {
     const { public_id } = req.body;
-    if (!public_id) return res.status(400).json({ success: false, message: "Missing public_id" });
+    if (!public_id)
+      return res.status(400).json({ success: false, message: "Missing public_id" });
 
     await cloudinary.uploader.destroy(public_id);
     res.json({ success: true });

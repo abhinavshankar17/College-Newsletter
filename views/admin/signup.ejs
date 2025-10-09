@@ -1,0 +1,85 @@
+<form action="/admin/signup" method="POST" class="signup-form">
+  <h2>Admin Signup</h2>
+  <input type="text" name="username" placeholder="Username" required />
+  <input type="email" name="email" placeholder="Email" required />
+  <input type="password" name="password" placeholder="Password" required />
+  <button type="submit">Sign Up</button>
+  <p>Already have an account? <a href="/admin-login">Login</a></p>
+
+  <style>
+    /* Center the form */
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #001f3f; /* Navy blue */
+      font-family: Arial, sans-serif;
+    }
+
+    /* Form container */
+    .signup-form {
+      background-color: #001f3f; /* Navy background */
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      width: 320px;
+      text-align: center;
+    }
+
+    .signup-form h2 {
+      color: #FFD700; /* Yellow text */
+      margin-bottom: 25px;
+    }
+
+    .signup-form input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #FFD700;
+      border-radius: 5px;
+      background-color: #f0f0f0;
+      font-size: 16px;
+    }
+
+    .signup-form input:focus {
+      outline: none;
+      border-color: #FFD700;
+      box-shadow: 0 0 5px #FFD700;
+    }
+
+    .signup-form button {
+      width: 100%;
+      padding: 10px;
+      background-color: #FFD700; /* Yellow button */
+      border: none;
+      border-radius: 5px;
+      color: #001f3f; /* Navy text */
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .signup-form button:hover {
+      background-color: #e6c200;
+    }
+
+    .signup-form p {
+      margin-top: 15px;
+      color: #ffffff;
+      font-size: 14px;
+    }
+
+    .signup-form a {
+      color: #FFD700;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .signup-form a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</form>
