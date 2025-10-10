@@ -3,7 +3,7 @@ import FacultyUpskilling from "../../models/faculty/FacultyUpskilling.js";
 // Show all faculty upskilling records
 export const getAllFacultyUpskilling = async (req, res) => {
   try {
-    const faculties = await FacultyUpskilling.find();
+    const faculties = await FacultyUpskilling.find().lean();
     res.render("faculty/FacultyUpskilling", { faculties });
   } catch (err) {
     console.error("❌ Error fetching Faculty Upskilling:", err);
@@ -16,49 +16,25 @@ export const addFacultyUpskilling = async (req, res) => {
   try {
     const { body, files } = req;
 
-    // Build faculty1..faculty4 dynamically
-    const facultyData = {};
-    for (let i = 1; i <= 5; i++) {
-      const nameKey = `name${i}`;
-      const desigKey = `designation${i}`;
-      const deptKey = `department${i}`;
-      const descKey = `description${i}`;
-      const imageKey = `image${i}`; // multer field name
+    // Build new faculty object
+    const newFaculty = new FacultyUpskilling({
+      name: body.name.trim(),
+      designation: body.designation?.trim() || "Assistant Professor",
+      department: body.department?.trim() || "NWC, SRMIST",
+      description: body.description?.trim() || "",
+      images: [],
+    });
 
-      const facultyMember = {};
-
-      if (body[nameKey] && body[nameKey].trim() !== "") {
-        facultyMember.name = body[nameKey].trim();
-      }
-      if (body[desigKey] && body[desigKey].trim() !== "") {
-        facultyMember.designation = body[desigKey].trim();
-      }
-      if (body[deptKey] && body[deptKey].trim() !== "") {
-        facultyMember.department = body[deptKey].trim();
-      }
-      if (body[descKey] && body[descKey].trim() !== "") {
-        facultyMember.description = body[descKey].trim();
-      }
-
-      // Handle images (single or multiple)
-      facultyMember.images = [];
-      if (files) {
-        const relevantFiles = files.filter(f => f.fieldname === imageKey);
-        relevantFiles.forEach(file => {
-          facultyMember.images.push(file.path || file.filename);
-        });
-      }
-
-      // Assign only if there’s some data
-      if (facultyMember.name || facultyMember.images.length > 0) {
-        facultyData[`faculty${i}`] = facultyMember;
-      }
+    // Handle uploaded images
+    if (files && files.length > 0) {
+      files.forEach(file => {
+        newFaculty.images.push(file.path || file.filename);
+      });
     }
 
-    const newRecord = new FacultyUpskilling(facultyData);
-    await newRecord.save();
+    await newFaculty.save();
 
-    console.log("✅ Faculty Upskilling record added:", newRecord._id);
+    console.log("✅ Faculty Upskilling record added:", newFaculty._id);
     res.redirect("/faculty/Faculty-Upskilling");
   } catch (err) {
     console.error("❌ Error adding Faculty Upskilling:", err);

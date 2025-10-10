@@ -160,33 +160,31 @@ h1::after {
 
   <% if (faculties && faculties.length > 0) { %>
     <div class="cards-grid">
-      <% faculties.forEach(doc => { %>
-        <% for (let i = 1; i <= 5; i++) {
-             const member = doc[`faculty${i}`];
-             if (member && (member.name || (member.images && member.images.length > 0))) {
-               const imgSrc = (member.images && member.images.length > 0) 
-                              ? (Array.isArray(member.images) ? member.images[0] : member.images)
-                              : '/images/default-avatar.png';
-        %>
-          <div class="card">
-            <img src="<%= imgSrc %>" alt="<%= member.name || 'No photo' %>">
-            <div class="info">
-              <% if (member.name) { %>
-                <h2><%= member.name %></h2>
-              <% } %>
-              <p><%= member.designation %>, <%= member.department %></p>
-              <% if (member.description) { %>
-                <div class="description"><%= member.description %></div>
-              <% } %>
-            </div>
+      <% faculties.forEach(member => { 
+           const imgSrc = (member.images && member.images.length > 0)
+                          ? member.images[0]
+                          : '/images/default-avatar.png';
+      %>
+        <div class="card">
+          <img src="<%= imgSrc %>" alt="<%= member.name || 'No photo' %>">
+          <div class="info">
+            <% if (member.name) { %>
+              <h2><%= member.name %></h2>
+            <% } %>
+            <p><%= member.designation %>, <%= member.department %></p>
+            <% if (member.description) { %>
+              <div class="description"><%= member.description %></div>
+            <% } %>
           </div>
-        <% } } %> 
-      <% }) %> 
+        </div>
+      <% }) %>
     </div>
   <% } else { %>
     <p class="empty-message">No faculty upskilling records available yet.</p>
   <% } %>
 </div>
+
+
 
 
 

@@ -1,58 +1,41 @@
-import OutreachActivityModel from "../../models/events/OutReach.js";
+import OutReachActivities from "../../models/events/OutReach.js";
 
-// Get all outreach activities
+// 📄 Get all activities grouped by date
 export const getOutreachActivity = async (req, res) => {
   try {
-    const activities = await OutreachActivityModel.find();
-    res.render("events/OutreachActivity.ejs", { activities });
+    const groupedActivities = await OutReachActivities.getGroupedActivities();
+    
+    // Render EJS page
+    res.render("events/OutreachActivity.ejs", { activities: groupedActivities });
   } catch (error) {
     console.error("Error fetching Outreach Activities:", error);
-    res.status(500).send("Server Error: " + error.message);
+    res.status(500).send("Server Error");
   }
 };
 
-// Add new outreach activity
+// 📄 Add a new activity
 export const addOutreachActivity = async (req, res) => {
   try {
-    const { activityKey, title, date, time, venue, participants, coordinators, eventSummary, images } = req.body;
+    const { title, date, time, venue, participants, CoOrdinators, EventSummary, images } = req.body;
 
-    // Ensure activityKey is either 'Activity1' or 'Activity2'
-    if (!['Activity1', 'Activity2'].includes(activityKey)) {
-      return res.status(400).send("Invalid activity key. Must be 'Activity1' or 'Activity2'.");
+    if (!title || !date) {
+      return res.status(400).send("Title and Date are required");
     }
 
-    // Parse coordinators string into object
-    const parsedCoordinators = coordinators ? { name: coordinators } : null;
-
-    // Create activity object
-    const activityData = {
+    const newActivity = await OutReachActivities.create({
       title,
       date,
       time,
-      venue,
+      venue: venue || [],
       participants,
-      coordinators: parsedCoordinators,
-      eventSummary,
-      images: Array.isArray(images) ? images : images ? [images] : []
-    };
+      CoOrdinators,
+      EventSummary,
+      images: images || [],
+    });
 
-    // Check if there is already a document
-    let existingDoc = await OutreachActivityModel.findOne();
-    if (existingDoc) {
-      // Update the specified activity key
-      existingDoc[activityKey] = activityData;
-      await existingDoc.save();
-    } else {
-      // Create new document with the activity under the given key
-      const newDoc = new OutreachActivityModel({
-        [activityKey]: activityData
-      });
-      await newDoc.save();
-    }
-
-    res.redirect("/OutreachActivity");
+    res.status(201).json({ success: true, data: newActivity });
   } catch (error) {
-    console.error("Error adding OutreachActivity:", error);
-    res.status(500).send("Server Error: " + error.message);
+    console.error("Error adding Outreach Activity:", error);
+    res.status(500).send("Server Error");
   }
 };

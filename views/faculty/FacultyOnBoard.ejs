@@ -1,11 +1,8 @@
 <%- include("../partials/header", { title: "Faculty On Board" }) %>
 
 <style>
-  body {
-    background: #f8f9fa;
-  }
+  body { background: #f8f9fa; }
 
-  /* Title */
   .faculty-title {
     background: #0d1b2a;
     color: #ffcc00;
@@ -22,7 +19,6 @@
     transform: scale(1.02);
   }
 
-  /* Card */
   .faculty-card {
     border: none;
     border-radius: 15px;
@@ -34,7 +30,6 @@
     box-shadow: 0 8px 20px rgba(0,0,0,0.15);
   }
 
-  /* Photo */
   .faculty-photo {
     border: 3px solid #ffcc00;
     transition: transform 0.3s ease, border-color 0.3s ease;
@@ -44,21 +39,11 @@
     border-color: #ffd84f;
   }
 
-  /* Name & Designation */
-  .faculty-name {
-    color: #0d1b2a;
-    font-weight: 700;
-    margin-top: 12px;
-  }
-  .faculty-card:hover .faculty-name {
-    color: #ffcc00;
-  }
-  .faculty-designation {
-    color: #555;
-    font-style: italic;
-  }
+  .faculty-name { color: #0d1b2a; font-weight: 700; margin-top: 12px; }
+  .faculty-card:hover .faculty-name { color: #ffcc00; }
 
-  /* Congratulations footer */
+  .faculty-designation { color: #555; font-style: italic; }
+
   .congrats {
     color: #0d1b2a;
     background: #ffcc00;
@@ -69,10 +54,7 @@
     transition: all 0.3s ease;
     margin-top: 40px;
   }
-  .congrats:hover {
-    background: #ffd84f;
-    transform: scale(1.05);
-  }
+  .congrats:hover { background: #ffd84f; transform: scale(1.05); }
 </style>
 
 <div class="container my-5">
@@ -80,44 +62,33 @@
 
   <div class="row g-4">
     <% if (faculty && faculty.length > 0) { %>
-      <% faculty.forEach(doc => { %>
-        <% for (let i = 1; i <= 10; i++) { 
-             const member = doc[`faculty${i}`]; 
-             const nameKey = `name${i}`; 
-             const designationKey = `designation${i}`; 
-             if (member && (member[nameKey] || (member.images && member.images.length > 0))) { 
-               const imgSrc = (member.images && member.images.length > 0) ? member.images[0] : null;
-        %>
-          <div class="col-12 col-sm-6 col-md-4">
-            <div class="card faculty-card h-100 text-center shadow-sm">
+      <% faculty.forEach(member => { %>
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="card faculty-card h-100 text-center shadow-sm">
+            <!-- Photo -->
+            <div class="d-flex justify-content-center mt-3">
+              <% if (member.images && member.images.length > 0) { %>
+                <img src="<%= member.images[0] %>"
+                     alt="<%= member.name %>"
+                     class="faculty-photo rounded-circle shadow-sm"
+                     style="width: 130px; height: 130px; object-fit: cover;">
+              <% } else { %>
+                <div class="d-flex align-items-center justify-content-center bg-light border text-muted"
+                     style="width: 130px; height: 130px; border-radius: 50%;">
+                  No Photo
+                </div>
+              <% } %>
+            </div>
 
-              <!-- Photo -->
-              <div class="d-flex justify-content-center mt-3">
-                <% if (imgSrc) { %>
-                  <img src="<%= imgSrc %>"
-                       alt="<%= member[nameKey] %>"
-                       class="faculty-photo rounded-circle shadow-sm"
-                       style="width: 130px; height: 130px; object-fit: cover;">
-                <% } else { %>
-                  <div class="d-flex align-items-center justify-content-center bg-light border text-muted"
-                       style="width: 130px; height: 130px; border-radius: 50%;">
-                    No Photo
-                  </div>
-                <% } %>
-              </div>
-
-              <!-- Name + Designation -->
-              <div class="card-body">
-                <% if (member[nameKey]) { %>
-                  <h5 class="faculty-name"><%= member[nameKey] %></h5>
-                <% } %>
-                <% if (member[designationKey]) { %>
-                  <p class="faculty-designation"><%= member[designationKey] %></p>
-                <% } %>
-              </div>
+            <!-- Name + Designation -->
+            <div class="card-body">
+              <h5 class="faculty-name"><%= member.name %></h5>
+              <% if (member.designation) { %>
+                <p class="faculty-designation"><%= member.designation %></p>
+              <% } %>
             </div>
           </div>
-        <% } } %>
+        </div>
       <% }); %>
     <% } else { %>
       <div class="col-12">

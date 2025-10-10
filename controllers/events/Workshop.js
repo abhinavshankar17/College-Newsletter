@@ -1,32 +1,36 @@
-import WorkshopModel from "../../models/events/WorkshopModel.js";
+import Workshop from "../../models/events/WorkshopModel.js";
 
-// Get workshops (only one doc with workshop1 & workshop2)
+// 📄 Get workshops grouped by date
 export const getAllWorkshops = async (req, res) => {
   try {
-    const workshops = await WorkshopModel.findOne().lean(); 
-    res.render("events/Workshops.ejs", { workshops });
+    const groupedWorkshops = await Workshop.getGroupedWorkshops();
+    res.render("events/workshops.ejs", { workshops: groupedWorkshops });
   } catch (error) {
-    console.log("❌ Error fetching workshops:", error);
-    res.status(500).render("error", { message: "Server Error" });
+    console.error("Error fetching workshops:", error);
+    res.status(500).send("Server Error");
   }
 };
 
-// Add/update workshops (update workshop1 or workshop2)
+// 📄 Add a new workshop
 export const addAllWorkshops = async (req, res) => {
   try {
-    const { workshopKey, title, description, eventSummary, images } = req.body;
+    const { title, date, Convener, ResourcePerson, NumberofRegisteredParticipants, EventSummary, images } = req.body;
 
-    // ensure one document exists
-    let workshops = await WorkshopModel.findOne();
-    if (!workshops) workshops = new WorkshopModel();
+    if (!title || !date) return res.status(400).send("Title and Date are required");
 
-    // assign values dynamically (workshop1 or workshop2)
-    workshops[workshopKey] = { title, description, eventSummary, images };
+    const newWorkshop = await Workshop.create({
+      title,
+      date,
+      Convener,
+      ResourcePerson,
+      NumberofRegisteredParticipants,
+      EventSummary,
+      images: images || [],
+    });
 
-    await workshops.save();
-    res.redirect("/Workshops");
+    res.status(201).json({ success: true, data: newWorkshop });
   } catch (error) {
-    console.error("❌ Error adding Workshop:", error);
-    res.status(500).render("error", { message: "Server Error" });
+    console.error("Error adding workshop:", error);
+    res.status(500).send("Server Error");
   }
 };

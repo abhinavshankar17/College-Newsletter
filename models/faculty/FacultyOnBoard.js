@@ -1,62 +1,33 @@
 import mongoose from "mongoose";
 
-
 const facultySchema = new mongoose.Schema({
-  faculty1:{
-    images: { type: [String], default: [] }, 
-  name1: { type: String, required: false },
-  designation1: { type: String, required: false },
- 
-  },
-  faculty2:{
-     images: { type: [String], default: [] }, 
-  name2: { type: String, required: false },
-  designation2: { type: String, required: false },
-   },
- faculty3:{
-   images: { type: [String], default: [] }, 
-  name3: { type: String, required: false },
-  designation3: { type: String, required: false },
- },
-
-  faculty4:{
-     images: { type: [String], default: [] }, 
-  name4: { type: String, required: false },
-  designation4: { type: String, required: false },
-  },
-  faculty5:{
-     images: { type: [String], default: [] }, 
-  name5: { type: String, required: false },
-  designation5: { type: String, required: false },
-  },
-  faculty6:{
-     images: { type: [String], default: [] }, 
-  name6: { type: String, required: false },
-  designation6: { type: String, required: false },
-  },
-   faculty7:{
-     images: { type: [String], default: [] }, 
-  name7: { type: String, required: false },
-  designation7: { type: String, required: false },
-   },
-   faculty8:{
-     images: { type: [String], default: [] }, 
-  name8: { type: String, required: false },
-  designation8: { type: String, required: false },
-   },
-   faculty9:{
-     images: { type: [String], default: [] }, 
-  name9: { type: String, required: false },
-  designation9: { type: String, required: false },
-   },
-   faculty10:{
-     images: { type: [String], default: [] }, 
-  name10: { type: String, required: false },
-  designation10: { type: String, required: false },
-   },
-
+  images: { type: [String], default: [] },
+  name: { type: String, required: true },
+  designation: { type: String, required: false },
+  createdAt: { type: Date, default: Date.now },
 });
 
-const FacultyOnBoard = mongoose.model("FacultyonBoard", facultySchema);
+// ✅ Static method to group faculty by designation
+facultySchema.statics.getFacultyGroupedByDesignation = async function () {
+  try {
+    const facultyList = await this.find().lean();
+    if (!facultyList || facultyList.length === 0) return {};
 
-export default FacultyOnBoard ;
+    const grouped = facultyList.reduce((groups, f) => {
+      const key = f.designation || "Others"; // default group
+      if (!groups[key]) groups[key] = [];
+      groups[key].push(f);
+      return groups;
+    }, {});
+
+    return grouped;
+  } catch (error) {
+    console.error("Error grouping faculty:", error);
+    throw error;
+  }
+};
+
+// ✅ Explicit collection name (optional)
+const FacultyOnBoard = mongoose.model("FacultyOnBoard", facultySchema, "faculty_on_board");
+
+export default FacultyOnBoard;

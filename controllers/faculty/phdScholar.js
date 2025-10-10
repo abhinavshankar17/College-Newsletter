@@ -1,6 +1,6 @@
 import PhdScholar from "../../models/faculty/phScholarSchema.js";
 
-// Get all PhD Scholars
+// GET: Show all PhD Scholars
 export const getAllPhdScholars = async (req, res) => {
   try {
     const scholars = await PhdScholar.find();
@@ -11,28 +11,24 @@ export const getAllPhdScholars = async (req, res) => {
   }
 };
 
-// Add new PhD Scholar
+// POST: Add new PhD Scholar
 export const addPhdScholar = async (req, res) => {
   try {
-    // Build the scholar document dynamically
-    const scholarData = {};
-    for (let i = 1; i <= 6; i++) {
-      const nameKey = `name${i}`;
-      const descKey = `description${i}`;
+    const { name, regNo, description } = req.body;
 
-      if (req.body[nameKey] && req.body[nameKey].trim() !== "") {
-        scholarData[nameKey] = req.body[nameKey].trim();
-      }
-
-      if (req.body[descKey] && req.body[descKey].trim() !== "") {
-        scholarData[descKey] = req.body[descKey].trim();
-      }
+    if (!name || name.trim() === "") {
+      return res.status(400).render("error", { message: "Name is required" });
     }
 
-    const newScholar = new PhdScholar(scholarData);
+    const newScholar = new PhdScholar({
+      name: name.trim(),
+      regNo: regNo?.trim() || "",
+      description: description?.trim() || "",
+    });
+
     await newScholar.save();
 
-    console.log("✅ PhD Scholar document added:", newScholar._id);
+    console.log("✅ PhD Scholar added:", newScholar._id);
     res.redirect("/faculty/phd-scholar");
   } catch (error) {
     console.error("❌ Error adding PhD Scholar:", error);

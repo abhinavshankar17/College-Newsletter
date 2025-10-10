@@ -1,138 +1,67 @@
-<body class="bg-light" style="font-family: 'Poppins', sans-serif;">
-  <%- include("../partials/header", { title: "Outreach Activities" }) %>
+<%- include("../partials/header", { title: "Outreach Activities" }) %>
 
-  <div class="container my-5">
-    <h1 class="mb-5 text-center fw-bold page-title">Outreach Activities</h1>
+<div class="container my-5">
+  <h1 class="mb-5 text-center fw-bold page-title">Outreach Activities</h1>
 
-    <% if (activities && activities.length) { %>
-      <% activities.forEach(record => { %>
-        <% ['Activity1', 'Activity2'].forEach(key => {
-             const activity = record[key];
-             if (activity) { %>
+  <% if (Object.keys(activities).length === 0) { %>
+    <p class="text-center text-muted">No Outreach Activities available.</p>
+  <% } else { %>
+    <% Object.keys(activities).forEach(date => { %>
+      <div class="mb-5">
+        <h3 class="text-primary mb-4"><%= date %></h3>
 
-          <div class="activity-card mb-5 p-4">
-            <!-- Title -->
-            <h2 class="mb-4 text-center fw-semibold activity-title">
-              <%= activity.title || "Untitled Outreach Activity" %>
-            </h2>
+        <% activities[date].forEach((activity, index) => { %>
+          <div class="card shadow-sm mb-4 rounded-3">
+            <div class="card-body">
+              <h5 class="card-title"><%= activity.title %></h5>
 
-            <!-- Basic Details -->
-            <div class="activity-details mb-4">
-              <p><strong>Date:</strong> <%= activity.date || "Not available" %></p>
-              <p><strong>Time:</strong> <%= activity.time || "Not available" %></p>
-              <p><strong>Venue:</strong> <%= activity.venue || "Not available" %></p>
-              <p><strong>Participants:</strong> <%= activity.participants || "Not specified" %></p>
-            </div>
+              <% if (activity.time) { %>
+                <p><i class="bi bi-clock me-2"></i><strong>Time:</strong> <%= activity.time %></p>
+              <% } %>
 
-            <!-- Coordinators -->
-            <% if (activity.coordinators && activity.coordinators.name) { %>
-              <div class="mb-4">
-             
-                <ul class="coordinator-list">
-                  <% activity.coordinators.name.split('\n').forEach(person => { %>
-                    <% if(person.trim()) { %>
-                      <li><%= person.trim() %></li>
-                    <% } %>
-                  <% }) %>
-                </ul>
-              </div>
-            <% } %>
+              <% if (activity.venue && activity.venue.length > 0) { %>
+                <p><i class="bi bi-geo-alt me-2"></i><strong>Venue:</strong> <%= activity.venue.join(", ") %></p>
+              <% } %>
 
-            <!-- Event Summary -->
-            <div class="mb-4">
-              <h5 class="section-header">Event Summary</h5>
-              <p class="event-summary"><%- (activity.eventSummary ? activity.eventSummary.replace(/\n/g, "<br>") : "No summary available.") %></p>
-            </div>
+              <% if (activity.participants) { %>
+                <p><i class="bi bi-people me-2"></i><strong>Participants:</strong> <%= activity.participants %></p>
+              <% } %>
 
-            <!-- Images -->
-            <% if (activity.images && activity.images.length) { %>
-              <div>
-                <h5 class="section-header">Event Images</h5>
-                <div class="row g-3">
-                  <% activity.images.forEach(img => { %>
-                    <div class="col-sm-6 col-md-4">
-                      <div class="card h-100 image-card">
-                        <img src="<%= img %>" class="card-img-top img-fluid rounded-top" alt="Event image">
-                      </div>
-                    </div>
-                  <% }) %>
-                </div>
-              </div>
-            <% } %>
-          </div>
+            <% if (activity.CoOrdinators) { %>
+  <div>
 
-        <% } }) %>
-      <% }) %>
-    <% } else { %>
-      <p class="text-center text-muted">No Outreach Activities available.</p>
-    <% } %>
+    
+    <% activity.CoOrdinators.split(',').forEach(role => { %>
+      <span style="display:block; font-weight:bold; margin-left:10px;"><%= role.trim() %></span>
+    <% }) %>
   </div>
+<% } %>
 
-  <%- include("../partials/footer") %>
+              <% if (activity.EventSummary) { %>
+                <p><i class="bi bi-card-text me-2"></i><strong>Summary:</strong> <%= activity.EventSummary %></p>
+              <% } %>
+            </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+            <!-- Images gallery -->
+            <% if (activity.images && activity.images.length > 0) { %>
+              <div class="card-footer bg-white d-flex flex-wrap gap-2">
+                <% activity.images.forEach(img => { %>
+                  <div style="flex: 1 1 30%; max-width: 30%;">
+                    <img src="<%= img %>" class="rounded" style="width:100%; height:150px; object-fit:contain; background:#f0f0f0;" alt="Activity Image">
+                  </div>
+                <% }) %>
+              </div>
+            <% } else { %>
+              <div class="card-footer bg-white">
+                <img src="/images/placeholder.png" class="rounded" style="width:100%; height:150px; object-fit:contain; background:#f0f0f0;" alt="No Image">
+              </div>
+            <% } %>
 
-  <style>
-    body { background-color: #f4f6f9; }
+          </div>
+        <% }) %>
+      </div>
+    <% }) %>
+  <% } %>
+</div>
 
-    .page-title {
-      color: #1a2530;
-      border-bottom: 3px solid #cda434;
-      display: inline-block;
-      padding-bottom: 5px;
-    }
-
-    .activity-card {
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-      transition: all 0.3s ease-in-out;
-    }
-
-    .activity-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 28px rgba(0,0,0,0.12);
-    }
-
-    .activity-title {
-      color: #2c3e50;
-      font-size: 1.7rem;
-      border-bottom: 2px solid #eee;
-      padding-bottom: 8px;
-    }
-
-    .activity-details p { margin: 6px 0; font-size: 0.95rem; }
-
-    .section-header {
-      font-weight: 600;
-      font-size: 1.1rem;
-      color: #1a2530;
-      margin-bottom: 12px;
-      border-left: 4px solid #cda434;
-      padding-left: 8px;
-    }
-
-    .event-summary {
-      background: #fafafa;
-      padding: 15px;
-      border-radius: 8px;
-      line-height: 1.6;
-      font-size: 0.96rem;
-    }
-
-    .image-card {
-      border: none;
-      border-radius: 12px;
-      overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .image-card img { transition: transform 0.3s ease; }
-
-    .image-card:hover img { transform: scale(1.05); }
-    .image-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
-
-    .coordinator-list { list-style-type: disc; margin-left: 20px; padding-left: 0; }
-    .coordinator-list li { margin-bottom: 6px; font-size: 0.95rem; line-height: 1.5; color: #34495e; }
-  </style>
-</body>
+<%- include("../partials/footer") %>

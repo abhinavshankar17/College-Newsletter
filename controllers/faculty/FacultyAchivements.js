@@ -1,61 +1,41 @@
-import FacultyAchievements from "../../models/faculty/FacultyAchivements.js";
+import FacultyAchievement from "../../models/faculty/FacultyAchievements.js";
 
-// Show all achievements page
+
+// ✅ GET — Show all grouped faculty achievements
 export const getFacultyAchievements = async (req, res) => {
   try {
-    const achievements = await FacultyAchievements.find();
-    res.render("faculty/FacultyAchievements", { achievements });
+    const groupedAchievements = await FacultyAchievement.getGroupedFacultyAchievements();
+    res.render("faculty/facultyAchievements.ejs", { groupedAchievements });
   } catch (error) {
-    console.error("❌ Error fetching Faculty Achievements:", error);
-    res.status(500).send("Error fetching Faculty Achievements data");
+    console.error("Error fetching faculty achievements:", error);
+    res.status(500).send("Error fetching faculty achievements");
   }
 };
 
-// Add new Faculty Achievement document
+// ✅ POST — Add a new faculty achievement
 export const addFacultyAchievements = async (req, res) => {
   try {
-    const { body, files } = req;
+    const { title, designation, description } = req.body;
+    let images = [];
 
-    const achievementData = {};
-
-    for (let i = 1; i <= 6; i++) {
-      const nameKey = `name${i}`;
-      const desigKey = `designamtion${i}`; // matches schema typo
-      const descKey = `description${i}`;
-      const imageKey = `image${i}`; // field name for multer
-
-      const facultyMember = {};
-
-      // Add name, designation, description if provided
-      if (body[nameKey] && body[nameKey].trim() !== "") facultyMember.name = body[nameKey].trim();
-      if (body[desigKey] && body[desigKey].trim() !== "") facultyMember.designamtion = body[desigKey].trim();
-      if (body[descKey] && body[descKey].trim() !== "") facultyMember.description = body[descKey].trim();
-
-      // Add image if uploaded
-      facultyMember.images = [];
-      if (files && files.length > 0) {
-        const relevantFile = files.find(f => f.fieldname === imageKey);
-        if (relevantFile) facultyMember.images.push(relevantFile.path || relevantFile.filename);
-      }
-
-      // Only add if at least one property exists
-      if (
-        facultyMember.name || 
-        facultyMember.designamtion || 
-        facultyMember.description || 
-        facultyMember.images.length > 0
-      ) {
-        achievementData[`faculty${i}`] = facultyMember;
-      }
+    // Handle file uploads (if images uploaded via multer)
+    if (req.files && req.files.length > 0) {
+      images = req.files.map((file) => `/uploads/${file.filename}`);
     }
 
-    const newAchievement = new FacultyAchievements(achievementData);
-    await newAchievement.save();
+    const newAchievement = new FacultyAchievement({
+      title,
+      designation,
+      description,
+      images,
+    });
 
-    console.log("✅ Faculty Achievement added:", newAchievement._id);
-    res.redirect("/faculty/achievements");
+    await newAchievement.save();
+    console.log("✅ Faculty achievement added successfully:", newAchievement);
+
+    res.redirect("/admin/faculty-achievements");
   } catch (error) {
-    console.error("❌ Error adding Faculty Achievement:", error);
-    res.status(500).send("Error adding Faculty Achievements data");
+    console.error("Error adding faculty achievement:", error);
+    res.status(500).send("Error saving faculty achievement");
   }
 };

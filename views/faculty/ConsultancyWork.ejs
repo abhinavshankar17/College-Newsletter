@@ -1,175 +1,64 @@
-<body class="bg-light">
-  <%- include("../partials/header", { title: "Consultancy Work" }) %>
+<%- include("../partials/header", { title: "Consultancies" }) %>
 
-  <div class="container my-5">
-    <h2 class="text-center fw-bold mb-4">Innovation Through Industry Partnerships</h2>
-    <h3 class="text-center fw-semibold mb-5">Consultancy Work</h3>
+<div class="container my-5">
+  <h1 class="mb-5 text-center fw-bold page-title">Consultancies</h1>
 
-    <% if (consultancies && consultancies.length > 0) { %>
-      <% consultancies.forEach(consultancy => { %>
-        <div class="card shadow-lg p-4 rounded-3 mb-5">
-          <hr class="my-4 border border-2 border-dashed">
+  <% if (!consultancies || consultancies.length === 0) { %>
+    <p class="text-center text-muted">No Consultancy data available.</p>
+  <% } else { %>
+    <% consultancies.forEach(cons => { %>
+      <div class="card shadow-sm mb-4 rounded-3">
+        <div class="card-body">
+          <% if(cons.title){ %>
+            <h5 class="card-title"><%= cons.title %></h5>
+          <% } %>
 
-          <!-- Project Info -->
-          <div class="mb-4">
-            <h4 class="fw-semibold">Project: <%= consultancy.title || "Untitled Project" %></h4>
-            <p><strong>Department:</strong> NWC, SRMIST</p>
-            <p><strong>Collaborating Agency:</strong> <%= consultancy.consultancyCompany || "Not Specified" %></p>
-            <p><strong>Consultancy Amount:</strong> ₹ <%= consultancy.consultancyAmount ? consultancy.consultancyAmount.toLocaleString() : "0" %></p>
-          </div>
+          <% if(cons.description1){ %>
+            <p><strong>Description:</strong> <%= cons.description1 %></p>
+          <% } %>
 
-          <!-- Team Members -->
-          <div class="mb-5">
-            <h4 class="text-center fw-semibold mb-3">Team Members</h4>
-            <div class="row justify-content-center g-4">
-              <% const members = [consultancy.Member1, consultancy.Member2, consultancy.Member3]; %>
-              <% members.forEach(member => { %>
-                <% if (member && (member.name || member.designation)) { %>
-                  <div class="col-md-3 col-sm-6 text-center team-member">
-                    <% 
-                      const imgSrc = (member.images && member.images.length > 0) ? member.images[0] : null; 
-                    %>
-                    <% if (imgSrc) { %>
-                      <img src="<%= imgSrc %>" alt="<%= member.name %>" class=" shadow mb-2">
-                    <% } else { %>
-                      <div class="rounded-circle placeholder mb-2">No Photo</div>
-                    <% } %>
-                    <p class="fw-bold mb-0"><%= member.name || "Unknown" %></p>
-                    <p class="text-muted small mb-0"><%= member.designation || "N/A" %></p>
-                    <p class="text-muted small"><%= member.department || "N/A" %></p>
-                  </div>
-                <% } %>
-              <% }) %>
+          <% if(cons.consultancyCompany){ %>
+            <p><strong>Company:</strong> <%= cons.consultancyCompany %></p>
+          <% } %>
+
+          <% if(cons.consultancyAmount){ %>
+            <p><strong>Amount:</strong> ₹<%= cons.consultancyAmount %></p>
+          <% } %>
+
+          <% if(cons.Member){ %>
+            <div>
+              <p><strong>Member Details:</strong></p>
+              <% if(cons.Member.name){ %>
+                <span style="display:block; margin-left:10px;"><strong>Name:</strong> <%= cons.Member.name %></span>
+              <% } %>
+              <% if(cons.Member.designation){ %>
+                <span style="display:block; margin-left:10px;"><strong>Designation:</strong> <%= cons.Member.designation %></span>
+              <% } %>
+              <% if(cons.Member.department){ %>
+                <span style="display:block; margin-left:10px;"><strong>Department:</strong> <%= cons.Member.department %></span>
+              <% } %>
             </div>
-          </div>
-
-          <!-- Project Description -->
-          <div class="mb-4">
-            <p class="text-muted">
-              <%= consultancy.description1 || "Project description will be added soon." %>
-            </p>
-          </div>
-
-          <!-- Closing Quote -->
-          <div class="closing-quote">
-            “<%= consultancy.closingQuote || "Innovation begins with collaboration." %>”
-          </div>
+          <% } %>
         </div>
-      <% }) %>
-    <% } else { %>
-      <p class="text-center fst-italic text-muted">No consultancy works available yet.</p>
-    <% } %>
-  </div>
 
-  <%- include("../partials/footer") %>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+        <!-- Member images gallery -->
+        <% if(cons.Member && cons.Member.images && cons.Member.images.length > 0){ %>
+          <div class="card-footer bg-white d-flex flex-wrap gap-2">
+            <% cons.Member.images.forEach(img => { %>
+              <div style="flex:1 1 30%; max-width:30%;">
+                <img src="<%= img %>" class="rounded" style="width:100%; height:150px; object-fit:contain; background:#f0f0f0;" alt="Member Image">
+              </div>
+            <% }) %>
+          </div>
+        <% } else { %>
+          <div class="card-footer bg-white">
+            <img src="/images/placeholder.png" class="rounded" style="width:100%; height:150px; object-fit:contain; background:#f0f0f0;" alt="No Image">
+          </div>
+        <% } %>
 
-<style>
-  body {
-    background-color: #f4f5f7;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    color: #2c3e50;
-  }
+      </div>
+    <% }) %>
+  <% } %>
+</div>
 
-  h2, h3, h4 {
-    font-weight: 600;
-    color: #2c3e50;
-  }
-
-  .container {
-    max-width: 1000px;
-    margin: auto;
-    padding: 40px 20px;
-  }
-
-  /* Card Styling */
-  .card {
-    background: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    padding: 25px;
-    margin-bottom: 40px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    border: 1px solid #e5e7eb;
-  }
-
-  .card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-  }
-
-  .card h4 {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-    color: #374151;
-  }
-
-  .card p {
-    margin-bottom: 8px;
-    color: #4b5563;
-    line-height: 1.5;
-  }
-
-  /* Team Members */
-  .row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-
-  .col-md-3, .col-sm-6 {
-    flex: 1 1 calc(25% - 20px);
-    text-align: center;
-  }
-
-  .rounded-circle {
-    border-radius: 50% !important;
-  }
-
-  .team-member img,
-  .team-member .placeholder {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    margin-bottom: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  }
-
-  .team-member .placeholder {
-    background-color: #9ca3af;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #ffffff;
-    font-size: 0.85rem;
-  }
-
-  .text-muted {
-    color: #6b7280 !important;
-  }
-
-  .closing-quote {
-    font-style: italic;
-    color: #10b981;
-    text-align: center;
-    margin-top: 20px;
-  }
-
-  hr {
-    border-top: 1px dashed #d1d5db;
-  }
-
-  /* Responsive */
-  @media (max-width: 768px) {
-    .col-md-3, .col-sm-6 {
-      flex: 1 1 calc(50% - 20px);
-    }
-  }
-
-  @media (max-width: 480px) {
-    .col-md-3, .col-sm-6 {
-      flex: 1 1 100%;
-    }
-  }
-</style>
+<%- include("../partials/footer") %>
