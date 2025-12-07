@@ -343,160 +343,347 @@
 </style>
 
 
+
   <!-- Placement Highlights Heading -->
   <h2 style="color:#1e3a8a;">Our Students!!</h2>
   <h1 style="color:#1e3a8a;">Placement Highlights</h1>
+  
+  <style>
+    :root {
+        --indigo-dark: #1a237e;
+        --indigo-mid: #3949ab;
+        --row-alt: #f4f6ff;
+        --border-soft: #d1d5ee;
+    }
 
-  <!-- First row stats -->
-  <div class="cards-grid">
-    <div class="stat-card orange">
-      <div class="border"></div>
-      <h2>97.95 %</h2>
-      <p>Placed in 2022 Batch</p>
-    </div>
-    <div class="stat-card blue">
-      <div class="border"></div>
-      <h2>93.08 %</h2>
-      <p>Placed in 2023 Batch</p>
-    </div>
-    <div class="stat-card green">
-      <div class="border"></div>
-      <h2>84 %</h2>
-      <p>Placed in 2024 Batch Till Jan</p>
-    </div>
-    <div class="stat-card purple">
-      <div class="border"></div>
-      <h2>76.21 %</h2>
-      <p>Placed in 2025 Batch Till Jan</p>
-    </div>
-  </div>
+    body {
+        background: #f3f4fc;
+        font-family: "Segoe UI", system-ui, sans-serif;
+    }
 
-  <!-- Second row marquee offers -->
-  <div class="cards-grid">
-    <div class="stat-card orange">
-      <div class="border"></div>
-      <h3>12 Marquee Offers</h3>
-      <p>(2022 Batch) with the Highest Package of</p>
-      <h2>42.5 LPA</h2>
-    </div>
-    <div class="stat-card green">
-      <div class="border"></div>
-      <h3>13 Marquee Offers</h3>
-      <p>(2023 Batch) with the Highest Package of</p>
-      <h2>70 LPA</h2>
-    </div>
-    <div class="stat-card purple">
-      <div class="border"></div>
-      <h3>13 Marquee Offers</h3>
-      <p>(2024 Batch) with the Highest Package of</p>
-      <h2>52 LPA</h2>
-    </div>
-    <div class="stat-card teal">
-      <div class="border"></div>
-      <h3>15 Marquee Offers</h3>
-      <p>(2025 Batch) with the Highest Package of</p>
-      <h2>26 LPA</h2>
-    </div>
-  </div>
+    .stats-wrapper {
+        max-width: 1100px;
+        margin: 28px auto 40px;
+        padding: 26px 28px 30px;
+        background: #ffffff;
+        border-radius: 18px;
+        box-shadow: 0 10px 32px rgba(26, 35, 126, 0.15);
+        border: 1px solid var(--border-soft);
+    }
 
+    .stats-title {
+        text-align: center;
+        font-size: 1.6rem;
+        font-weight: 800;
+        margin-bottom: 14px;
+        color: var(--indigo-dark);
+        letter-spacing: 0.02em;
+    }
+
+    .stats-subtitle {
+        text-align: center;
+        margin-bottom: 18px;
+        font-size: 0.92rem;
+        color: #5c6bc0;
+    }
+
+    /* TABLE BASE */
+    table.stats-table {
+        width: 100%;
+        border-collapse: collapse;
+        border-radius: 14px;
+        overflow: hidden;
+    }
+
+    .stats-table thead tr {
+        background: var(--indigo-dark);
+        color: #ffffff;
+    }
+
+    .stats-table th,
+    .stats-table td {
+        padding: 10px 12px;
+        font-size: 0.88rem;
+        border-bottom: 1px solid var(--border-soft);
+        vertical-align: middle;
+    }
+
+    .stats-table th {
+        font-weight: 650;
+        text-align: center;
+    }
+
+    .stats-table tbody tr:nth-child(even) {
+        background: var(--row-alt);
+    }
+
+    .stats-table tbody tr:hover {
+        background: #e3e7ff;
+        transition: background 0.15s ease-in-out;
+    }
+
+    /* COLUMN WIDTHS & ALIGNMENT */
+    /* S.No */
+    .stats-table th:nth-child(1),
+    .stats-table td:nth-child(1) {
+        width: 6%;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    /* Specialization – wider + left aligned */
+    .stats-table th:nth-child(2),
+    .stats-table td:nth-child(2) {
+        width: 24%;
+        text-align: left;
+        padding-left: 18px;
+        font-weight: 600;
+    }
+
+    /* Total Student Strength */
+    .stats-table th:nth-child(3),
+    .stats-table td:nth-child(3),
+    /* Placement Enrolled */
+    .stats-table th:nth-child(4),
+    .stats-table td:nth-child(4),
+    /* Total Offers */
+    .stats-table th:nth-child(5),
+    .stats-table td:nth-child(5),
+    /* Unique Offers */
+    .stats-table th:nth-child(6),
+    .stats-table td:nth-child(6),
+    /* Marquee Count */
+    .stats-table th:nth-child(8),
+    .stats-table td:nth-child(8),
+    /* Dream Count */
+    .stats-table th:nth-child(9),
+    .stats-table td:nth-child(9),
+    /* Super Dream Count */
+    .stats-table th:nth-child(10),
+    .stats-table td:nth-child(10) {
+        width: 7.5%;
+        text-align: center;
+    }
+
+    /* Unique Offer Percentage – a bit wider + bold */
+    .stats-table th:nth-child(7),
+    .stats-table td:nth-child(7) {
+        width: 10%;
+        text-align: center;
+    }
+
+    .stats-table td:nth-child(7) {
+        font-weight: 700;
+        color: var(--indigo-dark);
+    }
+
+    /* TOTAL ROW */
+    .total-row td {
+        background: var(--indigo-mid);
+        color: #ffffff;
+        font-weight: 700;
+        border-top: 2px solid #283593;
+    }
+
+    .total-label {
+        text-align: center;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+    }
+
+    @media (max-width: 768px) {
+        .stats-wrapper {
+            margin: 12px;
+            padding: 20px;
+        }
+
+        .stats-title {
+            font-size: 1.35rem;
+        }
+
+        .stats-table th,
+        .stats-table td {
+            padding: 8px 6px;
+            font-size: 0.8rem;
+        }
+    }
+</style>
+  <div class="stats-wrapper">
+    <div class="stats-title">Specialization Wise Statistics (2022–2026 Batch)</div>
+    <div class="stats-subtitle">Placement statistics across specializations</div>
+
+    <table class="stats-table">
+        <thead>
+        <tr>
+            <th>S.No</th>
+            <th>Specialization</th>
+            <th>Total Student Strength</th>
+            <th>Placement Enrolled</th>
+            <th>Total Offers</th>
+            <th>Unique Offers</th>
+            <th>Unique Offer Percentage</th>
+            <th>Marquee Count</th>
+            <th>Dream Count</th>
+            <th>Super Dream Count</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td>Cloud Computing</td>
+            <td>223</td>
+            <td>200</td>
+            <td>72</td>
+            <td>65</td>
+            <td>32.50%</td>
+            <td>3</td>
+            <td>35</td>
+            <td>18</td>
+        </tr>
+
+        <tr>
+            <td>2</td>
+            <td>Computer Networking</td>
+            <td>27</td>
+            <td>20</td>
+            <td>11</td>
+            <td>10</td>
+            <td>50.00%</td>
+            <td>0</td>
+            <td>06</td>
+            <td>02</td>
+        </tr>
+
+        <tr>
+            <td>3</td>
+            <td>Cyber Security</td>
+            <td>290</td>
+            <td>235</td>
+            <td>81</td>
+            <td>72</td>
+            <td>30.64%</td>
+            <td>5</td>
+            <td>30</td>
+            <td>30</td>
+        </tr>
+
+        <tr>
+            <td>4</td>
+            <td>Information Technology</td>
+            <td>156</td>
+            <td>135</td>
+            <td>40</td>
+            <td>31</td>
+            <td>22.96%</td>
+            <td>4</td>
+            <td>15</td>
+            <td>09</td>
+        </tr>
+
+        <tr>
+            <td>5</td>
+            <td>Internet of Things</td>
+            <td>81</td>
+            <td>80</td>
+            <td>35</td>
+            <td>30</td>
+            <td>37.50%</td>
+            <td>0</td>
+            <td>17</td>
+            <td>08</td>
+        </tr>
+
+        <tr class="total-row">
+            <td class="total-label" colspan="2">Total</td>
+            <td>777</td>
+            <td>670</td>
+            <td>239</td>
+            <td>208</td>
+            <td>31.04%</td>
+            <td>12</td>
+            <td>103</td>
+            <td>67</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+  
   <!-- UG Placement Training -->
-  <h2 style="color:#1e40af;">UG - Placement Training</h2>
+  <h2 style="color:#1e40af;">Placement Training and Enrichment Activities – July to September 2025</h2>
   <p class="section-text">
-    In line with our commitment to equipping students with the skills required to excel in the competitive job market, our institution conducted a series of placement training programs. Designed to enhance both technical and non-technical competencies, these sessions witnessed enthusiastic participation from students across diverse disciplines.
+    The Department of Networking and Communications, SRM Institute of Science and Technology, 
+    organized a comprehensive series of Placement Training and Career Enrichment Programs from July 
+    to September 2025 to enhance the employability skills and industry readiness of students. These 
+    initiatives aimed to bridge the gap between academic learning and professional requirements 
+    through a blend of mock tests, technical sessions, and expert interactions.
+  <p class="section-text">
+    The program commenced with the Placement Mock Test Series 05 – General Aptitude Test 01 on 
+    26th July 2025, which enabled 324 students from II, III, and IV years to assess their quantitative, 
+    logical, and analytical abilities — crucial for placement exams. This was followed by a Virtual Talk 
+    on “Gateway to Industry” on 30th July 2025, delivered by Mr. A. Anantharaman, Scientific Officer, 
+    National Institute of Science and Research, Bhubaneswar, attended by 95 participants, providing 
+    valuable insights into industry expectations and career pathways. The Soft Skills Test 01 conducted 
+    on 6th August 2025 for 780 students emphasized communication and interpersonal competencies 
+    essential for interviews and group discussions.
   </p>
   <p class="section-text">
-    The Department of Networking and Communications (NWC) organized a series of impactful placement training sessions during April – June 2025 to prepare students for upcoming recruitment drives.
+    Subsequently, the Reasoning Test 01 held on 9th August 2025 with 923 participants focused on 
+    strengthening analytical and logical reasoning skills. A Virtual Talk on Higher Studies Opportunities on 
+    13th August 2025 engaged 45 students, guiding them toward global higher education and research 
+    options. Another session on Gateway to Industry on 20th August 2025 by Dr. K. Venkataraman, 
+    Technical Architect, Hexaware, attended by 40 students, highlighted current industry trends and 
+    professional growth strategies. The Hackerrank Test 01 conducted on 23rd August 2025 engaged 681 
+    students in coding-based assessments to test programming and problem-solving abilities.
+    Continuing the series, the General Aptitude Test 02 on 30th August 2025 saw 835 participants 
+    refining their time management and numerical skills. On 3rd September 2025, another Virtual Talk on 
+    Higher Studies Opportunities for 52 students focused on academic progression through advanced 
+    technical education. The Technical Test 02 held on 6th September 2025 for 533 students assessed 
+    their domain-specific knowledge essential for placement drives. The Reasoning Test 02 on 13th 
+    September 2025, with 619 participants, further strengthened logical reasoning skills relevant for 
+    competitive exams and interviews.
   </p>
   <p class="section-text">
-    Our faculty members Dr. M. Maranco, Dr. Mursal Hamdani, Dr. Ramya, Mr. Indra Bhooshan, Dr. K. Rajeshkumar, Dr. R. Logeshwari and Dr. T. Preethiya coordinated placement training series. They conducted trainings on various skills such as Reasoning, General Aptitude and Technical. The training also includes hacker rank test, soft skill test and higher studies opportunities.
-  </p>
-  <p class="section-text">
-    These initiatives were met with enthusiastic participation of UG Students and significantly enhanced students’ technical, problem-solving, and interview preparation skills. The department remains committed to empowering students for successful placement outcomes.
+    Towards the end of the program, a Virtual Talk on Higher Studies Pathways on 17th September 2025 
+    guided 58 students on postgraduate programs and scholarships abroad. The Hackerrank Test 02 
+    conducted on 20th September 2025 for 601 students provided hands-on problem-solving experience 
+    in coding. Finally, the series concluded with the General Aptitude Test 03 on 27th September 2025, 
+    where 506 students evaluated their overall readiness for campus recruitment processes.
+    Overall, the structured blend of mock assessments, technical evaluations, and interactive expert 
+    sessions significantly contributed to improving students’ placement preparedness, confidence, and 
+    professional orientation.
   </p>
 
   <hr>
 
   <!-- PG Placement Training -->
-  <h2 style="color:#1e40af;">PG - Placement Training</h2>
+  <h2 style="color:#1e40af;">PG Students Placement Training Report</h2>
   <p class="section-text">
-    The Department of Networking and Communications (NWC) organized a series of placement training sessions during April – June 2025 for PG Students exclusively.
+    Between August and September 2025, the department recorded consistent student engagement 
+across the scheduled training activities. The session-wise participation analysis showed that final-year 
+students maintained an impressive average attendance of 65.6% per session across eight sessions, 
+while first-year students achieved an average of 50.2% attendance over six sessions, having joined 
+the program from 22nd August 2025 onward.
   </p>
   <p class="section-text">
-    A total of 04 placement training sessions were conducted, focusing on technical aptitude and coding proficiency.
+    During this period, a total of eight training sessions were conducted between 8th August and 26th 
+September 2025, encompassing a comprehensive mix of learning formats. The coverage by session 
+type indicated that Coding Sessions and Technical Training were conducted consistently across all 
+eight sessions, achieving 100% coverage each. In addition, Aptitude and Quantitative Training was 
+delivered in two sessions (25%), specifically on 8th and 15th August 2025.
   </p>
   <p class="section-text">
-    In April month 04 placement training activities were conducted by our faculty members. In May month 05 placement training activities and in June month 02 activities were conducted to ensure consistent practice and skill improvement. The training sessions focused on covering topic such as HackerRank Coding Practice, Code Debugging, Aptitude Tests, Quantitative Training, Coding Sessions, Technical Skill Development and Mock Test Activities.
+    Across all sessions, the recorded learning outcomes reflected positive skill enhancement, with 
+participants demonstrating improved quantitative abilities, enhanced coding proficiency, and 
+greater technical competence, underscoring the effectiveness of the training initiatives.
   </p>
 
-  <!-- Highlighted Activities -->
-  <div class="highlighted-activities">
-    <h3>Highlighted Activities</h3>
-    <ul>
-      <li><b>Salesforce AI with Agentforce Champion Program:</b> Students were enrolled and assigned to complete the Salesforce AI with Agentforce Champion Program, designed to provide essential AI and CRM skills.</li>
-      <li><b>Google cloud launchpad completion:</b> Students were guided to complete pending learning paths under the Google Cloud Launchpad Program, reinforcing their foundation in cloud computing and preparing them for Google-recognized certifications.</li>
-    </ul>
-  </div>
+
 
 </div>
 
 <hr>
-<div class="placement-details container">
-  <h2 class="text-center">Placement Details (2021 - 2025 Batch)</h2>
 
-  <div class="table-responsive">
-    <table class="placement-table">
-      <thead>
-        <tr>
-          <th>S.No</th>
-          <th>Date Result Published</th>
-          <th>Company Name</th>
-          <th>Placement Type</th>
-          <th>Total Offers</th>
-          <th>Package</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td><td>01.04.2025</td><td>HCL Technology</td><td>Dream</td><td>4</td><td>CTC : 4.25 LPA</td>
-        </tr>
-        <tr>
-          <td>2</td><td>04.04.2025</td><td>Oracle Financial Software Services Ltd</td><td>Dream</td><td>1</td><td>CTC : 9.34 LPA</td>
-        </tr>
-        <tr>
-          <td>3</td><td>04.04.2025</td><td>Gen C Pro – SAP BASIS</td><td>Dream</td><td>1</td><td>CTC : 5.4 LPA</td>
-        </tr>
-        <tr>
-          <td>4</td><td>04.04.2025</td><td>Gen C – SAP BASIS</td><td>Dream</td><td>1</td><td>CTC : 4.0 LPA</td>
-        </tr>
-        <tr>
-          <td>5</td><td>07.04.2025</td><td>KPMG</td><td>Dream</td><td>2</td><td>CTC : 7.0 LPA</td>
-        </tr>
-        <tr>
-          <td>6</td><td>12.04.2025</td><td>OnePaper Research Analysts Pvt Ltd</td><td>Dream</td><td>1</td><td>CTC : 4.92 LPA</td>
-        </tr>
-        <tr>
-          <td>7</td><td>13.04.2025</td><td>Rinex Technologies Pvt Ltd</td><td>Super Dream</td><td>2</td>
-          <td>Stipend : 25,000 PM <br> CTC : 10.0 LPA</td>
-        </tr>
-        <tr>
-          <td>8</td><td>19.04.2025</td><td>Labsity</td><td>Super Dream</td><td>2</td>
-          <td>Stipend : 15,000 – 25,000 PM <br> CTC : 10.0 LPA</td>
-        </tr>
-        <tr>
-          <td>9</td><td>22.04.2025</td><td>IBM</td><td>Dream</td><td>1</td><td>CTC : 4.5 LPA</td>
-        </tr>
-        <tr>
-          <td>10</td><td>24.04.2025</td><td>Federal Bank</td><td>Dream</td><td>1</td><td>CTC : 7.35 – 7.9 LPA</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <p class="placement-summary">
-    The Department’s Placement Percentage (2021–2025 Batch) has increased from
-    <strong>74.04% to 75.87%</strong> in the Month of April 2025.
-  </p>
-</div>
 
 <hr>
 <div class="placement-details container">
