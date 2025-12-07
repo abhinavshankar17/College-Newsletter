@@ -1,0 +1,263 @@
+<%- include("partials/header") %>
+
+<style>
+    :root {
+        --primary: #184b9b;
+        --accent: #6a1b6b;
+        --bg-soft: #f4f7fb;
+        --row-alt: #fbf9ff;
+        --border-soft: #e2e4f0;
+    }
+
+    body {
+        background: var(--bg-soft);
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .visitors-wrapper {
+        max-width: 1100px;
+        margin: 24px auto 40px;
+        padding: 20px 24px 26px;
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+    }
+
+    .visitors-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 14px;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .visitors-title {
+        font-size: 1.3rem;
+        font-weight: 650;
+        color: var(--primary);
+    }
+
+    .visitors-subtitle {
+        font-size: 0.9rem;
+        color: #6b7280;
+    }
+
+    .table-scroll {
+        margin-top: 10px;
+        overflow-x: auto;
+        border-radius: 12px;
+        border: 1px solid var(--border-soft);
+    }
+
+    table.visitors-table {
+        width: 100%;
+        min-width: 800px;
+        border-collapse: collapse;
+        background: #ffffff;
+    }
+
+    .visitors-table thead tr {
+        background: linear-gradient(90deg, var(--accent), #3a2068);
+        color: #ffffff;
+    }
+
+    .visitors-table th,
+    .visitors-table td {
+        padding: 10px 12px;
+        font-size: 0.88rem;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    .visitors-table th {
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+        white-space: nowrap;
+    }
+
+    .visitors-table tbody tr:nth-child(odd) {
+        background: #ffffff;
+    }
+
+    .visitors-table tbody tr:nth-child(even) {
+        background: var(--row-alt);
+    }
+
+    .visitors-table tbody tr:hover {
+        background: #eef3ff;
+        transition: background 0.2s ease;
+    }
+
+    /* Column-specific tweaks for 9 columns */
+    .visitors-table td:nth-child(1) {
+        text-align: center;
+        width: 50px;
+        font-weight: 600;
+        color: #4b5563;
+    }
+
+    .visitors-table td:nth-child(2) {
+        white-space: nowrap;
+        width: 90px;
+        color: #374151;
+    }
+
+    .visitors-table td:nth-child(3),
+    .visitors-table td:nth-child(4) {
+        width: 140px;
+        font-weight: 500;
+        color: #111827;
+    }
+
+    .visitors-table td:nth-child(5) {
+        width: 260px;
+    }
+
+    .visitors-table td:nth-child(6),
+    .visitors-table td:nth-child(7),
+    .visitors-table td:nth-child(8),
+    .visitors-table td:nth-child(9) {
+        width: 110px;
+    }
+
+    .visitors-table td:nth-child(7),
+    .visitors-table td:nth-child(8) {
+        text-align: center;
+    }
+
+    .check {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        border-radius: 999px;
+        border: 1px solid #16a34a;
+        color: #16a34a;
+        font-size: 0.85rem;
+        font-weight: 700;
+        background: #ecfdf3;
+    }
+
+    @media (max-width: 768px) {
+        .visitors-wrapper {
+            margin-inline: 12px;
+            padding: 16px 14px 20px;
+        }
+
+        .visitors-title {
+            font-size: 1.1rem;
+        }
+
+        .visitors-subtitle {
+            font-size: 0.8rem;
+        }
+
+        .visitors-table th,
+        .visitors-table td {
+            padding: 8px 10px;
+            font-size: 0.8rem;
+        }
+    }
+</style>
+
+<div class="visitors-wrapper">
+
+    <div class="visitors-header">
+        <div class="visitors-title">Visitors (National & International)</div>
+        <div class="visitors-subtitle">Academic year 2025 – Department Visitors Record</div>
+    </div>
+
+    <div class="table-scroll">
+        <table class="visitors-table">
+            <thead>
+            <tr>
+                <th rowspan="2">S.No.</th>
+                <th rowspan="2">Date of Visit</th>
+                <th rowspan="2">Visitor Name</th>
+                <th rowspan="2">Designation</th>
+                <th rowspan="2">Affiliated Institution</th>
+                <th rowspan="2">City, Country</th>
+                <th colspan="2" style="text-align:center;">Type of Visitor</th>
+                <th rowspan="2">Purpose of Visit</th>
+            </tr>
+            <tr>
+                <th>National</th>
+                <th>International</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <!-- Row 1 → National ✔ -->
+            <tr>
+                <td>1</td>
+                <td>08.09.2025</td>
+                <td>Dr. Sanjay Kumar Singh</td>
+                <td>Professor</td>
+                <td>Indian Institute of Technology (BHU), Varanasi, India.</td>
+                <td>India</td>
+                <td><span class="check">&#10003;</span></td>
+                <td></td>
+                <td>Viva-Voce</td>
+            </tr>
+
+            <!-- Row 2 → National ✔ -->
+            <tr>
+                <td>2</td>
+                <td>08.09.2025</td>
+                <td>Dr. Bose S</td>
+                <td>Professor</td>
+                <td>Anna University, Chennai, India.</td>
+                <td>India</td>
+                <td><span class="check">&#10003;</span></td>
+                <td></td>
+                <td>Viva-Voce</td>
+            </tr>
+
+            <!-- Row 3 → International ✔ -->
+            <tr>
+                <td>3</td>
+                <td>09.09.2025</td>
+                <td>Dr. Tamarai Pandian</td>
+                <td>Alumni</td>
+                <td>Albstadt-Sigmaringen</td>
+                <td>Germany</td>
+                <td></td>
+                <td><span class="check">&#10003;</span></td>
+                <td>Guest Lecture</td>
+            </tr>
+
+            <!-- Row 4 → National ✔ -->
+            <tr>
+                <td>4</td>
+                <td>11.09.2025</td>
+                <td>Dr. R. Murugan</td>
+                <td>Associate Professor</td>
+                <td>National Institute of Technology, Silchar, Assam, India - 788188.</td>
+                <td>India</td>
+                <td><span class="check">&#10003;</span></td>
+                <td></td>
+                <td>Viva-Voce</td>
+            </tr>
+
+            <!-- Row 5 → National ✔ -->
+            <tr>
+                <td>5</td>
+                <td>11.09.2025</td>
+                <td>Dr. S. Muthuraj Kumar</td>
+                <td>Associate Professor</td>
+                <td>Madras Institute of Technology (MIT), Anna University, Chrompet, Chennai - 600044.</td>
+                <td>India</td>
+                <td><span class="check">&#10003;</span></td>
+                <td></td>
+                <td>Viva-Voce</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<%- include("partials/footer") %>

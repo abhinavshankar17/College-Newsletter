@@ -23,11 +23,11 @@ console.log("Cloudinary config:", {
 // ✅ Correct paths
 // import cloudComputingRoutes from "./routes/specialization/cloudComputing.js";
 // import cyberSecurityRouter from "./routes/specialization/cyberSecurity.js";
-// import researchRoutes from "./routes/research/research.js"; 
 // import computerNetworkingRoutes from "./routes/specialization/ComputerNetworking.js";
 // import informationTechnologyRoutes from "./routes/specialization/InformationTechnology.js";
 // import internetOfThingsRoutes from "./routes/specialization/InternetOfThings.js";
 import adminRoutes from "./routes/admin.js";
+import researchRoutes from "./routes/research/research.js"; 
 
 import consultancyRoutes from "./routes/faculty/consultancy.js";
 import facultyAchivementRoutes from "./routes/faculty/FacultyAchivement.js";
@@ -97,6 +97,9 @@ app.use("/OutreachActivities", OutreachActivities);
 // Default route
 app.get("/", (req, res) => {
   res.render("home", { page: { pageTitle: "HomePage" } });
+});
+app.get("/visitors", (req, res) => {
+  res.render("visitors", { page: { pageTitle: "Visitors" } });
 });
 
 app.get("/students/placement-highlights", (req, res) => {
