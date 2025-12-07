@@ -21,12 +21,12 @@ console.log("Cloudinary config:", {
 });
 
 // ✅ Correct paths
-import cloudComputingRoutes from "./routes/specialization/cloudComputing.js";
-import cyberSecurityRouter from "./routes/specialization/cyberSecurity.js";
-import researchRoutes from "./routes/research/research.js"; 
-import computerNetworkingRoutes from "./routes/specialization/ComputerNetworking.js";
-import informationTechnologyRoutes from "./routes/specialization/InformationTechnology.js";
-import internetOfThingsRoutes from "./routes/specialization/InternetOfThings.js";
+// import cloudComputingRoutes from "./routes/specialization/cloudComputing.js";
+// import cyberSecurityRouter from "./routes/specialization/cyberSecurity.js";
+// import researchRoutes from "./routes/research/research.js"; 
+// import computerNetworkingRoutes from "./routes/specialization/ComputerNetworking.js";
+// import informationTechnologyRoutes from "./routes/specialization/InformationTechnology.js";
+// import internetOfThingsRoutes from "./routes/specialization/InternetOfThings.js";
 import adminRoutes from "./routes/admin.js";
 
 import consultancyRoutes from "./routes/faculty/consultancy.js";
@@ -67,11 +67,11 @@ app.use(session({
 
 // Routes
 app.use("/research", researchRoutes);
-app.use("/specialization/cloud-computing", cloudComputingRoutes);
-app.use("/specialization/cyber-security", cyberSecurityRouter);
-app.use("/specialization/computer-networking", computerNetworkingRoutes);
-app.use("/specialization/information-technology", informationTechnologyRoutes);
-app.use("/specialization/internet-of-things", internetOfThingsRoutes);
+// app.use("/specialization/cloud-computing", cloudComputingRoutes);
+// app.use("/specialization/cyber-security", cyberSecurityRouter);
+// app.use("/specialization/computer-networking", computerNetworkingRoutes);
+// app.use("/specialization/information-technology", informationTechnologyRoutes);
+// app.use("/specialization/internet-of-things", internetOfThingsRoutes);
 app.use("/admin", adminRoutes);
 app.use("/research-orations", researchOrationRoutes);
 
