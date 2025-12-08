@@ -1,41 +1,138 @@
 <%- include('../partials/header', { title: "Faculty Achievements" }) %>
 
+<style>
+  .achievements-title {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #0d47a1;
+  }
+
+  .group-card {
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .group-header {
+    background: linear-gradient(135deg, #1976d2, #0d47a1);
+    padding: 15px 20px;
+  }
+
+  .group-header h3 {
+    color: white;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  /* CARD WITH IMAGE */
+  .achievement-card {
+    border-radius: 12px;
+    transition: 0.25s ease;
+  }
+
+  .achievement-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15) !important;
+  }
+
+  /* ADJUSTED IMAGE – NO CUTTING */
+  .achievement-img {
+    width: 100%;
+    max-height: 250px;
+    object-fit: contain;  
+    background-color: #f9f9f9;
+    border-radius: 12px 12px 0 0;
+    padding: 8px;
+  }
+
+  /* TEXT BLOCK WHEN NO IMAGE */
+  .no-image-text-block {
+    padding: 12px 5px;
+    margin-top: 10px;
+    border-left: 4px solid #1976d2;
+    background: #f5faff;
+    border-radius: 6px;
+  }
+
+  .text-only-description {
+    color: #455a64;
+    font-size: 0.97rem;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .text-only-title {
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #0d47a1;
+  }
+
+  .card-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #263238;
+  }
+
+  .card-text {
+    font-size: 0.95rem;
+    color: #455a64;
+  }
+</style>
+
 <div class="container my-5">
-  <h1 class="text-center fw-bold mb-5">Faculty Achievements</h1>
+  <h1 class="text-center achievements-title mb-5">Faculty Achievements</h1>
 
   <% if (!groupedAchievements || Object.keys(groupedAchievements).length === 0) { %>
     <div class="alert alert-info text-center">
       No faculty achievements available.
     </div>
   <% } else { %>
+
     <% for (let title in groupedAchievements) { %>
-      <div class="card mb-5 shadow-sm">
-        <div class="card-header bg-primary text-white">
-          <h3 class="mb-0"><%= title %></h3>
+      <div class="card mb-5 shadow-sm group-card">
+
+        <div class="card-header group-header">
+          <h3><%= title %></h3>
         </div>
 
         <div class="card-body">
           <div class="row">
+
             <% groupedAchievements[title].forEach((item) => { %>
-              <div class="col-md-4 mb-4 d-flex">
-                <div class="card flex-fill h-100 border-0 shadow-sm">
-                  <% if (item.images && item.images.length > 0) { %>
-                    <img src="<%= item.images[0] %>" class="card-img-top img-fluid rounded-top" alt="Faculty Achievement Image">
-                  <% } else { %>
-                    <div class="bg-light text-center p-4 text-muted">No Image</div>
-                  <% } %>
-                  
-                  <div class="card-body">
-                    <h5 class="card-title"><%= item.designation || "No Designation" %></h5>
-                    <p class="card-text"><%= item.description || "No description provided." %></p>
+
+              <% if (item.images && item.images.length > 0) { %>
+                <!-- CARD WITH IMAGE -->
+                <div class="col-md-4 mb-4 d-flex">
+                  <div class="card flex-fill border-0 shadow-sm achievement-card">
+
+                    <img src="<%= item.images[0] %>" 
+                         class="card-img-top img-fluid achievement-img" 
+                         alt="Faculty Achievement Image">
+
+                    <div class="card-body">
+                      <h5 class="card-title"><%= item.designation || "" %></h5>
+                      <p class="card-text"><%= item.description || "" %></p>
+                    </div>
+
                   </div>
                 </div>
-              </div>
+
+              <% } else { %>
+                <!-- TEXT ONLY – GOES TO BOTTOM -->
+                <div class="col-12">
+                  <div class="no-image-text-block">
+                    <h6 class="text-only-title"><%= item.designation || "" %></h6>
+                    <p class="text-only-description"><%= item.description || "" %></p>
+                  </div>
+                </div>
+              <% } %>
+
             <% }) %>
+
           </div>
         </div>
       </div>
     <% } %>
+
   <% } %>
 </div>
 

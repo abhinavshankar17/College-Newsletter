@@ -1,62 +1,65 @@
 <%- include("../partials/header", { title: "Consultancies" }) %>
 
+<style>
+  .consultancy-card { border-radius:12px; padding:20px; box-shadow:0 6px 15px rgba(0,0,0,0.1); margin-bottom:30px; }
+  .consultancy-title { color:#c62828; text-align:center; font-weight:700; font-size:1.5rem; margin-bottom:5px; }
+  .consultancy-company { color:#c62828; text-align:center; font-weight:600; font-size:1.1rem; margin-bottom:10px; }
+  .consultancy-amount { color:#2e7d32; text-align:center; font-weight:600; font-size:1.2rem; margin-bottom:15px; }
+
+  .member-row { display:flex; flex-wrap:wrap; gap:20px; justify-content:flex-start; margin-bottom:15px; }
+  .member-card { flex:1 1 45%; max-width:45%; border-radius:10px; border:1px solid #e0e0e0; padding:10px; display:flex; gap:10px; background:#fafafa; }
+  .member-card img { width:100px; height:100px; object-fit:contain; border-radius:8px; background:#f0f0f0; }
+  .member-info { display:flex; flex-direction:column; justify-content:center; }
+  .member-info span { margin-bottom:4px; font-size:0.95rem; color:#333; }
+
+  .description-only { margin-top:20px; padding:12px; background:#f5faff; border-left:4px solid #1976d2; border-radius:6px; }
+  .description-only p { margin:0; color:#455a64; font-size:0.97rem; line-height:1.5; }
+
+  @media (max-width:768px){ .member-card { flex:1 1 100%; max-width:100%; } }
+</style>
+
 <div class="container my-5">
   <h1 class="mb-5 text-center fw-bold page-title">Consultancies</h1>
 
-  <% if (!consultancies || consultancies.length === 0) { %>
+  <% if(!consultancies || consultancies.length === 0) { %>
     <p class="text-center text-muted">No Consultancy data available.</p>
   <% } else { %>
     <% consultancies.forEach(cons => { %>
-      <div class="card shadow-sm mb-4 rounded-3">
-        <div class="card-body">
-          <% if(cons.title){ %>
-            <h5 class="card-title"><%= cons.title %></h5>
-          <% } %>
+      <% const hasMemberImage = cons.Member && cons.Member.images && cons.Member.images.length > 0; %>
+      <% const hasDescription = cons.description && cons.description.trim() !== ''; %>
 
-          <% if(cons.description1){ %>
-            <p><strong>Description:</strong> <%= cons.description1 %></p>
-          <% } %>
+      <% if(hasMemberImage || hasDescription) { %>
+        <div class="consultancy-card">
 
-          <% if(cons.consultancyCompany){ %>
-            <p><strong>Company:</strong> <%= cons.consultancyCompany %></p>
-          <% } %>
+          <!-- Title / Company / Amount -->
+          <% if(cons.title){ %><div class="consultancy-title"><%= cons.title %></div><% } %>
+          <% if(cons.consultancyCompany){ %><div class="consultancy-company"><%= cons.consultancyCompany %></div><% } %>
+          <% if(cons.consultancyAmount){ %><div class="consultancy-amount">₹<%= cons.consultancyAmount %></div><% } %>
 
-          <% if(cons.consultancyAmount){ %>
-            <p><strong>Amount:</strong> ₹<%= cons.consultancyAmount %></p>
-          <% } %>
-
-          <% if(cons.Member){ %>
-            <div>
-              <p><strong>Member Details:</strong></p>
-              <% if(cons.Member.name){ %>
-                <span style="display:block; margin-left:10px;"><strong>Name:</strong> <%= cons.Member.name %></span>
-              <% } %>
-              <% if(cons.Member.designation){ %>
-                <span style="display:block; margin-left:10px;"><strong>Designation:</strong> <%= cons.Member.designation %></span>
-              <% } %>
-              <% if(cons.Member.department){ %>
-                <span style="display:block; margin-left:10px;"><strong>Department:</strong> <%= cons.Member.department %></span>
-              <% } %>
+          <!-- Member + image -->
+          <% if(hasMemberImage){ %>
+            <div class="member-row">
+              <div class="member-card">
+                <img src="<%= cons.Member.images[0] %>" alt="Member Image">
+                <div class="member-info">
+                  <% if(cons.Member.name){ %><span><strong>Name:</strong> <%= cons.Member.name %></span><% } %>
+                  <% if(cons.Member.designation){ %><span><strong>Designation:</strong> <%= cons.Member.designation %></span><% } %>
+                  <% if(cons.Member.department){ %><span><strong>Department:</strong> <%= cons.Member.department %></span><% } %>
+                </div>
+              </div>
             </div>
           <% } %>
+
+          <!-- Description-only at bottom if no member/image -->
+          <% if(hasDescription && !hasMemberImage){ %>
+            <div class="description-only">
+              <% if(cons.title){ %><strong><%= cons.title %></strong><br/><% } %>
+              <p><%= cons.description %></p>
+            </div>
+          <% } %>
+
         </div>
-
-        <!-- Member images gallery -->
-        <% if(cons.Member && cons.Member.images && cons.Member.images.length > 0){ %>
-          <div class="card-footer bg-white d-flex flex-wrap gap-2">
-            <% cons.Member.images.forEach(img => { %>
-              <div style="flex:1 1 30%; max-width:30%;">
-                <img src="<%= img %>" class="rounded" style="width:100%; height:150px; object-fit:contain; background:#f0f0f0;" alt="Member Image">
-              </div>
-            <% }) %>
-          </div>
-        <% } else { %>
-          <div class="card-footer bg-white">
-            <img src="/images/placeholder.png" class="rounded" style="width:100%; height:150px; object-fit:contain; background:#f0f0f0;" alt="No Image">
-          </div>
-        <% } %>
-
-      </div>
+      <% } %>
     <% }) %>
   <% } %>
 </div>

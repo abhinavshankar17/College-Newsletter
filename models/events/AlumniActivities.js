@@ -1,39 +1,48 @@
 import mongoose from "mongoose";
 
 const alumniActivitySchema = new mongoose.Schema({
-  eventTitle: {
+   title: {
+    type: String,
+    required: false,   // e.g., "Alumni Reunion 2025"
+    trim: true
+  },
+  Date: {
     type: String,
     required: false,   // e.g., "Alumni Reunion 2025"
     trim: true
   },
   
-  participantsCount: {
-    type: Number,
+  Time: {
+    type: String,
     required: false,   // e.g., 50
   },
-  participantsBatchRange: {
+   Venue: {
     type: String,     // e.g., "2014 to 2023"
     trim: true
   },
-  convenername: {
+  Participants: {
       type: String,
       required: false, // e.g., "Dr. M. Lakshmi"
       trim: true
     },
-    convenerdesignation: {
+    ResoursePerson: {
       type: String,   // e.g., "Professor & Head"
       trim: true
     },
-    convenerdepartment: {
+    convener: {
       type: String,   // e.g., "Networking and Communications"
       trim: true
     },
-  eventOutcomes: {
+  eventsummary: {
     type: String,     // Full paragraph of event outcomes
     required: false,
     trim: true
   },
- 
+  eventoutcome: {
+    type: String,     // Full paragraph of event outcomes
+    required: false,
+    trim: true
+  },
        images: { type: [String], default: [] },
   
 

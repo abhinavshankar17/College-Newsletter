@@ -1,116 +1,83 @@
 <body>
   <%- include("../partials/header", { title: "Alumni Activities" }) %>
 
-  <style>
-    body {
-      font-family: "Poppins", sans-serif;
-      background-color: #f9f9fb;
-      color: #333;
-    }
-
-    h1 {
-      font-family: "Merriweather", serif;
-      font-weight: 700;
-      color: #2c3e50;
-      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-    }
-
-    .card {
-      border: none;
-      border-radius: 12px;
-      background: #ffffff;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      margin-bottom: 2rem;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
-    }
-
-    .card-title {
-      font-size: 1.6rem;
-      font-weight: 600;
-      color: #34495e;
-    }
-
-    .list-group-item {
-      border: none;
-      background: #f8f9fa;
-      font-size: 0.95rem;
-    }
-
-    .list-group-item strong {
-      color: #2c3e50;
-    }
-
-    h5 {
-      font-weight: 600;
-      color: #8e44ad;
-      border-left: 4px solid #8e44ad;
-      padding-left: 8px;
-      margin-bottom: 12px;
-    }
-
-    img {
-      transition: transform 0.3s ease;
-      border-radius: 10px;
-    }
-
-    img:hover {
-      transform: scale(1.05);
-    }
-
-    .text-muted {
-      font-size: 0.9rem;
-      color: #6c757d !important;
-    }
-  </style>
-
   <div class="container my-5">
     <h1 class="text-center mb-4">🎓 Alumni Activities</h1>
 
     <% if (!activities || activities.length === 0) { %>
       <div class="alert alert-warning text-center">
-        No Alumni Activities found. Please add one.
+        No Alumni Activities found.
       </div>
     <% } else { %>
+
       <% activities.forEach(activity => { %>
-        <div class="card shadow">
+        <div class="card mb-4 shadow">
           <div class="card-body">
-            <h2 class="card-title mb-3"><%= activity.eventTitle || "Untitled Event" %></h2>
 
-            <p><strong>Participants:</strong> 
-              <%= activity.participantsCount || "N/A" %> 
-              (Batches: <%= activity.participantsBatchRange || "N/A" %>)
-            </p>
+            <!-- ✅ Title -->
+            <h2 class="card-title mb-3">
+              <%= activity.title || "Untitled Alumni Activity" %>
+            </h2>
 
-            <h5>Convener</h5>
-            <ul class="list-group list-group-flush mb-3">
-              <li class="list-group-item"><strong>Name:</strong> <%= activity.convenername || "N/A" %></li>
-              <li class="list-group-item"><strong>Designation:</strong> <%= activity.convenerdesignation || "N/A" %></li>
-              <li class="list-group-item"><strong>Department:</strong> <%= activity.convenerdepartment || "N/A" %></li>
-            </ul>
+            <!-- Date & Time -->
+            <% if (activity.Date) { %>
+              <p><strong>Date:</strong> <%= activity.Date %></p>
+            <% } %>
 
-            <h5>Event Outcomes</h5>
-            <p><%= activity.eventOutcomes || "No outcomes provided." %></p>
+            <% if (activity.Time) { %>
+              <p><strong>Time:</strong> <%= activity.Time %></p>
+            <% } %>
 
+            <!-- Venue -->
+            <% if (activity.Venue) { %>
+              <p><strong>Venue:</strong> <%= activity.Venue %></p>
+            <% } %>
+
+            <!-- Participants -->
+            <% if (activity.Participants) { %>
+              <p><strong>Participants:</strong> <%= activity.Participants %></p>
+            <% } %>
+
+            <!-- Resource Person -->
+            <% if (activity.ResoursePerson) { %>
+              <p><strong>Resource Person:</strong> <%= activity.ResoursePerson %></p>
+            <% } %>
+
+            <!-- Convener -->
+            <% if (activity.convener) { %>
+              <p><strong>Convener:</strong> <%= activity.convener %></p>
+            <% } %>
+
+            <!-- Summary -->
+            <% if (activity.eventsummary) { %>
+              <h5>Event Summary</h5>
+              <p><%= activity.eventsummary %></p>
+            <% } %>
+
+            <!-- Outcome -->
+            <% if (activity.eventoutcome) { %>
+              <h5>Event Outcome</h5>
+              <p><%= activity.eventoutcome %></p>
+            <% } %>
+
+            <!-- Images -->
             <% if (activity.images && activity.images.length > 0) { %>
-              <h5 class="mt-4">📸 Photos</h5>
+              <h5 class="mt-3">📸 Photos</h5>
               <div class="row">
-                <% activity.images.forEach(image => { %>
-                  <div class="col-md-4 text-center mb-3">
-                    <img src="<%= image %>" alt="Alumni Activity Image" class="img-fluid rounded">
+                <% activity.images.forEach(img => { %>
+                  <div class="col-md-4 mb-3">
+                    <img src="<%= img %>" class="img-fluid rounded" />
                   </div>
                 <% }) %>
               </div>
             <% } else { %>
               <p class="text-muted">No photos available.</p>
             <% } %>
+
           </div>
         </div>
       <% }) %>
+
     <% } %>
   </div>
 

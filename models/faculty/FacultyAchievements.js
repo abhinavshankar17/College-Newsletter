@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const facultyAchievementSchema = new mongoose.Schema({
-  title: { type: String, required: true },           // Group title (was 'name')
+  title: { type: String, required: false },           // Group title (was 'name')
   designation: { type: String, required: false },    // Faculty designation
   images: { type: [String], default: [] },           // Image URLs or filenames
   description: { type: String, required: false },    // Description of achievement

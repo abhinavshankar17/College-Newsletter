@@ -1,45 +1,43 @@
 import mongoose from "mongoose";
 
-// 🎯 Each OutReach article schema
-const OutReachSchema = new mongoose.Schema({
-   title: { type: String, required: true },
-  date: { type: String, required: true },        // 🔴 Title for grouping Activities
-  time: { type: String, required: false },    // 🟢 Article headline
-  venue: { type: [String], required: false },   // Authors list
-  participants: { type: String, required: false },     // Journal name
-  CoOrdinators: { type: String, required: false },        // ISSN number
-  EventSummary: { type: String, required: false },
-    images: { type: [String], default: [] } ,
-   // Description paragraph
-  createdAt: { type: Date, default: Date.now }, 
-    // Timestamp for article creation
-});
+// OutReach article schema
+const OutReachSchema = new mongoose.Schema(
+  {
+    title: { type: String, required: true },
+    date: { type: String, required: true },
+    time: { type: String },
 
-// 🔑 Static method for grouping Activities by title
+    venue: { type: [String], default: [] },
+    participants: { type: [String], default: [] },
+
+    Association: { type: String, default: "" },
+
+    resourcePerson: { type: String, default: "" }, // ✅ renamed
+    convenorAndConvenor: { type: String, default: "" },
+
+    eventSummary: { type: String, default: "" },
+    images: { type: [String], default: [] },
+  },
+  { timestamps: true }
+);
+
+// Group activities by date
 OutReachSchema.statics.getGroupedActivities = async function () {
   try {
     const activities = await this.find().lean();
-    if (!activities || activities.length === 0) return {};
 
-    // Group Activities by date
-    const groupedActivities = activities.reduce((groups, article) => {
-      const key = article.date; // grouping by date
-      if (!groups[key]) {
-        groups[key] = [];
-      }
-      groups[key].push(article);
-      return groups;
+    return activities.reduce((acc, activity) => {
+      acc[activity.date] = acc[activity.date] || [];
+      acc[activity.date].push(activity);
+      return acc;
     }, {});
-
-    return groupedActivities;
-  } catch (error) {
-    console.error("Error grouping Activities:", error);
-    throw error;
+  } catch (err) {
+    console.error("Error grouping Activities:", err);
+    throw err;
   }
 };
 
-
-// 👇 Explicit collection name
+// Model
 const OutReachActivities = mongoose.model(
   "OutReachActivities",
   OutReachSchema,

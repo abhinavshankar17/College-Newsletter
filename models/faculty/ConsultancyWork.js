@@ -11,7 +11,7 @@ const consultancySchema = new mongoose.Schema({
   title: { type: String, required: false },
   description1: { type: String, required: false },
   consultancyCompany: { type: String, required: false },
-  consultancyAmount: { type: Number, required: false },
+  consultancyAmount: { type: String, required: false },
   Member: memberSchema, // nested member object
   createdAt: { type: Date, default: Date.now } // timestamp
 });
