@@ -285,7 +285,8 @@
 
   .marquee-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    /* grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); */
+    grid-template-columns: repeat(3, 1fr);  /* 3 equal cards per row on large screens */
     gap: 30px;
     justify-items: center;
   }
@@ -297,7 +298,14 @@
     box-shadow: 0 6px 15px rgba(0,0,0,0.12);
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    max-width: 280px;
+    /* max-width: 280px; */
+    width: 340px;          /* consistent width */
+    min-height: 350px;     /* consistent height */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
   }
 
   .marquee-card:hover {
@@ -608,7 +616,7 @@
         </tbody>
     </table>
 </div>
-  
+  <hr>
   <!-- UG Placement Training -->
   <h2 style="color:#1e40af;">Placement Training and Enrichment Activities – July to September 2025</h2>
   <p class="section-text">
@@ -677,299 +685,294 @@ delivered in two sessions (25%), specifically on 8th and 15th August 2025.
 participants demonstrating improved quantitative abilities, enhanced coding proficiency, and 
 greater technical competence, underscoring the effectiveness of the training initiatives.
   </p>
-
-
-
 </div>
 
 <hr>
 
-
-<hr>
-<div class="placement-details container">
-  <h2 class="text-center">Placement Details (2021 - 2025 Batch)</h2>
-
-  <div class="table-responsive">
-    <table class="placement-table">
-      <thead>
-        <tr>
-          <th>S.No</th>
-          <th>Date Result Published</th>
-          <th>Company Name</th>
-          <th>Placement Type</th>
-          <th>Total Offers</th>
-          <th>Package</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td><td>15.05.2025</td><td>Federal Bank</td><td>Dream</td><td>2</td><td>CTC : 7.35 – 7.9 LPA</td>
-        </tr>
-        <tr>
-          <td>2</td><td>21.05.2025</td><td>ESDS Software Solution Ltd</td><td>Dream</td><td>1</td><td>CTC : 7.0 LPA</td>
-        </tr>
-        <tr>
-          <td>3</td><td>26.05.2025</td><td>InTrainz</td><td>Dream</td><td>2</td><td>CTC : 4.0 – 6.0 LPA</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <p class="placement-summary">
-    The Department’s Placement Percentage (2021–2025 Batch) has increased from
-    <strong>75.87% to 76.18%</strong> in the Month of May 2025.
-  </p>
-</div>
-
- 
 <div class="marquee-offers">
   <h2 class="text-center fw-bold mb-4" style="color:#1a237e;">
-    M.Tech Offers (2026 Batch)
+    M.Tech – Super Dream & Dream Offers
   </h2>
 
   <div class="marquee-grid">
-    <!-- Super Dream Offer -->
+
+    <!-- 1. GANGISETTI BHAVANA SAI GAYATHRI -->
     <div class="marquee-card super-dream">
-      <img src="/images/bhavana.jpg" alt="Gangisetti Bhavana Sai Gayathri">
+      <img src="/images/mtech/bhavana.jpg" alt="Gangisetti Bhavana Sai Gayathri">
       <h4>GANGISETTI BHAVANA SAI GAYATHRI</h4>
-      <span>(RA2412033010017)</span>
-      <p>M.Tech. in Cloud Computing</p>
+      <p>(M.Tech – Cloud Computing)</p>
       <p><strong>Company:</strong> SAP Labs</p>
-      <p><strong>Stipend:</strong> ₹. 35,000 / PM</p>
+      <p><strong>Stipend:</strong> ₹ 35,000 / PM</p>
     </div>
 
-    <!-- Dream Offer -->
+    <!-- 2. AKASH K -->
     <div class="marquee-card dream">
-      <img src="/images/sujan.jpg" alt="Jujjavarapu Sujan Chowdary">
-      <h4>JUJJAVARAPU SUJAN CHOWDARY</h4>
-      <span>(RA2412033010001)</span>
-      <p>M.Tech. in Cloud Computing</p>
-      <p><strong>Company:</strong> Nokia</p>
-      <p><strong>Stipend:</strong> ₹. 35,000 / PM</p>
+      <img src="/images/mtech/akash.jpg" alt="Akash K">
+      <h4>AKASH K</h4>
+      <p>(M.Tech – Cloud Computing)</p>
+      <p><strong>Company:</strong> Deloitte USI</p>
+      <p><strong>CTC:</strong> ₹ 7.6 LPA</p>
     </div>
 
-    <!-- Dream Role -->
-    <div class="marquee-card dream-role">
-      <img src="/images/durga.jpg" alt="Nadipalli Durga Prasad">
-      <h4>NADIPALLI DURGA PRASAD</h4>
-      <span>(RA2412033010019)</span>
-      <p>M.Tech. in Cloud Computing</p>
-      <p><strong>Company:</strong> Nokia</p>
-      <p><strong>Stipend:</strong> ₹. 35,000 / PM</p>
-    </div>
-  </div>
-</div>
-
-<!-- ================= MARQUEE OFFERS SECTION ================= -->
-<div class="marquee-offers">
-  <h2>Marquee Offers</h2>
-  <div class="marquee-grid">
-    
-    <!-- Card 1 -->
-    <div class="marquee-card">
-      <img src="/images/renuka.jpg" alt="Ayineni Chaarvi Sai Renuka Choudary">
-      <h4>AYINENI CHAARVI SAI RENUKA CHOUDARY</h4>
-      <span>(RA2211030010122)</span>
-      <p>B.Tech. in CSE with Cyber Security</p>
-      <p><strong>Company :</strong> Citi Bank</p>
-      <p><strong>Stipend :</strong> ₹. 75,000 / PM</p>
-      <p><strong>CTC :</strong> 18 – 20 LPA</p>
-    </div>
-
-    <!-- Card 2 -->
-    <div class="marquee-card">
-      <img src="/images/afraz.jpg" alt="Afraz M">
-      <h4>AFRAZ M</h4>
-      <span>(RA2211030010132)</span>
-      <p>B.Tech. in CSE with Cyber Security</p>
-      <p><strong>Company :</strong> Citi Bank</p>
-      <p><strong>Stipend :</strong> ₹. 75,000 / PM</p>
-      <p><strong>CTC :</strong> 18 – 20 LPA</p>
-    </div>
-
-    <!-- Card 3 -->
-    <div class="marquee-card">
-      <img src="/images/thamizhiniyan.jpg" alt="Thamizhiniyan C S">
-      <h4>THAMIZHINIYAN C S</h4>
-      <span>(RA2112703010017)</span>
-      <p>M.Tech. (Integrated) in CSE with Cyber Security and Digital Forensics</p>
-      <p><strong>Company :</strong> SAP Labs</p>
-      <p><strong>Stipend :</strong> ₹. 35,000 / PM</p>
-      <p><strong>CTC :</strong> 20 LPA</p>
-    </div>
-
-    <!-- Card 4 -->
-    <div class="marquee-card">
-      <img src="/images/vinay.jpg" alt="Vinay Rajan S">
-      <h4>VINAY RAJAN S</h4>
-      <span>(RA2211028010084)</span>
-      <p>B.Tech. in CSE with Cloud Computing</p>
-      <p><strong>Company :</strong> Morgan Stanley</p>
-      <p><strong>Stipend :</strong> ₹. 87,000 / PM</p>
-      <p><strong>CTC :</strong> 25 LPA</p>
-    </div>
-
-  </div>
-</div>
-<div class="marquee-offers">
-  <h2>NWC - Notable Internship Details</h2>
-  <div class="marquee-grid">
-
-    <div class="marquee-card">
-      <img src="/images/interns/charith.jpg" alt="K L K CHARITH">
-      <h4>K L K CHARITH</h4>
-      <span>(RA2111030010106)</span>
-      <p><strong>Company:</strong> Summer Solutions Pvt. Ltd.</p>
-      <p><strong>Duration:</strong> 20-Jan-2025 to 20-Jul-2025</p>
-      <p><strong>Stipend:</strong> ₹ 7,500 / PM</p>
-    </div>
-
-    <div class="marquee-card">
-      <img src="/images/interns/shashwat.jpg" alt="SHASHWAT AGARWAL">
-      <h4>SHASHWAT AGARWAL</h4>
-      <span>(RA2211031010083)</span>
-      <p><strong>Company:</strong> Shamgar Software Solutions, India</p>
-      <p><strong>Duration:</strong> 29-Apr-2025 to 28-Jul-2025</p>
-      <p><strong>Stipend:</strong> ₹ 15,000 / PM</p>
-    </div>
-
-    <div class="marquee-card">
-      <img src="/images/interns/ramnarayan.jpg" alt="A. RAMNARAYAN">
-      <h4>A. RAMNARAYAN</h4>
-      <span>(RA2211030010022)</span>
-      <p><strong>Company:</strong> Knosfer, India</p>
-      <p><strong>Duration:</strong> 01-May-2025 to 01-Nov-2025</p>
-      <p><strong>Stipend:</strong> ₹ 10,000 / PM</p>
-    </div>
-
-    <div class="marquee-card">
-      <img src="/images/interns/pratyush.jpg" alt="PRATYUSH GOLWALA">
-      <h4>PRATYUSH GOLWALA</h4>
-      <span>(RA2211031010155)</span>
-      <p><strong>Company:</strong> Digital Doge, India</p>
-      <p><strong>Duration:</strong> 16-Jun-2025 to 16-Sep-2025</p>
-      <p><strong>Stipend:</strong> ₹ 10,000 / PM</p>
-    </div>
-
-    <div class="marquee-card">
-      <img src="/images/interns/taseen.jpg" alt="TASEEN IQBAL">
-      <h4>TASEEN IQBAL</h4>
-      <span>(RA2211030010048)</span>
-      <p><strong>Company:</strong> Eaton India</p>
-      <p><strong>Duration:</strong> 05-May-2025 to 11-Aug-2025</p>
-      <p><strong>Stipend:</strong> ₹ 21,000 / PM</p>
-    </div>
-
-    <div class="marquee-card">
-      <img src="/images/interns/ayushman.jpg" alt="AYUSHMAN ANAL">
-      <h4>AYUSHMAN ANAL</h4>
-      <span>(RA2211030010052)</span>
-      <p><strong>Company:</strong> Mintair Corp., India</p>
-      <p><strong>Duration:</strong> 17-Jun-2025 to 18-Jul-2025</p>
-      <p><strong>Stipend:</strong> ₹ 24,950 / PM</p>
-    </div>
-
-    <div class="marquee-card">
-      <img src="/images/interns/pranjali.jpg" alt="PRANJALI SRIVASTAVA">
-      <h4>PRANJALI SRIVASTAVA</h4>
-      <span>(RA2211028010140)</span>
-      <p><strong>Company:</strong> NovelVox, India</p>
-      <p><strong>Duration:</strong> 10-Jun-2025 to 10-Jul-2025</p>
-      <p><strong>Stipend:</strong> ₹ 30,000 / PM</p>
-    </div>
-
-    <div class="marquee-card">
-      <img src="/images/interns/guna.jpg" alt="GUNA SUNDAR">
-      <h4>GUNA SUNDAR</h4>
-      <span>(RA2211032010088)</span>
-      <p><strong>Company:</strong> Kloudportal Technology Solutions Pvt Ltd</p>
-      <p><strong>Duration:</strong> 01-May-2025 to 01-Aug-2025</p>
+    <!-- 3. PRINCE AYUSH -->
+    <div class="marquee-card dream">
+      <img src="/images/mtech/prince.jpg" alt="Prince Ayush">
+      <h4>PRINCE AYUSH</h4>
+      <p>(M.Tech – Cloud Computing)</p>
+      <p><strong>Company:</strong> KPIT</p>
       <p><strong>Stipend:</strong> ₹ 20,000 / PM</p>
     </div>
 
+    <!-- 4. UTPALA MAJUMDAR -->
+    <div class="marquee-card dream">
+      <img src="/images/mtech/utpala.jpg" alt="Utpala Majumdar">
+      <h4>UTPALA MAJUMDAR</h4>
+      <p>(M.Tech – ISCF)</p>
+      <p><strong>Company:</strong> KPIT</p>
+      <p><strong>Stipend:</strong> ₹ 20,000 / PM</p>
+    </div>
+
+    <!-- 5. JOSHNA G -->
+    <div class="marquee-card dream-role">
+      <img src="/images/mtech/joshna.jpg" alt="Joshna G">
+      <h4>JOSHNA G</h4>
+      <p>(M.Tech – ISCF)</p>
+      <p><strong>Company:</strong> Kalvium</p>
+      <p><strong>Stipend:</strong> ₹ 15,000 / PM</p>
+      <p><strong>CTC:</strong> ₹ 5.0 LPA</p>
+    </div>
+
+    <!-- 6. PANCHUMARTHI SUMADANIKA -->
+    <div class="marquee-card dream-role">
+      <img src="/images/mtech/panchumarthi.jpg" alt="Panchumarthi Sumadanika">
+      <h4>PANCHUMARTHI SUMADANIKA</h4>
+      <p>(M.Tech – Cloud Computing)</p>
+      <p><strong>Company:</strong> Kalvium</p>
+      <p><strong>Stipend:</strong> ₹ 15,000 / PM</p>
+      <p><strong>CTC:</strong> ₹ 5.0 LPA</p>
+    </div>
+
+    <!-- 7. KAVIN M -->
+    <div class="marquee-card dream-role">
+      <img src="/images/mtech/kavin.jpg" alt="Kavin M">
+      <h4>KAVIN M</h4>
+      <p>(M.Tech – Cloud Computing)</p>
+      <p><strong>Company:</strong> Kalvium</p>
+      <p><strong>Stipend:</strong> ₹ 15,000 / PM</p>
+      <p><strong>CTC:</strong> ₹ 5.0 LPA</p>
+    </div>
+
+    <!-- 8. SIVANESH M -->
+    <div class="marquee-card dream-role">
+      <img src="/images/mtech/sivanesh.jpg" alt="Sivanesh M">
+      <h4>SIVANESH M</h4>
+      <p>(M.Tech – Internet of Things)</p>
+      <p><strong>Company:</strong> Kalvium</p>
+      <p><strong>Stipend:</strong> ₹ 15,000 / PM</p>
+      <p><strong>CTC:</strong> ₹ 5.0 LPA</p>
+    </div>
+
+    <!-- 9. JUJJAVARAPU SUJAN CHOWDARY -->
+    <div class="marquee-card dream">
+      <img src="/images/mtech/sujan.jpg" alt="Jujjavarapu Sujan Chowdary">
+      <h4>JUJJAVARAPU SUJAN CHOWDARY</h4>
+      <p>(M.Tech – Cloud Computing)</p>
+      <p><strong>Company:</strong> Nokia</p>
+      <p><strong>Stipend:</strong> ₹ 35,000 / PM</p>
+    </div>
+
+    <!-- 10. NADIPALLI DURGA PRASAD -->
+    <div class="marquee-card dream-role">
+      <img src="/images/mtech/durga.jpg" alt="Nadipalli Durga Prasad">
+      <h4>NADIPALLI DURGA PRASAD</h4>
+      <p>(B.Tech – CSE with IT) <br> (M.Tech – Cloud Computing)</p>
+      <p><strong>Company:</strong> Nokia</p>
+      <p><strong>Stipend:</strong> ₹ 35,000 / PM</p>
+    </div>
+
   </div>
 </div>
+
+
+<!-- ================= MARQUEE OFFERS SECTION ================= -->
+
 <div class="marquee-offers">
+  <h2 class="text-center fw-bold mb-4" style="color:#1a237e;">
+    B.Tech – Marquee Offers
+  </h2>
+
   <div class="marquee-grid">
-    <!-- Card 1 -->
+
+    <!-- 1. VINAY RAJAN S -->
     <div class="marquee-card">
-      <img src="/images/interns/vihaan.jpg" alt="Vihaan Gautam">
-      <h4>VIHAAN GAUTAM</h4>
-      <span>(RA2211028010141)</span>
-      <p><strong>Company:</strong> Asiaville Interactive</p>
-      <p><strong>Duration:</strong> 02-Feb-2025 to 01-Aug-2025</p>
-      <p><strong>Stipend:</strong> ₹ 10,000 / PM</p>
+      <img src="/images/marquee/vinay.jpg" alt="Vinay Rajan S">
+      <h4>VINAY RAJAN S</h4>
+      <p>(B.Tech – CSE with Cloud Computing)</p>
+      <p><strong>Company:</strong> Morgan Stanley</p>
+      <p><strong>Stipend:</strong> ₹ 87,000 / PM</p>
+      <p><strong>CTC:</strong> ₹ 25.0 LPA</p>
     </div>
 
-    <!-- Card 2 -->
+    <!-- 2. AYINENI CHAARVI SAI RENUKA CHOUDARY -->
     <div class="marquee-card">
-      <img src="/images/interns/chirag.jpg" alt="Chirag Jain">
-      <h4>CHIRAG JAIN</h4>
-      <span>(RA2211028010047)</span>
-      <p><strong>Company:</strong> National Informatics Centre</p>
-      <p><strong>Duration:</strong> 01-Jun-2025 to 31-Jul-2025</p>
-      <p><strong>Stipend:</strong> ₹ 10,000 / PM</p>
+      <img src="/images/marquee/renuka.jpg" alt="Ayineni Chaarvi Sai Renuka Choudary">
+      <h4>AYINENI CHAARVI SAI RENUKA CHOUDARY</h4>
+      <p>(B.Tech – CSE with Cyber Security)</p>
+      <p><strong>Company:</strong> Citi Bank</p>
+      <p><strong>Stipend:</strong> ₹ 75,000 / PM</p>
+      <p><strong>CTC:</strong> ₹ 20.0 LPA</p>
     </div>
 
-    <!-- Card 3 -->
+    <!-- 3. AFRAZ M -->
     <div class="marquee-card">
-      <img src="/images/interns/aryan.jpg" alt="Aryan Aminbhave">
-      <h4>ARYAN AMINBHAVE</h4>
-      <span>(RA2211030010094)</span>
-      <p><strong>Company:</strong> AMD Pvt Ltd, India</p>
-      <p><strong>Duration:</strong> 14-Jul-2025 to 15-Jul-2026</p>
+      <img src="/images/marquee/afraz.jpg" alt="Afraz M">
+      <h4>AFRAZ M</h4>
+      <p>(B.Tech – CSE with Cyber Security)</p>
+      <p><strong>Company:</strong> Citi Bank</p>
+      <p><strong>Stipend:</strong> ₹ 75,000 / PM</p>
+      <p><strong>CTC:</strong> ₹ 20.0 LPA</p>
+    </div>
+
+    <!-- 4. MEDHIR ARYAN -->
+    <div class="marquee-card">
+      <img src="/images/marquee/mehdir.jpg" alt="Medhir Aryan">
+      <h4>MEDHIR ARYAN</h4>
+      <p>(B.Tech – CSE with Cloud Computing)</p>
+      <p><strong>Company:</strong> BNY Mellon</p>
+      <p><strong>Stipend:</strong> ₹ 75,000 / PM</p>
+      <p><strong>CTC:</strong> ₹ 22.0 LPA</p>
+    </div>
+
+    <!-- 5. SHASHWAT AGARWAL -->
+    <div class="marquee-card">
+      <img src="/images/marquee/shashwat.jpg" alt="Shashwat Agarwal">
+      <h4>SHASHWAT AGARWAL</h4>
+      <p>(B.Tech – CSE with IT)</p>
+      <p><strong>Company:</strong> MUFG Global Services</p>
+      <p><strong>Stipend:</strong> ₹ 65,000 / PM</p>
+      <p><strong>CTC:</strong> ₹ 20.0 LPA</p>
+    </div>
+
+    <!-- 6. PRANJAL BABEL -->
+    <div class="marquee-card">
+      <img src="/images/marquee/pranjal.jpg" alt="Pranjal Babel">
+      <h4>PRANJAL BABEL</h4>
+      <p>(B.Tech – CSE with Cyber Security)</p>
+      <p><strong>Company:</strong> MUFG Global Services</p>
+      <p><strong>Stipend:</strong> ₹ 65,000 / PM</p>
+      <p><strong>CTC:</strong> ₹ 20.0 LPA</p>
+    </div>
+
+    <!-- 7. ADITYA DUBEY -->
+    <div class="marquee-card">
+      <img src="/images/marquee/aditya.jpg" alt="Aditya Dubey">
+      <h4>ADITYA DUBEY</h4>
+      <p>(B.Tech – CSE with IT)</p>
+      <p><strong>Company:</strong> ZS Associates</p>
       <p><strong>Stipend:</strong> ₹ 40,000 / PM</p>
+      <p><strong>CTC:</strong> ₹ 20.0 LPA</p>
     </div>
 
-    <!-- Card 4 -->
+    <!-- 8. THAMIZHINIYAN C S -->
     <div class="marquee-card">
-      <img src="/images/interns/gopika.jpg" alt="Gopika Nair">
-      <h4>GOPIKA NAIR</h4>
-      <span>(RA2211030010095)</span>
-      <p><strong>Company:</strong> Cy5.io, India</p>
-      <p><strong>Duration:</strong> 07-Jan-2025 to 07-Jul-2025</p>
-      <p><strong>Stipend:</strong> ₹ 8,000 / PM</p>
+      <img src="/images/marquee/thamizhiniyan.jpg" alt="Thamizhinian C S">
+      <h4>THAMIZHINIYAN C S</h4>
+      <p>(M.Tech Integrated – CSE with CS&DS)</p>
+      <p><strong>Company:</strong> SAP Labs</p>
+      <p><strong>Stipend:</strong> ₹ 35,000 / PM</p>
+      <p><strong>CTC:</strong> ₹ 20.0 LPA</p>
     </div>
 
-    <!-- Card 5 -->
+    <!-- 9. KHUSBOO AGARWAL -->
     <div class="marquee-card">
-      <img src="/images/interns/indrayudh.jpg" alt="Indrayudh Mukhopadhyay">
-      <h4>INDRAYUDH MUKHOPADHYAY</h4>
-      <span>(RA2311031010051)</span>
-      <p><strong>Company:</strong> IndieRise Research Labs</p>
-      <p><strong>Duration:</strong> 04-May-2025 to 31-Jul-2025</p>
-      <p><strong>Stipend:</strong> ₹ 5,000 / PM</p>
+      <img src="/images/marquee/khusboo.jpg" alt="Khusboo Agarwal">
+      <h4>KHUSBOO AGARWAL</h4>
+      <p>(B.Tech – CSE with Cloud Computing)</p>
+      <p><strong>Company:</strong> Oracle</p>
+      <p><strong>CTC:</strong> ₹ 26.0 LPA</p>
     </div>
 
-    <!-- Card 6 -->
+    <!-- 10. JAIDITYA YADAV -->
     <div class="marquee-card">
-      <img src="/images/interns/kartik.jpg" alt="Kartik Goyal">
-      <h4>KARTIK GOYAL</h4>
-      <span>(RA2311030010055)</span>
-      <p><strong>Company:</strong> Pi Craft Technology Pvt Ltd</p>
-      <p><strong>Duration:</strong> 24-May-2025 to 24-Jul-2025</p>
-      <p><strong>Stipend:</strong> ₹ 5,000 / PM</p>
+      <img src="/images/marquee/jaiditya.jpg" alt="Jaiditya Yadav">
+      <h4>JAIDITYA YADAV</h4>
+      <p>(B.Tech – CSE with IT)</p>
+      <p><strong>Company:</strong> Oracle</p>
+      <p><strong>CTC:</strong> ₹ 26.0 LPA</p>
     </div>
 
-    <!-- Card 7 -->
-    <div class="marquee-card">
-      <img src="/images/interns/riya.jpg" alt="Riya Chandrakar">
-      <h4>RIYA CHANDRAKAR</h4>
-      <span>(RA2412033010041)</span>
-      <p><strong>Company:</strong> National Institute of Ocean Technology</p>
-      <p><strong>Duration:</strong> 01-Jul-2025 to 30-Jun-2026</p>
-    </div>
-
-    <!-- Card 8 -->
-    <div class="marquee-card">
-      <img src="/images/interns/prince.jpg" alt="Prince Ayush">
-      <h4>PRINCE AYUSH</h4>
-      <span>(RA2412033010008)</span>
-      <p><strong>Company:</strong> National Institute of Ocean Technology</p>
-      <p><strong>Duration:</strong> 01-Jul-2025 to 30-Jun-2026</p>
-    </div>
   </div>
 </div>
+
+
+
+
+<hr>
+<!-- ================= NWC Notable internship offers SECTION ================= -->
+<div class="marquee-offers">
+  <h2>NWC - Notable Internship Offers</h2>
+  <div style="text-align: left; line-height: 1.6;">
+
+<p><strong>SAP Labs:</strong> On July 1, 2025, SAP Labs published results for its Internship Leads to Placement (ILP) program, extending offers to 2 candidates. The internship stipend offered is ₹35,000 per month.</p>
+
+<p><strong>Ergo:</strong> The results for Ergo’s Internship Leads to Placement (ILP) program were announced on July 8, 2025. A single offer was made, which comes with a monthly stipend of ₹10,000.</p>
+
+<p><strong>Morgan Stanley:</strong> Announced on July 9, 2025, Morgan Stanley selected one candidate for its Internship Leads to Placement (ILP) program. The role offers a substantial monthly stipend of ₹87,000, which leads to a full-time placement with a Cost to Company (CTC) ranging between ₹20.0 and ₹25.0 LPA.</p>
+
+<p><strong>Intuitive Cloud:</strong> Intuitive Cloud published its results on July 11, 2025, for its Internship Leads to Placement (ILP) program, making one offer. The selected intern will receive a stipend of ₹20,000 per month, culminating in a full-time package with a CTC between ₹9.0 and ₹10.0 LPA.</p>
+
+<p><strong>Nissan Digital India:</strong> On July 18, 2025, Nissan Digital India announced the result for its Internship Leads to Placement (ILP) program, offering a position to one candidate with a monthly stipend of ₹20,000.</p>
+
+<p><strong>HWDEV & EJGR:</strong> The result for HWDEV&EJGR’s Internship Leads to Placement (ILP) program was published on July 21, 2025, with one candidate being selected. The internship offers a stipend of ₹45,000 per month and leads to a full-time role with a CTC in the range of ₹12.0 to ₹18.0 LPA.</p>
+
+<p><strong>Eplfi Technologies:</strong> Eplfi Technologies announced its results on July 22, 2025, making a significant 7 offers for its Internship Leads to Placement (ILP) program. The interns will be paid a stipend of ₹30,000 per month, which transitions to a full-time position with a CTC of ₹13.77 LPA.</p>
+
+<p><strong>Qsfjh:</strong> Also on July 22, 2025, Qsfjh published the result for its Internship Leads to Placement (ILP) program, selecting one candidate. The internship carries a stipend of ₹25,000 per month and leads to a full-time offer with a CTC ranging from ₹5.0 to ₹7.0 LPA.</p>
+
+<p><strong>Nokia:</strong> Nokia released its results on July 25, 2025, for its Internship Leads to Placement (ILP) program, extending offers to 4 candidates. The selected interns will receive a monthly stipend of ₹30,000.</p>
+
+<p><strong>Pondo:</strong> On August 2, 2025, Pondo published results for its Internship Leads to Placement (ILP) program, making 2 offers. The selected interns will receive a stipend of ₹25,000 per month.</p>
+
+<p><strong>Epam:</strong> Also on August 2, 2025, Epam announced results for its Internship Leads to Placement (ILP) program, extending 2 offers. The internship includes a stipend of ₹27,500 per month, which leads to a full-time placement with a Cost to Company (CTC) of ₹8.48 LPA.</p>
+
+<p><strong>Kalyium:</strong> Kalyium’s results for its Internship Leads to Placement (ILP) program were published on August 2, 2025, with one candidate being selected. The intern will be paid a stipend of ₹20,000 per month.</p>
+
+<p><strong>Volvo Group India Ltd:</strong> On August 2, 2025, Volvo Group India Ltd announced a direct placement offer for one candidate. The role comes with a Cost to Company (CTC) of ₹8.25 LPA.</p>
+
+<p><strong>ZS Associates:</strong> On August 6, 2025, ZS Associates published results for its Internship Leads to Placement (ILP) program, making 4 offers. The internship offers a stipend of ₹35,000 per month and leads to a full-time position with a CTC of ₹15.65 LPA.</p>
+
+<p><strong>JP Morgan (ILP):</strong> Also on August 6, 2025, JP Morgan announced one selection for its Internship Leads to Placement (ILP) program. The internship provides a stipend of ₹80,000 per month, culminating in a full-time package with a CTC of ₹19.75 LPA.</p>
+
+<p><strong>Nguyen Lach, Tinh Duc (ILP):</strong> On August 14, 2025, this company published a result for its program, selecting one candidate for a role that offers a stipend of ₹55,000 per month.</p>
+
+<p><strong>JP Morgan (Direct Placement):</strong> On August 14, 2025, JP Morgan also announced a direct placement offer for one candidate, with a Cost to Company (CTC) of ₹19.75 LPA.</p>
+
+<p><strong>Nguyen Lach, Tinh Duc (Direct Placement):</strong> Also on August 14, 2025, this company made a direct placement offer to one candidate for a role with a Cost to Company (CTC) of ₹15.00 LPA.</p>
+
+<p><strong>Fradal:</strong> On August 10, 2025, Fradal announced direct placement offers for 3 candidates. The roles come with a Cost to Company (CTC) of ₹10.25 LPA.</p>
+
+<p><strong>Siemens:</strong> Also on August 10, 2025, Siemens published a result, offering an internship position to one candidate with a monthly stipend of ₹25,000.</p>
+
+<p><strong>TechCoolon:</strong> On August 10, 2025, TechCoolon announced one selection for its Internship Leads to Placement (ILP) program, which offers a stipend of ₹15,000 per month.</p>
+
+<p><strong>Centrico:</strong> On August 22, 2025, Centrico published results for its Internship Leads to Placement (ILP) program, making 3 offers. The selected interns will receive a stipend of ₹15,000 per month.</p>
+
+<p><strong>Quyquinh:</strong> Also on August 22, 2025, Quyquinh announced one selection for its Internship Leads to Placement (ILP) program, which offers a stipend of ₹25,000 per month.</p>
+
+<p><strong>Infosys:</strong> On August 22, 2025, Infosys announced a direct placement offer for one candidate. The role comes with a Cost to Company (CTC) of ₹8.25 LPA.</p>
+
+<p><strong>Highways:</strong> On August 26, 2025, Highways published results for its Internship Leads to Placement (ILP) program, making 2 offers. The internship provides a stipend of ₹22,000 per month.</p>
+
+<p><strong>Mubox:</strong> Also on August 26, 2025, Mubox announced results for its Internship Leads to Placement (ILP) program, extending 3 offers. The selected interns will receive a stipend of ₹15,000 per month.</p>
+
+<p><strong>Pax:</strong> On August 26, 2025, Pax announced 3 selections for its Internship Leads to Placement (ILP) program. This program leads to a full-time position with a Cost to Company (CTC) of ₹15.00 LPA.</p>
+
+<p><strong>Sam Sebastin (Reg. No: RA231103I010110):</strong> A second-year B.Tech student in Networking and Communications, Information Technology, successfully completed a one-month internship at <strong>Sandeza Systems Private Limited, India</strong>, from 1st July 2025 to 31st July 2025. The internship was conducted in physical mode, and Sam demonstrated strong technical and communication skills, successfully completing all assigned project tasks.</p>
+
+</div>
+
+</div>
+
 
 
 </main>
