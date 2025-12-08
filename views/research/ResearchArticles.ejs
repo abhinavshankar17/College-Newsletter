@@ -23,6 +23,10 @@
               <p class="mb-1"><strong>ISSN:</strong> <%= p.issn %></p>
             <% } %>
 
+            <% if(p.year) { %>
+              <p class="mb-0"><strong>Year:</strong> <%= new Date(p.year).getFullYear() %></p>
+            <% } %>
+
             <% if (p.description) { %>
               <p class="text-muted"><%= p.description %></p>
             <% } %>

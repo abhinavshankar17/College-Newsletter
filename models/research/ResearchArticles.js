@@ -8,7 +8,7 @@ const articleSchema = new mongoose.Schema({
   journal: { type: String, required: false },     // Journal name
   issn: { type: String, required: false },        // ISSN number
   description: { type: String, required: false }, // Description paragraph
-  createdAt: { type: Date, default: Date.now },   // Timestamp for article creation
+  year : { type: Date, default: Date.now },   // Timestamp for article creation
 });
 
 // 🔑 Static method for grouping articles by title

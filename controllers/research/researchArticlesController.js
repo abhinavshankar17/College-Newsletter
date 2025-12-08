@@ -37,7 +37,8 @@ export const createResearchArticle = async (req, res) => {
       authors,
       journal: data.journal || "",
       issn: data.issn || "",
-      description: data.description || ""
+      description: data.description || "",
+      year: data.year ? new Date(data.year) : Date.now()
     });
 
     await newArticle.save();
