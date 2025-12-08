@@ -6,8 +6,9 @@ const researchProjectSchema = new mongoose.Schema({
   inventors: { type: [String], default: [] },         // Multiple inventors
   status: { type: String, required: false },
   issuingAgency: { type: String, required: false },
-  overview: { type: String, required: false },
-  updatedAt: { type: Date, default: Date.now }
+  description: { type: String, required: false },
+  patentno: { type: String, required: false },
+  year: { type: Date, default: Date.now }
 });
 
 const ResearchProject = mongoose.model(
