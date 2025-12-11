@@ -8,54 +8,81 @@
   <% } else { %>
     <% Object.keys(workshops).forEach(date => { %>
       <div class="mb-5">
-        <h3 class="text-primary mb-4"><%= date %></h3>
+        <h3 class="text-primary mb-4 workshop-date-heading"><%= date %></h3>
 
         <% workshops[date].forEach(workshop => { %>
-          <div class="card shadow-sm mb-4 rounded-3">
+          <div class="card shadow-sm mb-4 rounded-3 workshop-card">
+            <div class="card-header bg-white border-0 d-flex flex-wrap justify-content-between align-items-center workshop-card__header">
+              <div class="d-flex align-items-center gap-2 flex-wrap">
+                <span class="badge rounded-pill workshop-chip">Workshop</span>
+                <h5 class="card-title mb-0"><%= workshop.title %></h5>
+              </div>
+              <span class="badge workshop-date-chip"><%= workshop.date %></span>
+            </div>
+
             <div class="card-body">
-              <h5 class="card-title"><%= workshop.title %></h5>
+              <div class="workshop-meta-grid">
+                <% if (workshop.Convener) { 
+                  const raw = workshop.Convener || "";
+                  const split = raw.split(/Co-?Convener\s*:/i);
+                  const convenerText = split[0].replace(/Convener\s*:/i, "").trim();
+                  const coConvenerText = split[1] ? split[1].trim() : "";
+                %>
+                  <div class="meta-block">
+                    <% if (convenerText) { %>
+                      <p class="meta-label">Convener</p>
+                      <p class="meta-value"><%= convenerText %></p>
+                    <% } %>
+                    <% if (coConvenerText) { %>
+                      <p class="meta-label mt-2">Co-Convener</p>
+                      <p class="meta-value"><%= coConvenerText %></p>
+                    <% } %>
+                  </div>
+                <% } %>
 
-              <% if (workshop.Convener) { %>
-  <p><strong>Convener:</strong></p>
-  <% workshop.Convener.split(',').forEach(role => { 
-       const r = role.trim();
-       if(r){ %>
-        <span style="display:block; margin-left:10px;"><%= r %></span>
-  <% } }); %>
-<% } %>
+                <% if(workshop.ResourcePerson){ %>
+                  <div class="meta-block">
+                    <p class="meta-label">Resource Person</p>
+                    <ul class="list-unstyled mb-0">
+                      <% workshop.ResourcePerson.split(',').forEach(person => {
+                        const p = person.trim();
+                        if(p){ %>
+                          <li class="meta-item"><%= p %></li>
+                      <% } }); %>
+                    </ul>
+                  </div>
+                <% } %>
 
-
-            <% if(workshop.ResourcePerson){ %>
-  <p><strong>Resource Person:</strong></p>
-  <% workshop.ResourcePerson.split(',').forEach(person => {
-       const p = person.trim();
-       if(p){ %>
-        <span style="display:block; margin-left:10px;"><%= p %></span>
-  <% } }); %>
-<% } %>
-
-
-              <% if(workshop.NumberofRegisteredParticipants){ %>
-                <p><strong>Participants:</strong> <%= workshop.NumberofRegisteredParticipants %></p>
-              <% } %>
+                <% if(workshop.NumberofRegisteredParticipants){ %>
+                  <div class="meta-block">
+                    <p class="meta-label">Participants</p>
+                    <p class="meta-value"><%= workshop.NumberofRegisteredParticipants %></p>
+                  </div>
+                <% } %>
+              </div>
 
               <% if(workshop.EventSummary){ %>
-                <p><strong>Summary:</strong> <%= workshop.EventSummary %></p>
+                <div class="workshop-summary mt-3">
+                  <p class="meta-label">Summary</p>
+                  <p class="mb-0"><%= workshop.EventSummary %></p>
+                </div>
               <% } %>
             </div>
 
             <!-- Images gallery -->
             <% if(workshop.images && workshop.images.length > 0){ %>
-              <div class="card-footer bg-white d-flex flex-wrap gap-2">
+              <div class="card-footer bg-white d-flex flex-wrap gap-2 workshop-gallery">
                 <% workshop.images.forEach(img => { %>
-                  <div style="flex:1 1 30%; max-width:30%;">
-                    <img src="<%= img %>" class="rounded" style="width:100%; height:150px; object-fit:contain; background:#f0f0f0;" alt="Workshop Image">
+                  <div class="workshop-gallery__item">
+                    <img src="<%= img %>" class="rounded" alt="Workshop Image">
                   </div>
                 <% }) %>
               </div>
             <% } else { %>
-              <div class="card-footer bg-white">
-                <img src="/images/placeholder.png" class="rounded" style="width:100%; height:150px; object-fit:contain; background:#f0f0f0;" alt="No Image">
+              <div class="card-footer bg-white workshop-gallery">
+                <div class="workshop-gallery__item placeholder">
+                  <img src="/images/placeholder.png" class="rounded" alt="No Image">
+                </div>
               </div>
             <% } %>
 
