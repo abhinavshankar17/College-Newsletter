@@ -1,65 +1,201 @@
 <%- include("../partials/header", { title: "Consultancies" }) %>
 
 <style>
-  .consultancy-card { border-radius:12px; padding:20px; box-shadow:0 6px 15px rgba(0,0,0,0.1); margin-bottom:30px; }
-  .consultancy-title { color:#c62828; text-align:center; font-weight:700; font-size:1.5rem; margin-bottom:5px; }
-  .consultancy-company { color:#c62828; text-align:center; font-weight:600; font-size:1.1rem; margin-bottom:10px; }
-  .consultancy-amount { color:#2e7d32; text-align:center; font-weight:600; font-size:1.2rem; margin-bottom:15px; } 
-  .member-row { display:flex; flex-wrap:wrap; gap:20px; justify-content:flex-start; margin-bottom:15px; }
-  .member-card { flex:1 1 45%; max-width:45%; border-radius:10px; border:1px solid #e0e0e0; padding:10px; display:flex; gap:10px; background:#fafafa; }
-  .member-card img { width:100px; height:100px; object-fit:contain; border-radius:8px; background:#f0f0f0; }
-  .member-info { display:flex; flex-direction:column; justify-content:center; }
-  .member-info span { margin-bottom:4px; font-size:0.95rem; color:#333; }
+  .consultancy-card {
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    margin-bottom: 35px;
+    background: #ffffff;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
 
-  .description-only { margin-top:20px; padding:12px; background:#f5faff; border-left:4px solid #1976d2; border-radius:6px; }
-  .description-only p { margin:0; color:#455a64; font-size:0.97rem; line-height:1.5; }
+  .consultancy-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+  }
 
-  @media (max-width:768px){ .member-card { flex:1 1 100%; max-width:100%; } }
+  .consultancy-title {
+    color: #b71c1c;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.7rem;
+    margin-bottom: 6px;
+  }
+
+  .consultancy-company {
+    color: #c62828;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  .consultancy-amount {
+    color: #1b5e20;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 18px;
+  }
+
+  /* Member Row */
+  .member-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+    margin-bottom: 15px;
+  }
+
+  .member-card {
+    flex: 1 1 45%;
+    max-width: 45%;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    padding: 12px;
+    display: flex;
+    gap: 12px;
+    background: #fafafa;
+    transition: background 0.3s ease;
+  }
+
+  .member-card:hover {
+    background: #f2f2f2;
+  }
+
+  .member-card img {
+    width: 110px;
+    height: 110px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: #f0f0f0;
+  }
+
+  .member-info { display: flex; flex-direction: column; justify-content: center; }
+  .member-info span { margin-bottom: 5px; font-size: 1rem; color: #333; }
+
+  /* Description-only Block */
+  .description-only {
+    padding: 14px;
+    background: #e3f2fd;
+    border-left: 5px solid #1565c0;
+    border-radius: 8px;
+    margin-top: 12px;
+  }
+
+  .description-only p {
+    margin: 0;
+    font-size: 1rem;
+    color: #37474f;
+    text-align: justify;
+    line-height: 1.55;
+  }
+
+  @media (max-width: 768px) {
+    .member-card {
+      flex: 1 1 100%;
+      max-width: 100%;
+    }
+    .member-card img {
+      width: 90px;
+      height: 90px;
+    }
+  }
 </style>
+
+
 
 <div class="container my-5">
   <h1 class="mb-5 text-center fw-bold page-title">Consultancies</h1>
 
-  <% if(!consultancies || consultancies.length === 0) { %>
+  <% if (!consultancies || consultancies.length === 0) { %>
     <p class="text-center text-muted">No Consultancy data available.</p>
   <% } else { %>
-    <% consultancies.forEach(cons => { %>
-      <% const hasMemberImage = cons.Member && cons.Member.images && cons.Member.images.length > 0; %>
-      <% const hasDescription = cons.description && cons.description.trim() !== ''; %>
 
-      <% if(hasMemberImage || hasDescription) { %>
+    <!-- ========================= -->
+    <!-- 1) DESCRIPTION-ONLY AT TOP -->
+    <!-- ========================= -->
+    <% consultancies
+      .filter(c => (!c.Member || !c.Member.images || c.Member.images.length === 0))
+      .forEach(cons => { %>
+
+      <% const hasDescription = cons.description && cons.description.trim() !== ""; %>
+      <% if(hasDescription) { %>
         <div class="consultancy-card">
 
-          <!-- Title / Company / Amount -->
-          <% if(cons.title){ %><div class="consultancy-title"><%= cons.title %></div><% } %>
-          <% if(cons.consultancyCompany){ %><div class="consultancy-company"><%= cons.consultancyCompany %></div><% } %>
-          <% if(cons.consultancyAmount){ %><div class="consultancy-amount">₹<%= cons.consultancyAmount %></div><% } %>
-
-          <!-- Member + image -->
-          <% if(hasMemberImage){ %>
-            <div class="member-row">
-              <div class="member-card">
-                <img src="<%= cons.Member.images[0] %>" alt="Member Image">
-                <div class="member-info">
-                  <% if(cons.Member.name){ %><span><strong>Name:</strong> <%= cons.Member.name %></span><% } %>
-                  <% if(cons.Member.designation){ %><span><strong>Designation:</strong> <%= cons.Member.designation %></span><% } %>
-                  <% if(cons.Member.department){ %><span><strong>Department:</strong> <%= cons.Member.department %></span><% } %>
-                </div>
-              </div>
-            </div>
+          <% if(cons.title){ %>
+            <div class="consultancy-title"><%= cons.title %></div>
           <% } %>
 
-          <!-- Description-only at bottom if no member/image -->
-          <% if(hasDescription && !hasMemberImage){ %>
-            <div class="description-only">
-              <% if(cons.title){ %><strong><%= cons.title %></strong><br/><% } %>
-              <p><%= cons.description %></p>
-            </div>
+          <% if(cons.consultancyCompany){ %>
+            <div class="consultancy-company"><%= cons.consultancyCompany %></div>
           <% } %>
 
+          <% if(cons.consultancyAmount){ %>
+            <div class="consultancy-amount">₹<%= cons.consultancyAmount %></div>
+          <% } %>
+
+          <div class="description-only">
+            <p><%= cons.description %></p>
+          </div>
         </div>
       <% } %>
+
     <% }) %>
+
+
+
+    <!-- =============================== -->
+    <!-- 2) CONSULTANCIES WITH IMAGE BELOW -->
+    <!-- =============================== -->
+    <% consultancies
+      .filter(c => c.Member && c.Member.images && c.Member.images.length > 0)
+      .forEach(cons => { %>
+
+      <div class="consultancy-card">
+
+        <% if(cons.title){ %>
+          <div class="consultancy-title"><%= cons.title %></div>
+        <% } %>
+
+        <% if(cons.consultancyCompany){ %>
+          <div class="consultancy-company"><%= cons.consultancyCompany %></div>
+        <% } %>
+
+        <% if(cons.consultancyAmount){ %>
+          <div class="consultancy-amount">₹<%= cons.consultancyAmount %></div>
+        <% } %>
+
+        <div class="member-row">
+          <div class="member-card">
+            <img src="<%= cons.Member.images[0] %>" alt="Member Image">
+            <div class="member-info">
+              <% if(cons.Member.name){ %>
+                <span><strong>Name:</strong> <%= cons.Member.name %></span>
+              <% } %>
+
+              <% if(cons.Member.designation){ %>
+                <span><strong>Designation:</strong> <%= cons.Member.designation %></span>
+              <% } %>
+
+              <% if(cons.Member.department){ %>
+                <span><strong>Department:</strong> <%= cons.Member.department %></span>
+              <% } %>
+            </div>
+          </div>
+        </div>
+
+        <% if(cons.description){ %>
+          <div class="description-only">
+            <p><%= cons.description %></p>
+          </div>
+        <% } %>
+
+      </div>
+
+    <% }) %>
+
   <% } %>
 </div>
 
