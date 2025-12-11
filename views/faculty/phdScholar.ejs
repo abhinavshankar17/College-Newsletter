@@ -2,22 +2,26 @@
 
 <style>
 /* Base Styles */
+/* =========================
+   Base Styles
+========================= */
 body {
   font-family: "Segoe UI", Roboto, Arial, sans-serif;
   background: linear-gradient(135deg, #f0f4f8, #ffffff);
   margin: 0;
   color: #1f2937;
+  line-height: 1.6;
+  scroll-behavior: smooth;
 }
 
-/* Header */
 h1 {
   text-align: center;
-  font-size: 2.6rem;
-  font-weight: 700;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
   color: #1e293b;
   margin: 60px 20px 40px;
-  line-height: 1.2;
   position: relative;
+  text-shadow: 0 0 12px rgba(251, 191, 36, 0.25);
 }
 
 h1::after {
@@ -25,12 +29,14 @@ h1::after {
   display: block;
   width: 140px;
   height: 4px;
-  background: linear-gradient(to right, #4f46e5, #6366f1);
+  background: linear-gradient(to right, #fbbf24, #facc15);
   margin: 16px auto 0;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
-/* Scholar Container */
+/* =========================
+   Scholar Container
+========================= */
 .scholar-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -40,21 +46,25 @@ h1::after {
   margin: 0 auto;
 }
 
-/* Scholar Card */
+/* =========================
+   Scholar Card
+========================= */
 .scholar-card {
   background: #ffffff;
-  border-radius: 18px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
   padding: 26px 22px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  transition: all 0.35s ease;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  text-align: justify;
 }
 
 .scholar-card:hover {
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
-  background: #f9fafb;
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 20px 45px rgba(251, 191, 36, 0.25);
+  background: #fef9f1;
 }
 
 /* Scholar Text */
@@ -62,19 +72,21 @@ h1::after {
   margin: 6px 0;
   font-size: 1rem;
   color: #4b5563;
-  line-height: 1.5;
+  line-height: 1.7;
 }
 
 .scholar-card p strong {
-  background: linear-gradient(90deg, #4f46e5, #6366f1);
+  font-size: 1.1rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #facc15, #fbbf24);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-weight: 700;
-  font-size: 1.1rem;
   display: inline-block;
 }
 
-/* No Data */
+/* =========================
+   No Data
+========================= */
 .no-data {
   text-align: center;
   font-size: 1.3rem;
@@ -92,7 +104,31 @@ h1::after {
   box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
-/* Responsive */
+/* =========================
+   Congratulations Section
+========================= */
+.congrats {
+  margin: 40px 0 80px;
+  font-size: 2rem;
+  color: #1e3a8a;
+  text-align: center;
+  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* =========================
+   Yellow Accent Enhancements
+========================= */
+.yellow-accent {
+  background: linear-gradient(90deg, #fbbf24, #facc15);
+  height: 6px;
+  width: clamp(120px, 30vw, 220px);
+  margin: 18px auto;
+  border-radius: 4px;
+}
+
+/* =========================
+   Responsive
+========================= */
 @media (max-width: 768px) {
   h1 { font-size: 2.3rem; }
   .scholar-card { padding: 22px 18px; }
@@ -102,6 +138,7 @@ h1::after {
   h1 { font-size: 2rem; }
   .scholar-card { padding: 18px 14px; }
 }
+
 </style>
 
 <body>
@@ -128,7 +165,8 @@ h1::after {
       <% }) %>
     </div>
   <% } %>
-   <div class="text-center">
+
+  <div class="text-center">
     <h2 class="fw-bold congrats">🎉 Congratulations 🎉</h2>
   </div>
 </body>

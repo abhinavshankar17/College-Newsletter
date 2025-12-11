@@ -1,96 +1,254 @@
 <%- include("../partials/header", { title: "Workshops" }) %>
 
-<div class="container my-5">
-  <h1 class="mb-5 text-center fw-bold page-title">Workshops</h1>
+<style>
+  body {
+    background: #eef2f7;
+    font-family: "Segoe UI", sans-serif;
+    color: #2c3e50;
+  }
 
-  <% if (Object.keys(workshops).length === 0) { %>
-    <p class="text-center text-muted">No Workshops available.</p>
+  .container {
+    max-width: 1150px;
+  }
+
+  h1 {
+    color: #0a1f44 !important;
+    letter-spacing: 1px;
+  }
+
+  /* Date Section */
+  .date-header {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0a3d62;
+    border-left: 6px solid #0a3d62;
+    padding-left: 14px;
+    margin-bottom: 28px;
+    text-align: left;
+  }
+
+  /* Workshop Card */
+  .workshop-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border: 1px solid #e3e7ec;
+  }
+
+  .workshop-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  }
+
+  .workshop-title {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #1b2a49;
+    margin-bottom: 15px;
+    text-align: justify;
+  }
+
+  .label {
+    font-weight: 700;
+    color: #34495e;
+    margin-top: 12px;
+    display: inline-block;
+  }
+
+  .value {
+    color: #555;
+    font-weight: 500;
+  }
+
+  /* Info Block */
+  .info-block {
+    margin-top: 20px;
+    background: #f8fafc;
+    border: 1px solid #d7dee8;
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+
+  .info-block-title {
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: #0a3d62;
+    margin-bottom: 14px;
+    border-left: 4px solid #0a3d62;
+    padding-left: 10px;
+  }
+
+  /* Stylish Name Tags */
+  /* Stylish Name Tags in a Row */
+.tags-container {
+  display: flex;
+  flex-direction: column; /* Column layout */
+  gap: 8px;               /* Space between each tag */
+}
+
+.tag {
+  background: #e8f1fb;
+  padding: 8px 14px;
+  border-radius: 25px;
+  border: 1px solid #cddff7;
+  font-size: 0.95rem;
+  color: #1b2a49;
+  font-weight: 600;
+  text-align: left;
+  white-space: normal; /* allow text wrapping if long */
+}
+
+  /* Event Summary */
+  .event-summary {
+    margin-top: 18px;
+    text-align: justify;
+    color: #333;
+    line-height: 1.7;
+    font-size: 0.98rem;
+    background: #f8fafc;
+    padding: 15px 18px;
+    border-left: 4px solid #0a3d62;
+    border-radius: 8px;
+  }
+
+  /* Images - FIXED without cutting */
+  .image-container {
+    margin-top: 25px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+  }
+
+  .image-container img {
+    width: 100%;
+    max-height: 260px;
+    object-fit: contain; /* prevent image from cutting */
+    background: #fff;
+    border-radius: 14px;
+    padding: 10px;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.12);
+    transition: transform 0.3s ease;
+  }
+
+  .image-container img:hover {
+    transform: scale(1.03);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .workshop-card {
+      padding: 22px;
+    }
+
+    .workshop-title {
+      font-size: 1.5rem;
+    }
+
+    .tag {
+      font-size: 0.9rem;
+    }
+  }
+</style>
+
+<div class="container py-5">
+
+  <h1 class="text-center mb-5 fw-bold display-5">📘 Workshops</h1>
+
+  <% if (!workshops || Object.keys(workshops).length === 0) { %>
+    <div class="alert alert-info text-center">
+      No workshops available.
+    </div>
   <% } else { %>
-    <% Object.keys(workshops).forEach(date => { %>
-      <div class="mb-5">
-        <h3 class="text-primary mb-4 workshop-date-heading"><%= date %></h3>
 
-        <% workshops[date].forEach(workshop => { %>
-          <div class="card shadow-sm mb-4 rounded-3 workshop-card">
-            <div class="card-header bg-white border-0 d-flex flex-wrap justify-content-between align-items-center workshop-card__header">
-              <div class="d-flex align-items-center gap-2 flex-wrap">
-                <span class="badge rounded-pill workshop-chip">Workshop</span>
-                <h5 class="card-title mb-0"><%= workshop.title %></h5>
-              </div>
-              <span class="badge workshop-date-chip"><%= workshop.date %></span>
-            </div>
+    <% for (let dateGroup in workshops) { %>
+      <div class="workshop-section">
 
-            <div class="card-body">
-              <div class="workshop-meta-grid">
-                <% if (workshop.Convener) { 
-                  const raw = workshop.Convener || "";
-                  const split = raw.split(/Co-?Convener\s*:/i);
-                  const convenerText = split[0].replace(/Convener\s*:/i, "").trim();
-                  const coConvenerText = split[1] ? split[1].trim() : "";
-                %>
-                  <div class="meta-block">
-                    <% if (convenerText) { %>
-                      <p class="meta-label">Convener</p>
-                      <p class="meta-value"><%= convenerText %></p>
-                    <% } %>
-                    <% if (coConvenerText) { %>
-                      <p class="meta-label mt-2">Co-Convener</p>
-                      <p class="meta-value"><%= coConvenerText %></p>
-                    <% } %>
-                  </div>
-                <% } %>
+        <h2 class="date-header"><%= dateGroup %></h2>
 
-                <% if(workshop.ResourcePerson){ %>
-                  <div class="meta-block">
-                    <p class="meta-label">Resource Person</p>
-                    <ul class="list-unstyled mb-0">
-                      <% workshop.ResourcePerson.split(',').forEach(person => {
-                        const p = person.trim();
-                        if(p){ %>
-                          <li class="meta-item"><%= p %></li>
-                      <% } }); %>
-                    </ul>
-                  </div>
-                <% } %>
+        <% workshops[dateGroup].forEach(workshop => { %>
 
-                <% if(workshop.NumberofRegisteredParticipants){ %>
-                  <div class="meta-block">
-                    <p class="meta-label">Participants</p>
-                    <p class="meta-value"><%= workshop.NumberofRegisteredParticipants %></p>
-                  </div>
-                <% } %>
-              </div>
+          <div class="workshop-card">
 
-              <% if(workshop.EventSummary){ %>
-                <div class="workshop-summary mt-3">
-                  <p class="meta-label">Summary</p>
-                  <p class="mb-0"><%= workshop.EventSummary %></p>
-                </div>
-              <% } %>
-            </div>
+            <div class="workshop-title"><%= workshop.title %></div>
 
-            <!-- Images gallery -->
-            <% if(workshop.images && workshop.images.length > 0){ %>
-              <div class="card-footer bg-white d-flex flex-wrap gap-2 workshop-gallery">
-                <% workshop.images.forEach(img => { %>
-                  <div class="workshop-gallery__item">
-                    <img src="<%= img %>" class="rounded" alt="Workshop Image">
-                  </div>
-                <% }) %>
-              </div>
-            <% } else { %>
-              <div class="card-footer bg-white workshop-gallery">
-                <div class="workshop-gallery__item placeholder">
-                  <img src="/images/placeholder.png" class="rounded" alt="No Image">
+            <p><span class="label">Date: </span>
+              <span class="value"><%= workshop.date %></span></p>
+
+            <% if (workshop.time) { %>
+              <p><span class="label">Time: </span>
+                <span class="value"><%= workshop.time %></span></p>
+            <% } %>
+
+            <% if (workshop.venue) { %>
+              <p><span class="label">Venue: </span>
+                <span class="value"><%= workshop.venue %></span></p>
+            <% } %>
+
+            <p><span class="label">Number of Registered Participants: </span>
+              <span class="value"><%= workshop.numberOfParticipants %></span>
+            </p>
+
+            <!-- Conveners -->
+            <% if (workshop.conveners && workshop.conveners.length > 0) { %>
+              <div class="info-block">
+                <div class="info-block-title">Convener(s)</div>
+                <div class="tags-container">
+                  <% workshop.conveners.forEach(name => { %>
+                    <div class="tag"><%= name %></div>
+                  <% }) %>
                 </div>
               </div>
             <% } %>
 
+            <!-- Co-Conveners -->
+            <% if (workshop.coConveners && workshop.coConveners.length > 0) { %>
+              <div class="info-block">
+                <div class="info-block-title">Co-Convener(s)</div>
+                <div class="tags-container">
+                  <% workshop.coConveners.forEach(name => { %>
+                    <div class="tag"><%= name %></div>
+                  <% }) %>
+                </div>
+              </div>
+            <% } %>
+
+            <!-- Resource Persons -->
+            <% if (workshop.resourcePersons && workshop.resourcePersons.length > 0) { %>
+              <div class="info-block">
+                <div class="info-block-title">Resource Person(s)</div>
+                <div class="tags-container">
+                  <% workshop.resourcePersons.forEach(name => { %>
+                    <div class="tag"><%= name %></div>
+                  <% }) %>
+                </div>
+              </div>
+            <% } %>
+
+            <% if (workshop.eventSummary) { %>
+              <p class="label">Event Summary:</p>
+              <div class="event-summary">
+                <%= workshop.eventSummary.replace(/\\n/g, "<br>") %>
+              </div>
+            <% } %>
+
+            <% if (workshop.images && workshop.images.length > 0) { %>
+              <div class="image-container">
+                <% workshop.images.forEach(img => { %>
+                  <img src="<%= img %>" alt="Workshop Image">
+                <% }) %>
+              </div>
+            <% } %>
+
           </div>
+
         <% }) %>
       </div>
-    <% }) %>
+    <% } %>
   <% } %>
+
 </div>
 
 <%- include("../partials/footer") %>

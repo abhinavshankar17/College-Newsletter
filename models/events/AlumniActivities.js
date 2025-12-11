@@ -26,11 +26,11 @@ const alumniActivitySchema = new mongoose.Schema({
       trim: true
     },
     ResoursePerson: {
-      type: String,   // e.g., "Professor & Head"
+      type: [String],   // e.g., "Professor & Head"
       trim: true
     },
     convener: {
-      type: String,   // e.g., "Networking and Communications"
+      type: [String],   // e.g., "Networking and Communications"
       trim: true
     },
   eventsummary: {

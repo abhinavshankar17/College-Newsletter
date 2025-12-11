@@ -1,46 +1,109 @@
 <%- include('../partials/header', { title: "Faculty Articles" }) %>
 
+<style>
+  body {
+    background: #f0f4ff;
+  }
+
+  .page-title {
+    color: #0d3b66;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 2.6rem;
+    background: linear-gradient(to right, #1e3c72, #2a5298);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .article-card {
+    border-radius: 18px;
+    padding: 28px;
+    background: linear-gradient(to bottom right, #ffffff, #f3f8ff);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .article-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.18);
+    background: linear-gradient(to bottom right, #e8f0ff, #ffffff);
+  }
+
+  .article-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #0b2a5f;
+  }
+
+  .faculty-info {
+    font-size: 1rem;
+    color: #5a6a7a;
+  }
+
+  .article-text {
+    text-align: justify;
+    line-height: 1.7;
+    font-size: 1.08rem;
+    color: #2d3436;
+  }
+
+  blockquote {
+    border-left: 5px solid #2a5298;
+    padding-left: 15px;
+    color: #3c4a59;
+    font-style: italic;
+  }
+
+  .article-img {
+    max-width: 180px;
+    border-radius: 12px;
+    border: 2px solid #d0d8e8;
+  }
+</style>
+
 <div class="container my-5">
-  <h1 class="mb-4 fw-bold">📚 Faculty Articles</h1>
+  <h1 class="text-center page-title mb-5"> Faculty Articles</h1>
 
   <% if (articles && articles.length > 0) { %>
-    <div class="row">
+    <div class="row g-4">
+
       <% articles.forEach(article => { %>
-        <div class="col-md-6 mb-4">
-          <div class="card shadow-sm h-100">
-            <% if (article.images && article.images.length > 0) { %>
-              <div class="d-flex flex-wrap p-2">
-                <% article.images.forEach(img => { %>
-                  <img src="<%= img %>" alt="Article Image" class="img-fluid rounded mb-2 me-2" style="max-width: 150px;">
-                <% }) %>
-              </div>
-            <% } %>
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="article-card shadow-sm">
 
-            <div class="card-body">
-              <h2 class="card-title h5 mb-2"><%= article.title || "Untitled Article" %></h2>
-              <% if (article.name) { %>
-                <p class="text-muted mb-2">
-                  <strong><%= article.name %></strong>
-                  <% if (article.designation) { %> – <%= article.designation %> <% } %>
-                </p>
-              <% } %>
-
-              <% if (article.description) { %>
-                <p class="mb-2"><%= article.description %></p>
-              <% } %>
-
-              <% if (article.quote) { %>
-                <blockquote class="blockquote border-start border-3 ps-3 mt-2">
-                  <p class="mb-0">"<%= article.quote %>"</p>
-                </blockquote>
-              <% } %>
-            </div>
+          <% if (article.images && article.images.length > 0) { %>
+          <div class="d-flex flex-wrap gap-3 mb-4">
+            <% article.images.forEach(img => { %>
+            <img src="<%= img %>" class="article-img" />
+            <% }) %>
           </div>
+          <% } %>
+
+          <h2 class="article-title mb-2"><%= article.title || "Untitled Article" %></h2>
+
+          <% if (article.name) { %>
+          <p class="faculty-info mb-3">
+            <strong><%= article.name %></strong>
+            <% if (article.designation) { %> • <%= article.designation %> <% } %>
+          </p>
+          <% } %>
+
+          <% if (article.description) { %>
+          <p class="article-text mb-4"><%= article.description %></p>
+          <% } %>
+
+          <% if (article.quote) { %>
+          <blockquote>“<%= article.quote %>”</blockquote>
+          <% } %>
+
         </div>
+      </div>
       <% }) %>
+
     </div>
   <% } else { %>
-    <p class="text-muted fst-italic">No faculty articles found.</p>
+    <p class="text-muted fst-italic text-center mt-5">No faculty articles found.</p>
   <% } %>
 </div>
 

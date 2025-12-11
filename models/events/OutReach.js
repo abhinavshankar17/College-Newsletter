@@ -1,21 +1,23 @@
 import mongoose from "mongoose";
 
-// OutReach article schema
+// Outreach Activity Schema
 const OutReachSchema = new mongoose.Schema(
   {
-    title: { type: String, required: true },
-    date: { type: String, required: true },
-    time: { type: String },
+    title: { type: String, required: true, trim: true },
+    date: { type: String, required: true, trim: true },
+    time: { type: String, default: "", trim: true },
 
     venue: { type: [String], default: [] },
     participants: { type: [String], default: [] },
 
-    Association: { type: String, default: "" },
+    Association: { type: String, default: "", trim: true },
 
-    resourcePerson: { type: String, default: "" }, // ✅ renamed
-    convenorAndConvenor: { type: String, default: "" },
+    resourcePerson: { type: [String], default: [] },   // ✔ Resource Persons
+    convenor: { type: [String], default: [] },         // ✔ Convenor list
+    coconvenor: { type: [String], default: [] },       // ✔ Co-Convenor list
 
-    eventSummary: { type: String, default: "" },
+    eventSummary: { type: String, default: "", trim: true },
+
     images: { type: [String], default: [] },
   },
   { timestamps: true }

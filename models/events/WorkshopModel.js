@@ -1,34 +1,45 @@
 import mongoose from "mongoose";
 
-// 🎯 Workshop schema
-const workshopSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  date: { type: String, required: true },        // 🔴 Grouping by date
-  Convener: { type: String, required: false },  
-  ResourcePerson: { type: String, required: false },
-  NumberofRegisteredParticipants: { type: String, required: false },
-  EventSummary: { type: String, required: false },
-  images: { type: [String], default: [] },
-  createdAt: { type: Date, default: Date.now },
-});
+const workshopSchema = new mongoose.Schema(
+  {
+    title: { type: String, required: false, trim: true },
 
-// 🔑 Static method for grouping workshops by date
+    date: { type: String, required: false, trim: true },  // e.g., "07.07.2025 to 11.07.2025"
+    time: { type: String, trim: true },                  // "9:30 AM to 4:00 PM"
+    venue: { type: String, trim: true },
+
+    conveners: { type: [String], default: [] },          // multiple names
+    coConveners: { type: [String], default: [] },        
+    resourcePersons: { type: [String], default: [] },
+
+    numberOfParticipants: { type: Number, default: 0 },
+
+    eventSummary: { type: String, trim: true },
+
+    images: { type: [String], default: [] }
+  },
+  { timestamps: true }
+);
+
+// 🔥 Group workshops by DATE (first date in range)
 workshopSchema.statics.getGroupedWorkshops = async function () {
   try {
-    const workshops = await this.find().lean();
-    if (!workshops || workshops.length === 0) return {};
+    const workshops = await this.find().sort({ createdAt: -1 }).lean();
 
-    const grouped = workshops.reduce((groups, workshop) => {
-      const key = workshop.date;
-      if (!groups[key]) groups[key] = [];
-      groups[key].push(workshop);
-      return groups;
+    if (!workshops.length) return {};
+
+    const grouped = workshops.reduce((acc, workshop) => {
+      let key = workshop.date.split("to")[0].trim(); // take first date
+      if (!acc[key]) acc[key] = [];
+      acc[key].push(workshop);
+      return acc;
     }, {});
 
     return grouped;
-  } catch (error) {
-    console.error("Error grouping workshops:", error);
-    throw error;
+
+  } catch (err) {
+    console.error("Grouping workshops failed:", err);
+    throw err;
   }
 };
 

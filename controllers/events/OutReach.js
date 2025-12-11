@@ -1,9 +1,10 @@
 import OutReachActivities from "../../models/events/OutReach.js";
 
-// 📄 Get all activities grouped by date
+ 
 export const getOutreachActivity = async (req, res) => {
   try {
     const groupedActivities = await OutReachActivities.getGroupedActivities();
+
     res.render("events/OutreachActivity.ejs", {
       activities: groupedActivities,
     });
@@ -23,39 +24,63 @@ export const addOutreachActivity = async (req, res) => {
       venue,
       participants,
       Association,
-      resourcePerson,            // ✅ renamed
+      resourcePerson,
       convenorAndConvenor,
       eventSummary,
       images,
     } = req.body;
 
     if (!title || !date) {
-      return res.status(400).send("Title and Date are required");
+      return res.status(400).json({
+        success: false,
+        message: "Title and Date are required",
+      });
     }
 
     const newActivity = await OutReachActivities.create({
       title,
       date,
       time: time || "",
+
+      // Convert to array if not array
       venue: Array.isArray(venue) ? venue : venue ? [venue] : [],
+
       participants: Array.isArray(participants)
         ? participants
         : participants
         ? [participants]
         : [],
+
       Association: Association || "",
-      resourcePerson: resourcePerson || "",   // ✅ saved correctly
-      convenorAndConvenor: convenorAndConvenor || "",
+
+      // Must be array based on model
+      resourcePerson: Array.isArray(resourcePerson)
+        ? resourcePerson
+        : resourcePerson
+        ? [resourcePerson]
+        : [],
+
+      convenorAndConvenor: Array.isArray(convenorAndConvenor)
+        ? convenorAndConvenor
+        : convenorAndConvenor
+        ? [convenorAndConvenor]
+        : [],
+
       eventSummary: eventSummary || "",
+
       images: Array.isArray(images) ? images : images ? [images] : [],
     });
 
-    res.status(201).json({
+    return res.status(201).json({
       success: true,
+      message: "Outreach Activity Added Successfully",
       data: newActivity,
     });
   } catch (error) {
     console.error("Error adding Outreach Activity:", error);
-    res.status(500).send("Server Error");
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
   }
 };

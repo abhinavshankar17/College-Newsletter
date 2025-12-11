@@ -6,13 +6,14 @@ const guestLectureSchema = new mongoose.Schema({
 
   conveners: 
     {
-      name: { type: String, required: false },
+      name: { type: [String], required: false },
     
     }
   ,
+ 
 
   resourcePerson: {
-    name: { type: String, required: false },
+    name: { type: [String], required: false },
    
   },
 

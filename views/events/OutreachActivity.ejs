@@ -1,5 +1,97 @@
 <%- include("../partials/header", { title: "Outreach Activities" }) %>
 
+<style>
+  /* Page Title */
+  .page-title {
+    font-size: 2.5rem;
+    color: #0a1f44;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Card */
+  .activity-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+
+  .activity-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Card Body Paragraphs */
+  .card-body p {
+    margin-bottom: 0.6rem;
+    font-size: 0.95rem;
+    color: #333;
+    text-align: justify; /* Justify all paragraphs */
+  }
+
+  .card-body h5 {
+    color: #0d47a1;
+  }
+
+  /* Person List: vertical, justified */
+  .person-list {
+    padding-left: 0;
+    list-style: none;
+    margin: 0 0 12px 0;
+  }
+
+  .person-list li {
+    padding: 8px 12px;
+    background: #e3f2fd;
+    border-radius: 8px;
+    font-weight: 500;
+    text-align: justify; /* Justify person names */
+    margin-bottom: 6px;
+    border-left: 4px solid #0d6efd;
+  }
+
+  /* Headings */
+  h3.text-primary {
+    font-size: 1.6rem;
+    border-bottom: 2px solid #0d6efd;
+    display: inline-block;
+    padding-bottom: 4px;
+  }
+
+  /* Images */
+  .activity-images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .activity-images img {
+    width: 100%;
+    max-width: calc(33.33% - 10px);
+    height: 160px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+  }
+
+  .activity-images img:hover {
+    transform: scale(1.05);
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 992px) {
+    .activity-images img {
+      max-width: calc(50% - 10px);
+    }
+  }
+
+  @media (max-width: 576px) {
+    .activity-images img {
+      max-width: 100%;
+    }
+  }
+</style>
+
 <div class="container my-5">
   <h1 class="mb-5 text-center fw-bold page-title">Outreach Activities</h1>
 
@@ -9,114 +101,102 @@
 
     <% Object.keys(activities).forEach(date => { %>
       <div class="mb-5">
-
         <!-- Date Heading -->
         <h3 class="text-primary mb-4"><%= date %></h3>
 
         <% activities[date].forEach(activity => { %>
-          <div class="card shadow-sm mb-4 rounded-3">
+          <div class="card shadow-sm rounded-3 activity-card">
 
             <div class="card-body">
 
               <!-- Title -->
-              <h5 class="card-title fw-semibold"><%= activity.title || "" %></h5>
+              <% if (activity.title && activity.title.trim() !== "") { %>
+                <h5 class="card-title fw-semibold"><%= activity.title %></h5>
+              <% } %>
 
               <!-- Time -->
-              <% if (activity.time) { %>
-                <p>
-                  <i class="bi bi-clock me-2"></i>
-                  <strong>Time:</strong> <%= activity.time %>
-                </p>
+              <% if (activity.time && activity.time.trim() !== "") { %>
+                <p><i class="bi bi-clock me-2"></i><strong>Time:</strong> <%= activity.time %></p>
               <% } %>
 
               <!-- Venue -->
               <% if (activity.venue && activity.venue.length > 0) { %>
-                <p>
-                  <i class="bi bi-geo-alt me-2"></i>
-                  <strong>Venue:</strong> <%= activity.venue.join(", ") %>
-                </p>
+                <p><i class="bi bi-geo-alt me-2"></i><strong>Venue:</strong> <%= activity.venue.join(", ") %></p>
               <% } %>
 
               <!-- Participants -->
               <% if (activity.participants && activity.participants.length > 0) { %>
-                <p>
-                  <i class="bi bi-people me-2"></i>
-                  <strong>Participants:</strong>
-                  <%= activity.participants.join(", ") %>
-                </p>
+                <p><i class="bi bi-people me-2"></i><strong>Participants:</strong> <%= activity.participants.join(", ") %></p>
               <% } %>
 
               <!-- Association -->
-              <% if (activity.Association) { %>
-                <p>
-                  <i class="bi bi-building me-2"></i>
-                <%= activity.Association %>
-                </p>
+              <% if (activity.Association && activity.Association.trim() !== "") { %>
+                <p><i class="bi bi-building me-2"></i><strong>Association:</strong> <%= activity.Association %></p>
               <% } %>
 
-              <!-- Convenor & Co-Convenor -->
-              <% if (activity.convenorAndConvenor) { %>
-                <p>
-                  <i class="bi bi-person-badge me-2"></i>
-                  
-                  <% 
-                    const roles = activity.convenorAndConvenor.split(",");
-                    roles.forEach((role, idx) => { 
-                  %>
-                    <span class="fw-bold"><%= role.trim() %></span><%= idx < roles.length - 1 ? ", " : "" %>
+              <!-- Convenor -->
+              <% if (activity.convenor && activity.convenor.length > 0) { %>
+                <p><i class="bi bi-person-badge me-2"></i><strong>Convenor:</strong></p>
+                <ul class="person-list">
+                  <% activity.convenor.forEach(c => { %>
+                    <% if (c && c.trim() !== "") { %>
+                      <li><%= c %></li>
+                    <% } %>
                   <% }) %>
-                </p>
+                </ul>
+              <% } %>
+
+              <!-- Co-Convenor -->
+              <% if (activity.coconvenor && activity.coconvenor.length > 0) { %>
+                <p><i class="bi bi-person-badge-fill me-2"></i><strong>Co-Convenor:</strong></p>
+                <ul class="person-list">
+                  <% activity.coconvenor.forEach(c => { %>
+                    <% if (c && c.trim() !== "") { %>
+                      <li><%= c %></li>
+                    <% } %>
+                  <% }) %>
+                </ul>
               <% } %>
 
               <!-- Resource Person -->
-              <% if (activity.coordinators) { %>
-                <p>
-                  <i class="bi bi-mic-fill me-2"></i>
-       
-                  <%= activity.coordinators %>
-                </p>
+              <% if (activity.resourcePerson) { %>
+                <p><i class="bi bi-mic me-2"></i><strong>Resource Persons:</strong></p>
+                <ul class="person-list">
+                  <%
+                    const resArray = Array.isArray(activity.resourcePerson)
+                      ? activity.resourcePerson
+                      : [activity.resourcePerson];
+                  %>
+                  <% resArray.forEach(r => { %>
+                    <% if (r && r.trim() !== "") { %>
+                      <li><%= r %></li>
+                    <% } %>
+                  <% }) %>
+                </ul>
               <% } %>
 
               <!-- Event Summary -->
-              <% if (activity.eventSummary) { %>
-                <p class="mt-2">
-                  <i class="bi bi-card-text me-2"></i>
-                  <strong>Summary:</strong> <%= activity.eventSummary %>
-                </p>
+              <% if (activity.eventSummary && activity.eventSummary.trim() !== "") { %>
+                <p class="mt-2"><i class="bi bi-card-text me-2"></i><strong>Summary:</strong> <%= activity.eventSummary %></p>
               <% } %>
 
             </div>
 
-            <!-- Images -->
+            <!-- Images Section -->
             <% if (activity.images && activity.images.length > 0) { %>
-              <div class="card-footer bg-white d-flex flex-wrap gap-2">
-
+              <div class="card-footer bg-white activity-images">
                 <% activity.images.forEach(img => { %>
-                  <div style="flex: 1 1 30%; max-width: 30%;">
-                    <img
-                      src="<%= img %>"
-                      alt="Activity Image"
-                      class="rounded"
-                      style="width:100%; height:150px; object-fit:contain; background:#f0f0f0;"
-                    />
-                  </div>
+                  <img src="<%= img %>" alt="Activity Image" class="rounded" />
                 <% }) %>
-
               </div>
             <% } else { %>
-              <div class="card-footer bg-white">
-                <img
-                  src="/images/placeholder.png"
-                  alt="No Image"
-                  class="rounded"
-                  style="width:100%; height:150px; object-fit:contain; background:#f0f0f0;"
-                />
+              <div class="card-footer bg-white activity-images">
+                <img src="/images/placeholder.png" alt="No Image" class="rounded" />
               </div>
             <% } %>
 
           </div>
         <% }) %>
-
       </div>
     <% }) %>
 

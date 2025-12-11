@@ -1,36 +1,67 @@
-import Workshop from "../../models/events/WorkshopModel.js";
-
-// 📄 Get workshops grouped by date
+import Workshop from "../../models/events/WorkshopModel.js"; 
 export const getAllWorkshops = async (req, res) => {
   try {
     const groupedWorkshops = await Workshop.getGroupedWorkshops();
     res.render("events/workshops.ejs", { workshops: groupedWorkshops });
-  } catch (error) {
-    console.error("Error fetching workshops:", error);
+  } catch (err) {
+    console.error("Error fetching workshops:", err);
     res.status(500).send("Server Error");
   }
 };
-
-// 📄 Add a new workshop
-export const addAllWorkshops = async (req, res) => {
+ 
+export const addWorkshops = async (req, res) => {
   try {
-    const { title, date, Convener, ResourcePerson, NumberofRegisteredParticipants, EventSummary, images } = req.body;
-
-    if (!title || !date) return res.status(400).send("Title and Date are required");
-
-    const newWorkshop = await Workshop.create({
+    const {
       title,
       date,
-      Convener,
-      ResourcePerson,
-      NumberofRegisteredParticipants,
-      EventSummary,
-      images: images || [],
+      time,
+      venue,
+      conveners,
+      coConveners,
+      resourcePersons,
+      numberOfParticipants,
+      eventSummary,
+      images
+    } = req.body;
+
+    if (!title || !date) {
+      return res.status(400).json({
+        success: false,
+        message: "Title and Date are required"
+      });
+    }
+
+    const workshop = await Workshop.create({
+      title,
+      date,
+      time,
+      venue,
+
+      conveners: Array.isArray(conveners)
+        ? conveners
+        : conveners?.split("\n") || [],
+
+      coConveners: Array.isArray(coConveners)
+        ? coConveners
+        : coConveners?.split("\n") || [],
+
+      resourcePersons: Array.isArray(resourcePersons)
+        ? resourcePersons
+        : resourcePersons?.split("\n") || [],
+
+      numberOfParticipants: Number(numberOfParticipants || 0),
+
+      eventSummary,
+
+      images: Array.isArray(images)
+        ? images
+        : images?.split("\n") || []
     });
 
-    res.status(201).json({ success: true, data: newWorkshop });
-  } catch (error) {
-    console.error("Error adding workshop:", error);
+    res.status(201).json({ success: true, data: workshop });
+
+  } catch (err) {
+    console.error("Error adding workshop:", err);
     res.status(500).send("Server Error");
   }
 };
