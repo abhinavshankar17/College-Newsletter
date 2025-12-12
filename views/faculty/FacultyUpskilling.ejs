@@ -120,13 +120,32 @@ h1::after {
   font-weight: 600;
 }
 
+/* =========================
+   Description — Soft Justification
+========================= */
 .card .description {
   margin-top: 6px;
   font-size: 0.9rem;
   color: #6b7280;
   font-style: italic;
   line-height: 1.5;
-  text-align: justify; /* Justified description */
+
+  /* Soft justification */
+  text-align: justify;
+  text-justify: inter-word;
+
+  /* Prevent wide spacing */
+  max-width: 95%;
+  margin-right: auto;
+
+  /* Handle long words */
+  hyphens: auto;
+  overflow-wrap: break-word;
+}
+
+/* Do NOT justify very short descriptions (looks bad) */
+.card .description.short {
+  text-align: left;
 }
 
 /* =========================
@@ -179,6 +198,7 @@ h1::after {
            const imgSrc = (member.images && member.images.length > 0)
                           ? member.images[0]
                           : '/images/default-avatar.png';
+           const isShort = member.description && member.description.length < 140;
       %>
         <div class="card">
           <img src="<%= imgSrc %>" alt="<%= member.name || 'No photo' %>">
@@ -187,8 +207,11 @@ h1::after {
               <h2><%= member.name %></h2>
             <% } %>
             <p><%= member.designation %>, <%= member.department %></p>
+
             <% if (member.description) { %>
-              <div class="description"><%= member.description %></div>
+              <div class="description <%= isShort ? 'short' : '' %>">
+                <%= member.description %>
+              </div>
             <% } %>
           </div>
         </div>
@@ -198,9 +221,5 @@ h1::after {
     <p class="empty-message">No faculty upskilling records available yet.</p>
   <% } %>
 </div>
-
-
-
-
 
 <%- include("../partials/footer") %>
