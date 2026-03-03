@@ -8,24 +8,23 @@
     padding: 2rem;
   }
 
-  /* ===== Page Title ===== */
   h1 {
     text-align: center;
     font-weight: 700;
-    color: #0d1b2a; /* Navy */
+    color: #0d1b2a;
     margin-bottom: 2rem;
   }
 
-  /* ===== Section Title ===== */
   .rp-section-title {
     font-weight: 600;
-    color: #0d1b2a; /* Navy */
+    color: #0d1b2a;
     position: relative;
     display: inline-block;
     padding-bottom: 6px;
     margin-bottom: 1.5rem;
   }
 
+  /* ✅ Changed underline to green */
   .rp-section-title::after {
     content: "";
     position: absolute;
@@ -33,86 +32,138 @@
     bottom: 0;
     height: 3px;
     width: 50%;
-    background: #ffb703; /* Yellow underline */
+    background: #84cc16; /* Green underline */
     border-radius: 2px;
-    transition: width 0.3s ease;
   }
 
-  .rp-section-title:hover::after {
-    width: 100%;
-  }
-
-  /* ===== Card Styling ===== */
-  .card {
-    border: none;
+  .investigator-card {
+    background: #e9f5e1;
     border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .investigator-card img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+
+  .money-box {
+    background: #d9f99d;
+    padding: 15px;
+    text-align: center;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #065f46;
+    margin-top: 1rem;
+  }
+
+  .team-table {
     background: #f9fafc;
-    transition: all 0.3s ease;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-top: 1rem;
   }
 
-  .card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-    background: #ffffff;
-  }
-
-  /* ===== Status Badge (subtle) ===== */
-  .status-badge {
-    display: inline-block;
-    background: rgba(13, 27, 42, 0.08); /* light navy tint */
-    color: #0d1b2a; /* navy text */
-    padding: 3px 10px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 500;
-  }
-
-  /* ===== Card Headline ===== */
-  .card h5 {
-    font-weight: 600;
-    color: #0d1b2a; /* Navy */
-    transition: color 0.3s ease;
-  }
-
-  .card:hover h5 {
-    color: #ffb703; /* Yellow on hover */
-  }
-
-  /* ===== Card Text ===== */
-  .card p {
-    margin-bottom: 0.5rem;
-    color: #333;
-  }
-
-  .card strong {
+  .team-table h6 {
+    font-weight: 700;
     color: #0d1b2a;
+  }
+
+  .impact-list li {
+    margin-bottom: 6px;
   }
 </style>
 
 <div class="container py-4 rp-container">
-  <h1><%= page.pageTitle %></h1>
+  <h1>Research Funded Project Highlight</h1>
 
-  <% Object.keys(page.sections).forEach(function(sectionTitle){ %>
-    <!-- Section Title -->
-    <h2 class="rp-section-title"><%= sectionTitle %></h2>
+  <div class="row">
 
-    <!-- Projects Grid -->
-    <div class="row g-3">
-      <% page.sections[sectionTitle].forEach(function(p){ %>
-        <div class="col-md-6 col-lg-4">
-          <div class="card h-100 shadow-sm p-3">
-            <h5><%= p.headline %></h5>
-            <p><strong>Patent Owner(s):</strong> <%= (p.inventors || []).join(", ") %></p>
-            <p><strong>Status:</strong> <span class="status-badge"><%= p.status %></span></p>
-            <p><strong>Issuing Agency:</strong> <%= p.issuingAgency %></p>
-            <p><strong>Patent No:</strong> <%= p.patentno %></p>
-            <p><strong>Description:</strong> <%= p.discription%></p>
-            <p><strong>Year:</strong><%= p.year %></p>
-          </div>
-        </div>
-      <% }); %>
+    <!-- LEFT COLUMN -->
+    <div class="col-md-4">
+
+      <div class="investigator-card">
+        <img src="/images/mukesh.jpg" alt="Dr Mukesh">
+        <strong>Dr. M. B. Mukesh Krishnan</strong><br>
+        Professor, NWC, SRMIST
+      </div>
+
+      <div class="investigator-card">
+        <img src="/images/suresh.jpg" alt="Dr Suresh">
+        <strong>Dr. A. Suresh</strong><br>
+        Professor, NWC, SRMIST
+      </div>
+
+      <div class="money-box">
+        Sanctioned Amount <br>
+        ₹ 88.4 Lakhs
+      </div>
+
     </div>
-  <% }); %>
+
+    <!-- RIGHT COLUMN -->
+    <div class="col-md-8">
+
+      <p>
+        The Department of Networking and Communications proudly announces the sanction 
+        of a prestigious funded research project under a national funding scheme, 
+        reflecting the department’s strong focus on interdisciplinary research, 
+        healthcare technologies, and explainable AI systems.
+      </p>
+
+      <p><strong>Project Title:</strong><br>
+        Explainable AI-Based Clinical Decision Support Service for Hospitals and Telemedicine Platforms.
+      </p>
+
+      <h5 class="rp-section-title">Principal Investigators</h5>
+
+      <div class="row team-table">
+        <div class="col-md-6">
+          <h6>Indian Team</h6>
+          <p><strong>PI:</strong> Dr. M.B Mukesh Krishnan,<br> SRM Institute of Science and Technology.</p>
+          <p><strong>Co-PI:</strong> Dr. A. Suresh,<br> SRM Institute of Science and Technology.</p>
+        </div>
+
+        <div class="col-md-6">
+          <h6>International Team</h6>
+          <p><strong>PI:</strong> Dr. Lipo Wang,<br> Nanyang Technological University, Singapore.</p>
+          <p><strong>Co-PI:</strong> Dr. Eric Peng Huat Yap,<br> Nanyang Technological University, Singapore.</p>
+        </div>
+      </div>
+
+      <p class="mt-3"><strong>Funding Agency:</strong>  
+        SPARC (Scheme for Promotion of Academic and Research Collaboration)
+      </p>
+
+      <p><strong>Project Duration:</strong>  
+        November 2025 – October 2027 (2 Years)
+      </p>
+
+      <h5 class="rp-section-title">Project Significance</h5>
+
+      <p>
+        This project aims to develop an Explainable Artificial Intelligence (XAI) driven 
+        clinical decision support framework that enhances transparency, trust, and reliability 
+        in hospital workflows and telemedicine platforms. By integrating networking technologies, 
+        AI interpretability, and secure data communication, the project aligns with the department’s 
+        vision of advancing intelligent, ethical, and scalable healthcare systems.
+      </p>
+
+      <h5 class="rp-section-title">Departmental Impact</h5>
+
+      <ul class="impact-list">
+        <li>Research leadership in AI-driven networked healthcare systems</li>
+        <li>Industry-academia collaboration under national initiatives</li>
+        <li>Opportunities for student involvement, publications, and technology transfer</li>
+        <li>The Department congratulates the investigators and looks forward to impactful outcomes from this funded research initiative.</li>
+      </ul>
+
+    </div>
+  </div>
 </div>
 
 <%- include("../partials/footer") %>
