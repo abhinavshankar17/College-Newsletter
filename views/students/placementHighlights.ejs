@@ -1,979 +1,350 @@
 <%- include("../partials/header", { title: "Placement Highlights" }) %>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+body{
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to bottom, #f1f3f9, #e9edf6);
+  color:#222;
+}
+
+.placement-container{
+  padding:40px 60px;
+}
+
+/* ===== Heading ===== */
+.top-heading h3{
+  color:#2b3c8f;
+  font-weight:600;
+}
+.top-heading h1{
+  color:#2b3c8f;
+  font-weight:800;
+  font-size:40px;
+}
+
+/* ===== Stat Cards ===== */
+.stats-cards{
+  display:flex;
+  gap:30px;
+  margin:40px 0;
+}
+
+.stat-box{
+  flex:1;
+  padding:30px;
+  border-radius:25px;
+  text-align:center;
+  border:2px dashed rgba(0,0,0,0.2);
+}
+
+.stat-box h4{
+  font-weight:600;
+  margin-bottom:15px;
+}
+
+.stat-box h2{
+  font-size:40px;
+  font-weight:800;
+}
+
+.green{ background:#cfe7b7; }
+.pink{ background:#e5c1d6; }
+.blue{ background:#bfe0e6; }
+
+/* ===== Specialization Table ===== */
+.spec-title{
+  color:#d62828;
+  font-weight:800;
+  font-size:24px;
+  margin:30px 0 15px;
+}
+
+.spec-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px;
+}
+
+.spec-table th, .spec-table td{
+  padding:10px;
+  text-align:center;
+}
+
+.spec-table thead{
+  background:#f4c6c6;
+}
+
+.spec-table tbody tr:nth-child(even){
+  background:#f7f7f7;
+}
+
+.total-row{
+  background:#e6d5d5;
+  font-weight:700;
+}
+
+/* ===== UG Section ===== */
+.section-title{
+  font-weight:700;
+  color:#5a2c7c;
+  margin:50px 0 20px;
+  font-size:22px;
+}
+
+.two-col{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+  text-align:justify;
+}
+
+/* ===== Internship Section ===== */
+.intern-title{
+  font-weight:800;
+  font-size:32px;
+  color:#2b3c8f;
+  margin:60px 0 30px;
+}
+
+.intern-grid{
+  display:flex;
+  justify-content:space-between;
+  gap:30px;
+  margin-bottom:40px;
+}
+
+.intern-card{
+  text-align:center;
+  flex:1;
+}
+
+.intern-card img{
+  width:150px;
+  height:150px;
+  border-radius:50%;
+  border:4px dashed #2b9ed8;
+  object-fit:cover;
+  margin-bottom:15px;
+}
+
+.intern-card h4{
+  color:#d62828;
+  font-weight:700;
+}
+
+/* ===== Company Wise ===== */
+.company-title{
+  font-weight:700;
+  color:#6a1b9a;
+  font-size:22px;
+  margin:40px 0 20px;
+}
+
+.company-columns{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+  position:relative;
+}
+
+.company-columns:after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:0;
+  bottom:0;
+  border-left:3px dotted #444;
+}
+
+/* ===== Bottom Ribbon ===== */
+.ribbon{
+  margin-top:50px;
+  background:#d9b2c8;
+  padding:20px;
+  text-align:center;
+  font-size:20px;
+  font-weight:600;
+  border-radius:12px;
+}
+
+.ribbon strong{
+  font-size:24px;
+}
+</style>
+
 <div class="placement-container">
 
-  <!-- Google Font (move to header.ejs ideally, but leaving here since you said no major changes) -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  /* Placement Page Container */
-  .placement-container {
-    font-family: 'Poppins', sans-serif;
-    padding: 20px 40px;
-    line-height: 1.7;
-    color: #1f2937;
-  }
-
-  /* Grid Layout */
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    margin-bottom: 40px;
-  }
-
-  /* Base Card Style */
-  .stat-card {
-    position: relative;
-    z-index: 0;
-    background: linear-gradient(145deg, #f9fafb, #eef2f3);
-    border-radius: 16px;
-    padding: 25px;
-    text-align: center;
-    overflow: hidden;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-    transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.6s ease;
-  }
-
-  /* Border Glow Layer */
-  .stat-card .border {
-    position: absolute;
-    inset: 0;
-    border: 2px solid transparent;
-    border-radius: 16px;
-    transition: all 0.5s ease;
-    pointer-events: none;
-    z-index: 1; /* sits above background */
-  }
-
-  /* Ensure text sits above the border layer */
-  .stat-card * {
-    position: relative;
-    z-index: 2;
-  }
-
-  /* Hover Interaction */
-  .stat-card:hover {
-    transform: translateY(-8px) scale(1.03);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.18);
-  }
-
-  /* Hover Border Colors */
-  .stat-card.orange:hover .border { border: 2px solid #ea580c; box-shadow: 0 0 18px #ea580c; }
-  .stat-card.blue:hover   .border { border: 2px solid #2563eb; box-shadow: 0 0 18px #2563eb; }
-  .stat-card.green:hover  .border { border: 2px solid #16a34a; box-shadow: 0 0 18px #16a34a; }
-  .stat-card.purple:hover .border { border: 2px solid #9333ea; box-shadow: 0 0 18px #9333ea; }
-  .stat-card.teal:hover   .border { border: 2px solid #0d9488; box-shadow: 0 0 18px #0d9488; }
-
-  /* Typography inside cards */
-  .stat-card h2 {
-    font-size: 1.9rem;
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
-
-  .stat-card h3 {
-    font-size: 1.25rem;
-    font-weight: 500;
-    margin-bottom: 6px;
-  }
-
-  .stat-card p {
-    font-size: 1rem;
-    color: #374151;
-  }
-
-  /* Color Variants */
-  .blue   { color: #2563eb; }
-  .green  { color: #16a34a; }
-  .purple { color: #9333ea; }
-  .teal   { color: #0d9488; }
-  .orange { color: #ea580c; }
-
-  /* General Headings */
-  h1, h2 { font-weight: 600; }
-
-  h1 {
-    font-size: 28px;
-    margin-bottom: 20px;
-  }
-
-  h2 {
-    font-size: 22px;
-    margin-bottom: 15px;
-  }
-
-  /* Section Divider */
-  hr {
-    margin: 40px 0;
-    border: none;
-    border-top: 2px dashed #cbd5e1;
-  }
-
-  /* Paragraphs */
-  .section-text {
-    text-align: justify;
-    margin-bottom: 20px;
-    font-size: 1rem;
-    color: #374151;
-  }
-
-  /* Highlighted Activities Block */
-  .highlighted-activities {
-    background: #f9fafb;
-    padding: 15px 20px;
-    border-left: 4px solid #2563eb;
-    border-radius: 8px;
-    margin-top: 20px;
-  }
-
-  .highlighted-activities h3 {
-    color: #1e40af;
-    margin-bottom: 10px;
-  }
-
-  .highlighted-activities ul {
-    margin: 0;
-    padding-left: 20px;
-  }
-
-  .highlighted-activities li {
-    margin-bottom: 8px;
-  }
-
-  /* Placement Details Section */
-.placement-details {
-  margin: 50px auto;
-  padding: 20px;
-  max-width: 1100px;
-  font-family: "Segoe UI", sans-serif;
-  color: #333;
-}
-
-.placement-details h2 {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #1a237e;
-  margin-bottom: 25px;
-  border-left: 6px solid #3f51b5;
-  padding-left: 12px;
-  display: inline-block;
-}
-
-/* Table Styling */
-.placement-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: #fff;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-}
-
-.placement-table thead {
-  background: #3f51b5;
-  color: #fff;
-  font-size: 0.95rem;
-}
-
-.placement-table thead th {
-  padding: 12px;
-  text-align: center;
-  font-weight: 600;
-}
-
-.placement-table tbody td {
-  padding: 12px;
-  text-align: center;
-  border-bottom: 1px solid #e0e0e0;
-  font-size: 0.95rem;
-}
-
-.placement-table tbody tr:nth-child(even) {
-  background: #f9f9fb;
-}
-
-.placement-table tbody tr:hover {
-  background: #e8eaf6;
-  transition: 0.3s;
-}
-
-/* Placement Summary */
-.placement-summary {
-  margin-top: 20px;
-  font-size: 1rem;
-  text-align: center;
-  color: #444;
-}
-
-.placement-summary strong {
-  color: #1a237e;
-  font-weight: 700;
-}
-.offer-card {
-  display: flex;
-  align-items: center;
-  background: #fff;
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  padding: 20px;
-  margin-bottom: 25px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  gap: 20px; /* natural spacing between image and text */
-}
-
-.offer-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-}
-
-.offer-img {
-  flex: 0 0 120px; /* fixed image column */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.offer-img img {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  border: 4px solid #1a237e;
-  object-fit: cover;
-}
-
-.offer-content {
-  flex: 1; /* take remaining space */
-}
-
-.offer-title {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 8px;
-}
-
-.offer-title span {
-  font-size: 0.9rem;
-  font-weight: normal;
-  color: #555;
-}
-
-.super-dream .offer-title {
-  color: #d32f2f;
-}
-
-.dream .offer-title {
-  color: #e67e22;
-}
-
-.dream-role .offer-title {
-  color: #1976d2;
-}
-
-.marquee-offers {
-    margin: 60px auto;
-    max-width: 1200px;
-    font-family: 'Poppins', sans-serif;
-    text-align: center;
-  }
-
-  .marquee-offers h2 {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #1a237e;
-    margin-bottom: 40px;
-  }
-
-  .marquee-grid {
-    display: grid;
-    /* grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); */
-    grid-template-columns: repeat(3, 1fr);  /* 3 equal cards per row on large screens */
-    gap: 30px;
-    justify-items: center;
-  }
-
-  .marquee-card {
-    background: #fff;
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.12);
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    /* max-width: 280px; */
-    width: 340px;          /* consistent width */
-    min-height: 350px;     /* consistent height */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-
-  }
-
-  .marquee-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.18);
-  }
-
-  .marquee-card img {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    border: 4px solid #1a237e;
-    object-fit: cover;
-    margin-bottom: 15px;
-  }
-
-  .marquee-card h4 {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: #111827;
-    margin-bottom: 5px;
-  }
-
-  .marquee-card span {
-    font-size: 0.9rem;
-    color: #6b7280;
-    display: block;
-    margin-bottom: 10px;
-  }
-
-  .marquee-card p {
-    font-size: 0.9rem;
-    margin: 4px 0;
-    color: #374151;
-  }
-
-  .marquee-card strong {
-    color: #1a237e;
-  }
-
-
-
-</style>
-
-
-
-  <!-- Placement Highlights Heading -->
-  <h2 style="color:#1e3a8a;">Our Students!!</h2>
-  <h1 style="color:#1e3a8a;">Placement Highlights</h1>
-  
-  <style>
-    :root {
-        --indigo-dark: #1a237e;
-        --indigo-mid: #3949ab;
-        --row-alt: #f4f6ff;
-        --border-soft: #d1d5ee;
-    }
-
-    body {
-        background: #f3f4fc;
-        font-family: "Segoe UI", system-ui, sans-serif;
-    }
-
-    .stats-wrapper {
-        max-width: 1100px;
-        margin: 28px auto 40px;
-        padding: 26px 28px 30px;
-        background: #ffffff;
-        border-radius: 18px;
-        box-shadow: 0 10px 32px rgba(26, 35, 126, 0.15);
-        border: 1px solid var(--border-soft);
-    }
-
-    .stats-title {
-        text-align: center;
-        font-size: 1.6rem;
-        font-weight: 800;
-        margin-bottom: 14px;
-        color: var(--indigo-dark);
-        letter-spacing: 0.02em;
-    }
-
-    .stats-subtitle {
-        text-align: center;
-        margin-bottom: 18px;
-        font-size: 0.92rem;
-        color: #5c6bc0;
-    }
-
-    /* TABLE BASE */
-    table.stats-table {
-        width: 100%;
-        border-collapse: collapse;
-        border-radius: 14px;
-        overflow: hidden;
-    }
-
-    .stats-table thead tr {
-        background: var(--indigo-dark);
-        color: #ffffff;
-    }
-
-    .stats-table th,
-    .stats-table td {
-        padding: 10px 12px;
-        font-size: 0.88rem;
-        border-bottom: 1px solid var(--border-soft);
-        vertical-align: middle;
-    }
-
-    .stats-table th {
-        font-weight: 650;
-        text-align: center;
-    }
-
-    .stats-table tbody tr:nth-child(even) {
-        background: var(--row-alt);
-    }
-
-    .stats-table tbody tr:hover {
-        background: #e3e7ff;
-        transition: background 0.15s ease-in-out;
-    }
-
-    /* COLUMN WIDTHS & ALIGNMENT */
-    /* S.No */
-    .stats-table th:nth-child(1),
-    .stats-table td:nth-child(1) {
-        width: 6%;
-        text-align: center;
-        font-weight: 600;
-    }
-
-    /* Specialization – wider + left aligned */
-    .stats-table th:nth-child(2),
-    .stats-table td:nth-child(2) {
-        width: 24%;
-        text-align: left;
-        padding-left: 18px;
-        font-weight: 600;
-    }
-
-    /* Total Student Strength */
-    .stats-table th:nth-child(3),
-    .stats-table td:nth-child(3),
-    /* Placement Enrolled */
-    .stats-table th:nth-child(4),
-    .stats-table td:nth-child(4),
-    /* Total Offers */
-    .stats-table th:nth-child(5),
-    .stats-table td:nth-child(5),
-    /* Unique Offers */
-    .stats-table th:nth-child(6),
-    .stats-table td:nth-child(6),
-    /* Marquee Count */
-    .stats-table th:nth-child(8),
-    .stats-table td:nth-child(8),
-    /* Dream Count */
-    .stats-table th:nth-child(9),
-    .stats-table td:nth-child(9),
-    /* Super Dream Count */
-    .stats-table th:nth-child(10),
-    .stats-table td:nth-child(10) {
-        width: 7.5%;
-        text-align: center;
-    }
-
-    /* Unique Offer Percentage – a bit wider + bold */
-    .stats-table th:nth-child(7),
-    .stats-table td:nth-child(7) {
-        width: 10%;
-        text-align: center;
-    }
-
-    .stats-table td:nth-child(7) {
-        font-weight: 700;
-        color: var(--indigo-dark);
-    }
-
-    /* TOTAL ROW */
-    .total-row td {
-        background: var(--indigo-mid);
-        color: #ffffff;
-        font-weight: 700;
-        border-top: 2px solid #283593;
-    }
-
-    .total-label {
-        text-align: center;
-        font-weight: 800;
-        letter-spacing: 0.06em;
-    }
-
-    @media (max-width: 768px) {
-        .stats-wrapper {
-            margin: 12px;
-            padding: 20px;
-        }
-
-        .stats-title {
-            font-size: 1.35rem;
-        }
-
-        .stats-table th,
-        .stats-table td {
-            padding: 8px 6px;
-            font-size: 0.8rem;
-        }
-    }
-</style>
-  <div class="stats-wrapper">
-    <div class="stats-title">Specialization Wise Statistics (2022–2026 Batch)</div>
-    <div class="stats-subtitle">Placement statistics across specializations</div>
-
-    <table class="stats-table">
-        <thead>
-        <tr>
-            <th>S.No</th>
-            <th>Specialization</th>
-            <th>Total Student Strength</th>
-            <th>Placement Enrolled</th>
-            <th>Total Offers</th>
-            <th>Unique Offers</th>
-            <th>Unique Offer Percentage</th>
-            <th>Marquee Count</th>
-            <th>Dream Count</th>
-            <th>Super Dream Count</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        <tr>
-            <td>1</td>
-            <td>Cloud Computing</td>
-            <td>223</td>
-            <td>200</td>
-            <td>72</td>
-            <td>65</td>
-            <td>32.50%</td>
-            <td>3</td>
-            <td>35</td>
-            <td>18</td>
-        </tr>
-
-        <tr>
-            <td>2</td>
-            <td>Computer Networking</td>
-            <td>27</td>
-            <td>20</td>
-            <td>11</td>
-            <td>10</td>
-            <td>50.00%</td>
-            <td>0</td>
-            <td>06</td>
-            <td>02</td>
-        </tr>
-
-        <tr>
-            <td>3</td>
-            <td>Cyber Security</td>
-            <td>290</td>
-            <td>235</td>
-            <td>81</td>
-            <td>72</td>
-            <td>30.64%</td>
-            <td>5</td>
-            <td>30</td>
-            <td>30</td>
-        </tr>
-
-        <tr>
-            <td>4</td>
-            <td>Information Technology</td>
-            <td>156</td>
-            <td>135</td>
-            <td>40</td>
-            <td>31</td>
-            <td>22.96%</td>
-            <td>4</td>
-            <td>15</td>
-            <td>09</td>
-        </tr>
-
-        <tr>
-            <td>5</td>
-            <td>Internet of Things</td>
-            <td>81</td>
-            <td>80</td>
-            <td>35</td>
-            <td>30</td>
-            <td>37.50%</td>
-            <td>0</td>
-            <td>17</td>
-            <td>08</td>
-        </tr>
-
-        <tr class="total-row">
-            <td class="total-label" colspan="2">Total</td>
-            <td>777</td>
-            <td>670</td>
-            <td>239</td>
-            <td>208</td>
-            <td>31.04%</td>
-            <td>12</td>
-            <td>103</td>
-            <td>67</td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-  <hr>
-  <!-- UG Placement Training -->
-  <h2 style="color:#1e40af;">Placement Training and Enrichment Activities – July to September 2025</h2>
-  <p class="section-text">
-    The Department of Networking and Communications, SRM Institute of Science and Technology, 
-    organized a comprehensive series of Placement Training and Career Enrichment Programs from July 
-    to September 2025 to enhance the employability skills and industry readiness of students. These 
-    initiatives aimed to bridge the gap between academic learning and professional requirements 
-    through a blend of mock tests, technical sessions, and expert interactions.
-  <p class="section-text">
-    The program commenced with the Placement Mock Test Series 05 – General Aptitude Test 01 on 
-    26th July 2025, which enabled 324 students from II, III, and IV years to assess their quantitative, 
-    logical, and analytical abilities — crucial for placement exams. This was followed by a Virtual Talk 
-    on “Gateway to Industry” on 30th July 2025, delivered by Mr. A. Anantharaman, Scientific Officer, 
-    National Institute of Science and Research, Bhubaneswar, attended by 95 participants, providing 
-    valuable insights into industry expectations and career pathways. The Soft Skills Test 01 conducted 
-    on 6th August 2025 for 780 students emphasized communication and interpersonal competencies 
-    essential for interviews and group discussions.
-  </p>
-  <p class="section-text">
-    Subsequently, the Reasoning Test 01 held on 9th August 2025 with 923 participants focused on 
-    strengthening analytical and logical reasoning skills. A Virtual Talk on Higher Studies Opportunities on 
-    13th August 2025 engaged 45 students, guiding them toward global higher education and research 
-    options. Another session on Gateway to Industry on 20th August 2025 by Dr. K. Venkataraman, 
-    Technical Architect, Hexaware, attended by 40 students, highlighted current industry trends and 
-    professional growth strategies. The Hackerrank Test 01 conducted on 23rd August 2025 engaged 681 
-    students in coding-based assessments to test programming and problem-solving abilities.
-    Continuing the series, the General Aptitude Test 02 on 30th August 2025 saw 835 participants 
-    refining their time management and numerical skills. On 3rd September 2025, another Virtual Talk on 
-    Higher Studies Opportunities for 52 students focused on academic progression through advanced 
-    technical education. The Technical Test 02 held on 6th September 2025 for 533 students assessed 
-    their domain-specific knowledge essential for placement drives. The Reasoning Test 02 on 13th 
-    September 2025, with 619 participants, further strengthened logical reasoning skills relevant for 
-    competitive exams and interviews.
-  </p>
-  <p class="section-text">
-    Towards the end of the program, a Virtual Talk on Higher Studies Pathways on 17th September 2025 
-    guided 58 students on postgraduate programs and scholarships abroad. The Hackerrank Test 02 
-    conducted on 20th September 2025 for 601 students provided hands-on problem-solving experience 
-    in coding. Finally, the series concluded with the General Aptitude Test 03 on 27th September 2025, 
-    where 506 students evaluated their overall readiness for campus recruitment processes.
-    Overall, the structured blend of mock assessments, technical evaluations, and interactive expert 
-    sessions significantly contributed to improving students’ placement preparedness, confidence, and 
-    professional orientation.
-  </p>
-
-  <hr>
-
-  <!-- PG Placement Training -->
-  <h2 style="color:#1e40af;">PG Students Placement Training Report</h2>
-  <p class="section-text">
-    Between August and September 2025, the department recorded consistent student engagement 
-across the scheduled training activities. The session-wise participation analysis showed that final-year 
-students maintained an impressive average attendance of 65.6% per session across eight sessions, 
-while first-year students achieved an average of 50.2% attendance over six sessions, having joined 
-the program from 22nd August 2025 onward.
-  </p>
-  <p class="section-text">
-    During this period, a total of eight training sessions were conducted between 8th August and 26th 
-September 2025, encompassing a comprehensive mix of learning formats. The coverage by session 
-type indicated that Coding Sessions and Technical Training were conducted consistently across all 
-eight sessions, achieving 100% coverage each. In addition, Aptitude and Quantitative Training was 
-delivered in two sessions (25%), specifically on 8th and 15th August 2025.
-  </p>
-  <p class="section-text">
-    Across all sessions, the recorded learning outcomes reflected positive skill enhancement, with 
-participants demonstrating improved quantitative abilities, enhanced coding proficiency, and 
-greater technical competence, underscoring the effectiveness of the training initiatives.
-  </p>
+<div class="top-heading">
+  <h3>Our Students!!</h3>
+  <h1>Placement Highlights</h1>
 </div>
 
-<hr>
-
-<div class="marquee-offers">
-  <h2 class="text-center fw-bold mb-4" style="color:#1a237e;">
-    M.Tech – Super Dream & Dream Offers
-  </h2>
-
-  <div class="marquee-grid">
-
-    <!-- 1. GANGISETTI BHAVANA SAI GAYATHRI -->
-    <div class="marquee-card super-dream">
-      <img src="/images/mtech/bhavana.jpg" alt="Gangisetti Bhavana Sai Gayathri">
-      <h4>GANGISETTI BHAVANA SAI GAYATHRI</h4>
-      <p>(M.Tech – Cloud Computing)</p>
-      <p><strong>Company:</strong> SAP Labs</p>
-      <p><strong>Stipend:</strong> ₹ 35,000 / PM</p>
-    </div>
-
-    <!-- 2. AKASH K -->
-    <div class="marquee-card dream">
-      <img src="/images/mtech/akash.jpg" alt="Akash K">
-      <h4>AKASH K</h4>
-      <p>(M.Tech – Cloud Computing)</p>
-      <p><strong>Company:</strong> Deloitte USI</p>
-      <p><strong>CTC:</strong> ₹ 7.6 LPA</p>
-    </div>
-
-    <!-- 3. PRINCE AYUSH -->
-    <div class="marquee-card dream">
-      <img src="/images/mtech/prince.jpg" alt="Prince Ayush">
-      <h4>PRINCE AYUSH</h4>
-      <p>(M.Tech – Cloud Computing)</p>
-      <p><strong>Company:</strong> KPIT</p>
-      <p><strong>Stipend:</strong> ₹ 20,000 / PM</p>
-    </div>
-
-    <!-- 4. UTPALA MAJUMDAR -->
-    <div class="marquee-card dream">
-      <img src="/images/mtech/utpala.jpg" alt="Utpala Majumdar">
-      <h4>UTPALA MAJUMDAR</h4>
-      <p>(M.Tech – ISCF)</p>
-      <p><strong>Company:</strong> KPIT</p>
-      <p><strong>Stipend:</strong> ₹ 20,000 / PM</p>
-    </div>
-
-    <!-- 5. JOSHNA G -->
-    <div class="marquee-card dream-role">
-      <img src="/images/mtech/joshna.jpg" alt="Joshna G">
-      <h4>JOSHNA G</h4>
-      <p>(M.Tech – ISCF)</p>
-      <p><strong>Company:</strong> Kalvium</p>
-      <p><strong>Stipend:</strong> ₹ 15,000 / PM</p>
-      <p><strong>CTC:</strong> ₹ 5.0 LPA</p>
-    </div>
-
-    <!-- 6. PANCHUMARTHI SUMADANIKA -->
-    <div class="marquee-card dream-role">
-      <img src="/images/mtech/panchumarthi.jpg" alt="Panchumarthi Sumadanika">
-      <h4>PANCHUMARTHI SUMADANIKA</h4>
-      <p>(M.Tech – Cloud Computing)</p>
-      <p><strong>Company:</strong> Kalvium</p>
-      <p><strong>Stipend:</strong> ₹ 15,000 / PM</p>
-      <p><strong>CTC:</strong> ₹ 5.0 LPA</p>
-    </div>
-
-    <!-- 7. KAVIN M -->
-    <div class="marquee-card dream-role">
-      <img src="/images/mtech/kavin.jpg" alt="Kavin M">
-      <h4>KAVIN M</h4>
-      <p>(M.Tech – Cloud Computing)</p>
-      <p><strong>Company:</strong> Kalvium</p>
-      <p><strong>Stipend:</strong> ₹ 15,000 / PM</p>
-      <p><strong>CTC:</strong> ₹ 5.0 LPA</p>
-    </div>
-
-    <!-- 8. SIVANESH M -->
-    <div class="marquee-card dream-role">
-      <img src="/images/mtech/sivanesh.jpg" alt="Sivanesh M">
-      <h4>SIVANESH M</h4>
-      <p>(M.Tech – Internet of Things)</p>
-      <p><strong>Company:</strong> Kalvium</p>
-      <p><strong>Stipend:</strong> ₹ 15,000 / PM</p>
-      <p><strong>CTC:</strong> ₹ 5.0 LPA</p>
-    </div>
-
-    <!-- 9. JUJJAVARAPU SUJAN CHOWDARY -->
-    <div class="marquee-card dream">
-      <img src="/images/mtech/sujan.jpg" alt="Jujjavarapu Sujan Chowdary">
-      <h4>JUJJAVARAPU SUJAN CHOWDARY</h4>
-      <p>(M.Tech – Cloud Computing)</p>
-      <p><strong>Company:</strong> Nokia</p>
-      <p><strong>Stipend:</strong> ₹ 35,000 / PM</p>
-    </div>
-
-    <!-- 10. NADIPALLI DURGA PRASAD -->
-    <div class="marquee-card dream-role">
-      <img src="/images/mtech/durga.jpg" alt="Nadipalli Durga Prasad">
-      <h4>NADIPALLI DURGA PRASAD</h4>
-      <p>(B.Tech – CSE with IT) <br> (M.Tech – Cloud Computing)</p>
-      <p><strong>Company:</strong> Nokia</p>
-      <p><strong>Stipend:</strong> ₹ 35,000 / PM</p>
-    </div>
-
+<!-- ===== Stat Cards ===== -->
+<div class="stats-cards">
+  <div class="stat-box green">
+    <h4>Overall Placement Percentage in 2022–2026 Batch</h4>
+    <h2>65.26%</h2>
+  </div>
+  <div class="stat-box pink">
+    <h4>PG Placement Percentage in 2024–2026 Batch</h4>
+    <h2>33.33%</h2>
+  </div>
+  <div class="stat-box blue">
+    <h4>M-Tech (Integrated) Placement Percentage in 2024–2026 Batch</h4>
+    <h2>83.33%</h2>
   </div>
 </div>
 
+<!-- ===== Specialization Stats ===== -->
+<div class="spec-title">Specialization Wise Statistics (2022–2026 Batch)</div>
 
-<!-- ================= MARQUEE OFFERS SECTION ================= -->
+<table class="spec-table">
+<thead>
+<tr>
+<th>S.No</th>
+<th>Specialization</th>
+<th>Total Student Strength</th>
+<th>Placement Enrolled</th>
+<th>Total Offers</th>
+<th>Unique Offers</th>
+<th>Unique Offer %</th>
+<th>Marquee</th>
+<th>Dream</th>
+<th>Super Dream</th>
+<th>Day Sharing</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>1</td><td>Cloud Computing</td><td>224</td><td>199</td><td>214</td><td>133</td><td>66.83%</td><td>8</td><td>86</td><td>43</td><td>77</td></tr>
+<tr><td>2</td><td>Computer Networking</td><td>27</td><td>20</td><td>19</td><td>15</td><td>75.00%</td><td>0</td><td>9</td><td>4</td><td>5</td></tr>
+<tr><td>3</td><td>Cyber Security</td><td>295</td><td>235</td><td>187</td><td>142</td><td>60.42%</td><td>4</td><td>80</td><td>55</td><td>48</td></tr>
+<tr><td>4</td><td>Information Technology</td><td>157</td><td>135</td><td>126</td><td>83</td><td>61.48%</td><td>5</td><td>36</td><td>23</td><td>62</td></tr>
+<tr><td>5</td><td>Internet of Things</td><td>81</td><td>79</td><td>90</td><td>63</td><td>79.74%</td><td>2</td><td>37</td><td>16</td><td>35</td></tr>
+<tr class="total-row"><td colspan="2">Total</td><td>784</td><td>668</td><td>636</td><td>436</td><td>64.67%</td><td>19</td><td>249</td><td>141</td><td>227</td></tr>
+</tbody>
+</table>
 
-<div class="marquee-offers">
-  <h2 class="text-center fw-bold mb-4" style="color:#1a237e;">
-    B.Tech – Marquee Offers
-  </h2>
+<!-- ===== UG Section ===== -->
+<div class="section-title">UG Placement Training and Enrichment Activities during October to December 2025</div>
 
-  <div class="marquee-grid">
+<div class="two-col">
+<p>
+Training sessions were conducted regularly with strong final-year participation and progressive first-year involvement, reflecting a balanced, pipeline-oriented placement strategy...
+</p>
+<p>
+Overall, the training remained well-aligned with placement competencies, resulting in improved coding proficiency, enhanced technical understanding, increased problem-solving confidence, and better preparedness.
+</p>
+</div>
 
-    <!-- 1. VINAY RAJAN S -->
-    <div class="marquee-card">
-      <img src="/images/marquee/vinay.jpg" alt="Vinay Rajan S">
-      <h4>VINAY RAJAN S</h4>
-      <p>(B.Tech – CSE with Cloud Computing)</p>
-      <p><strong>Company:</strong> Morgan Stanley</p>
-      <p><strong>Stipend:</strong> ₹ 87,000 / PM</p>
-      <p><strong>CTC:</strong> ₹ 25.0 LPA</p>
-    </div>
+<!-- ===== Internship Section ===== -->
+<div class="intern-title">Internship Offer Details</div>
 
-    <!-- 2. AYINENI CHAARVI SAI RENUKA CHOUDARY -->
-    <div class="marquee-card">
-      <img src="/images/marquee/renuka.jpg" alt="Ayineni Chaarvi Sai Renuka Choudary">
-      <h4>AYINENI CHAARVI SAI RENUKA CHOUDARY</h4>
-      <p>(B.Tech – CSE with Cyber Security)</p>
-      <p><strong>Company:</strong> Citi Bank</p>
-      <p><strong>Stipend:</strong> ₹ 75,000 / PM</p>
-      <p><strong>CTC:</strong> ₹ 20.0 LPA</p>
-    </div>
+<div class="intern-grid">
+<div class="intern-card">
+<img src="/images/interns/akash.jpg">
+<h4>AKASHDEEP DASH</h4>
+<p>Company: KPMG, India</p>
+<p>Stipend: ₹22,000 / PM</p>
+</div>
 
-    <!-- 3. AFRAZ M -->
-    <div class="marquee-card">
-      <img src="/images/marquee/afraz.jpg" alt="Afraz M">
-      <h4>AFRAZ M</h4>
-      <p>(B.Tech – CSE with Cyber Security)</p>
-      <p><strong>Company:</strong> Citi Bank</p>
-      <p><strong>Stipend:</strong> ₹ 75,000 / PM</p>
-      <p><strong>CTC:</strong> ₹ 20.0 LPA</p>
-    </div>
+<div class="intern-card">
+<img src="/images/interns/roshan.jpg">
+<h4>ROSHAN LAL YOGI</h4>
+<p>Company: Truxxo, India</p>
+<p>Stipend: ₹3,000 / PM</p>
+</div>
 
-    <!-- 4. MEDHIR ARYAN -->
-    <div class="marquee-card">
-      <img src="/images/marquee/mehdir.jpg" alt="Medhir Aryan">
-      <h4>MEDHIR ARYAN</h4>
-      <p>(B.Tech – CSE with Cloud Computing)</p>
-      <p><strong>Company:</strong> BNY Mellon</p>
-      <p><strong>Stipend:</strong> ₹ 75,000 / PM</p>
-      <p><strong>CTC:</strong> ₹ 22.0 LPA</p>
-    </div>
+<div class="intern-card">
+<img src="/images/interns/amisha.jpg">
+<h4>AMISHA THAKUR</h4>
+<p>Company: Machenn Innovations Pvt. Ltd., India</p>
+<p>Stipend: ₹5,000 / PM</p>
+</div>
+</div>
 
-    <!-- 5. SHASHWAT AGARWAL -->
-    <div class="marquee-card">
-      <img src="/images/marquee/shashwat.jpg" alt="Shashwat Agarwal">
-      <h4>SHASHWAT AGARWAL</h4>
-      <p>(B.Tech – CSE with IT)</p>
-      <p><strong>Company:</strong> MUFG Global Services</p>
-      <p><strong>Stipend:</strong> ₹ 65,000 / PM</p>
-      <p><strong>CTC:</strong> ₹ 20.0 LPA</p>
-    </div>
+<!-- ===== Company Wise ===== -->
+<!-- ===== Company Wise ===== -->
+<div class="company-title">Company wise internship offers:</div>
 
-    <!-- 6. PRANJAL BABEL -->
-    <div class="marquee-card">
-      <img src="/images/marquee/pranjal.jpg" alt="Pranjal Babel">
-      <h4>PRANJAL BABEL</h4>
-      <p>(B.Tech – CSE with Cyber Security)</p>
-      <p><strong>Company:</strong> MUFG Global Services</p>
-      <p><strong>Stipend:</strong> ₹ 65,000 / PM</p>
-      <p><strong>CTC:</strong> ₹ 20.0 LPA</p>
-    </div>
+<div class="company-columns">
 
-    <!-- 7. ADITYA DUBEY -->
-    <div class="marquee-card">
-      <img src="/images/marquee/aditya.jpg" alt="Aditya Dubey">
-      <h4>ADITYA DUBEY</h4>
-      <p>(B.Tech – CSE with IT)</p>
-      <p><strong>Company:</strong> ZS Associates</p>
-      <p><strong>Stipend:</strong> ₹ 40,000 / PM</p>
-      <p><strong>CTC:</strong> ₹ 20.0 LPA</p>
-    </div>
+  <!-- LEFT COLUMN -->
+  <div>
 
-    <!-- 8. THAMIZHINIYAN C S -->
-    <div class="marquee-card">
-      <img src="/images/marquee/thamizhiniyan.jpg" alt="Thamizhinian C S">
-      <h4>THAMIZHINIYAN C S</h4>
-      <p>(M.Tech Integrated – CSE with CS&DS)</p>
-      <p><strong>Company:</strong> SAP Labs</p>
-      <p><strong>Stipend:</strong> ₹ 35,000 / PM</p>
-      <p><strong>CTC:</strong> ₹ 20.0 LPA</p>
-    </div>
+    <p><strong>ITC Infotech</strong> offered 4 Internship-Leading-to-Placement (ILP) offers with a stipend of ₹15,000 per month and a final package of <strong>CTC 8.5 LPA</strong> (04-12-2025).</p>
 
-    <!-- 9. KHUSBOO AGARWAL -->
-    <div class="marquee-card">
-      <img src="/images/marquee/khusboo.jpg" alt="Khusboo Agarwal">
-      <h4>KHUSBOO AGARWAL</h4>
-      <p>(B.Tech – CSE with Cloud Computing)</p>
-      <p><strong>Company:</strong> Oracle</p>
-      <p><strong>CTC:</strong> ₹ 26.0 LPA</p>
-    </div>
+    <p><strong>Philips</strong> offered 2 ILP offers with a stipend of ₹45,000 per month and a final package of <strong>CTC 11.8 LPA</strong> (07-12-2025).</p>
 
-    <!-- 10. JAIDITYA YADAV -->
-    <div class="marquee-card">
-      <img src="/images/marquee/jaiditya.jpg" alt="Jaiditya Yadav">
-      <h4>JAIDITYA YADAV</h4>
-      <p>(B.Tech – CSE with IT)</p>
-      <p><strong>Company:</strong> Oracle</p>
-      <p><strong>CTC:</strong> ₹ 26.0 LPA</p>
-    </div>
+    <p><strong>Bain Capability Network</strong> offered 4 ILP offers with a stipend of ₹45,000 per month and a final package of <strong>CTC 15.68 LPA</strong> (07-12-2025).</p>
+
+    <p><strong>Accenture (AEH)</strong> offered 27 full-time placement offers with a package of <strong>CTC 11 LPA</strong> (07-12-2025).</p>
+
+    <p><strong>Accenture (AASE)</strong> offered 10 full-time placement offers with a package of <strong>CTC 6.5 LPA</strong> (07-12-2025).</p>
+
+    <p><strong>Accenture (ASE)</strong> offered 17 full-time placement offers with a package of <strong>CTC 4.5 LPA</strong> (07-12-2025).</p>
+
+    <p><strong>Accenture (ASE)</strong> offered 16 additional full-time placement offers with a package of <strong>CTC 4.5 LPA</strong> (10-12-2025).</p>
+
+    <p><strong>Mindsprint</strong> offered 2 full-time placement offers with a package of <strong>CTC 5.2 LPA</strong> (10-12-2025).</p>
+
+    <p><strong>Baton Systems</strong> offered 1 ILP offer with a stipend of ₹25,000 per month and a package ranging from <strong>CTC 5.0–10.0 LPA</strong> (10-12-2025).</p>
+
+    <p><strong>Straive</strong> offered 1 ILP offer with a stipend of ₹30,000 per month and a final package of <strong>CTC 6.0 LPA</strong> (16-12-2025).</p>
+
+    <p><strong>AB InBev</strong> offered 1 ILP offer with a stipend of ₹40,000 per month and a final package of <strong>CTC 12.0 LPA</strong> (16-12-2025).</p>
+
+    <p><strong>Bounteous × Accolite</strong> offered 1 ILP offer with a stipend of ₹25,000 per month and a final package of <strong>CTC 9.0 LPA</strong> (17-12-2025).</p>
+
+    <p><strong>LTI Mindtree</strong> offered 15 full-time placement offers with a package of <strong>CTC 4.05 LPA</strong> (17-12-2025).</p>
+
+    <p><strong>Bounteous × Accolite</strong> offered 1 additional ILP offer with a stipend of ₹25,000 per month and a final package of <strong>CTC 9.0 LPA</strong> (18-12-2025).</p>
+
+    <p><strong>Brutanix Studios</strong> offered 1 ILP offer with a stipend of ₹25,000 per month (final CTC yet to be announced) (21-12-2025).</p>
 
   </div>
+
+  <!-- RIGHT COLUMN -->
+  <div>
+
+    <p><strong>Accenture (AEH)</strong> offered 21 full-time placement offers with a package of <strong>CTC 11 LPA</strong> (10-12-2025).</p>
+
+    <p><strong>GeakMinds Technologies Pvt. Ltd.</strong> offered 5 ILP offers with a stipend of ₹15,000 per month and a package of <strong>CTC 5.0–7.0 LPA</strong> (10-12-2025).</p>
+
+    <p><strong>Accenture (AASE)</strong> offered 4 full-time placement offers with a package of <strong>CTC 6.5 LPA</strong> (10-12-2025).</p>
+
+    <p><strong>Evernorth</strong> offered 4 ILP offers with a stipend of ₹40,000 per month and a final package of <strong>CTC 18.0 LPA</strong> (11-12-2025).</p>
+
+    <p><strong>Deccan AI</strong> offered 6 ILP offers with a stipend of ₹50,000 per month (final CTC yet to be announced) (11-12-2025).</p>
+
+    <p><strong>Switch Mobility</strong> offered 1 full-time placement offer with a package of <strong>CTC 5.0 LPA</strong> (13-12-2025).</p>
+
+    <p><strong>Immerso.ai</strong> offered 1 ILP offer with a stipend of ₹25,000 per month and a final package of <strong>CTC 5.0 LPA</strong> (15-12-2025).</p>
+
+    <p><strong>InteractGEN</strong> offered 1 ILP offer with a stipend of ₹50,000 per month and a high-value package of <strong>CTC 50.0 LPA</strong> (16-12-2025).</p>
+
+    <p><strong>HashedIn by Deloitte</strong> offered 2 ILP offers with a stipend of ₹25,000 per month and a final package of <strong>CTC 8.0 LPA</strong> (16-12-2025).</p>
+
+    <p><strong>Acmegrade Pvt. Ltd.</strong> offered 39 ILP offers with a stipend of ₹18,000 per month and a final package of <strong>CTC 6.5 LPA</strong> (24-12-2025).</p>
+
+    <p><strong>KPMG</strong> offered 1 ILP offer with a stipend of ₹20,000 per month and a final package of <strong>CTC 5.0 LPA</strong> (24-12-2025).</p>
+
+    <p><strong>Tonik Bank</strong> offered 1 ILP offer with a stipend of ₹40,000 per month and a package ranging from <strong>CTC 5.0–6.0 LPA</strong> (24-12-2025).</p>
+
+    <p><strong>Guidehouse</strong> offered 2 full-time placement offers with a package of <strong>CTC 5.5 LPA</strong> (24-12-2025).</p>
+
+    <p><strong>LTI Mindtree</strong> offered 30 additional full-time placement offers with a package of <strong>CTC 4.05 LPA</strong> (29-12-2025).</p>
+
+  </div>
+
 </div>
 
-
-
-
-<hr>
-<!-- ================= NWC Notable internship offers SECTION ================= -->
-<div class="marquee-offers">
-  <h2>NWC - Notable Internship Offers</h2>
-  <div style="text-align: left; line-height: 1.6;">
-
-<p><strong>SAP Labs:</strong> On July 1, 2025, SAP Labs published results for its Internship Leads to Placement (ILP) program, extending offers to 2 candidates. The internship stipend offered is ₹35,000 per month.</p>
-
-<p><strong>Ergo:</strong> The results for Ergo’s Internship Leads to Placement (ILP) program were announced on July 8, 2025. A single offer was made, which comes with a monthly stipend of ₹10,000.</p>
-
-<p><strong>Morgan Stanley:</strong> Announced on July 9, 2025, Morgan Stanley selected one candidate for its Internship Leads to Placement (ILP) program. The role offers a substantial monthly stipend of ₹87,000, which leads to a full-time placement with a Cost to Company (CTC) ranging between ₹20.0 and ₹25.0 LPA.</p>
-
-<p><strong>Intuitive Cloud:</strong> Intuitive Cloud published its results on July 11, 2025, for its Internship Leads to Placement (ILP) program, making one offer. The selected intern will receive a stipend of ₹20,000 per month, culminating in a full-time package with a CTC between ₹9.0 and ₹10.0 LPA.</p>
-
-<p><strong>Nissan Digital India:</strong> On July 18, 2025, Nissan Digital India announced the result for its Internship Leads to Placement (ILP) program, offering a position to one candidate with a monthly stipend of ₹20,000.</p>
-
-<p><strong>HWDEV & EJGR:</strong> The result for HWDEV&EJGR’s Internship Leads to Placement (ILP) program was published on July 21, 2025, with one candidate being selected. The internship offers a stipend of ₹45,000 per month and leads to a full-time role with a CTC in the range of ₹12.0 to ₹18.0 LPA.</p>
-
-<p><strong>Eplfi Technologies:</strong> Eplfi Technologies announced its results on July 22, 2025, making a significant 7 offers for its Internship Leads to Placement (ILP) program. The interns will be paid a stipend of ₹30,000 per month, which transitions to a full-time position with a CTC of ₹13.77 LPA.</p>
-
-<p><strong>Qsfjh:</strong> Also on July 22, 2025, Qsfjh published the result for its Internship Leads to Placement (ILP) program, selecting one candidate. The internship carries a stipend of ₹25,000 per month and leads to a full-time offer with a CTC ranging from ₹5.0 to ₹7.0 LPA.</p>
-
-<p><strong>Nokia:</strong> Nokia released its results on July 25, 2025, for its Internship Leads to Placement (ILP) program, extending offers to 4 candidates. The selected interns will receive a monthly stipend of ₹30,000.</p>
-
-<p><strong>Pondo:</strong> On August 2, 2025, Pondo published results for its Internship Leads to Placement (ILP) program, making 2 offers. The selected interns will receive a stipend of ₹25,000 per month.</p>
-
-<p><strong>Epam:</strong> Also on August 2, 2025, Epam announced results for its Internship Leads to Placement (ILP) program, extending 2 offers. The internship includes a stipend of ₹27,500 per month, which leads to a full-time placement with a Cost to Company (CTC) of ₹8.48 LPA.</p>
-
-<p><strong>Kalyium:</strong> Kalyium’s results for its Internship Leads to Placement (ILP) program were published on August 2, 2025, with one candidate being selected. The intern will be paid a stipend of ₹20,000 per month.</p>
-
-<p><strong>Volvo Group India Ltd:</strong> On August 2, 2025, Volvo Group India Ltd announced a direct placement offer for one candidate. The role comes with a Cost to Company (CTC) of ₹8.25 LPA.</p>
-
-<p><strong>ZS Associates:</strong> On August 6, 2025, ZS Associates published results for its Internship Leads to Placement (ILP) program, making 4 offers. The internship offers a stipend of ₹35,000 per month and leads to a full-time position with a CTC of ₹15.65 LPA.</p>
-
-<p><strong>JP Morgan (ILP):</strong> Also on August 6, 2025, JP Morgan announced one selection for its Internship Leads to Placement (ILP) program. The internship provides a stipend of ₹80,000 per month, culminating in a full-time package with a CTC of ₹19.75 LPA.</p>
-
-<p><strong>Nguyen Lach, Tinh Duc (ILP):</strong> On August 14, 2025, this company published a result for its program, selecting one candidate for a role that offers a stipend of ₹55,000 per month.</p>
-
-<p><strong>JP Morgan (Direct Placement):</strong> On August 14, 2025, JP Morgan also announced a direct placement offer for one candidate, with a Cost to Company (CTC) of ₹19.75 LPA.</p>
-
-<p><strong>Nguyen Lach, Tinh Duc (Direct Placement):</strong> Also on August 14, 2025, this company made a direct placement offer to one candidate for a role with a Cost to Company (CTC) of ₹15.00 LPA.</p>
-
-<p><strong>Fradal:</strong> On August 10, 2025, Fradal announced direct placement offers for 3 candidates. The roles come with a Cost to Company (CTC) of ₹10.25 LPA.</p>
-
-<p><strong>Siemens:</strong> Also on August 10, 2025, Siemens published a result, offering an internship position to one candidate with a monthly stipend of ₹25,000.</p>
-
-<p><strong>TechCoolon:</strong> On August 10, 2025, TechCoolon announced one selection for its Internship Leads to Placement (ILP) program, which offers a stipend of ₹15,000 per month.</p>
-
-<p><strong>Centrico:</strong> On August 22, 2025, Centrico published results for its Internship Leads to Placement (ILP) program, making 3 offers. The selected interns will receive a stipend of ₹15,000 per month.</p>
-
-<p><strong>Quyquinh:</strong> Also on August 22, 2025, Quyquinh announced one selection for its Internship Leads to Placement (ILP) program, which offers a stipend of ₹25,000 per month.</p>
-
-<p><strong>Infosys:</strong> On August 22, 2025, Infosys announced a direct placement offer for one candidate. The role comes with a Cost to Company (CTC) of ₹8.25 LPA.</p>
-
-<p><strong>Highways:</strong> On August 26, 2025, Highways published results for its Internship Leads to Placement (ILP) program, making 2 offers. The internship provides a stipend of ₹22,000 per month.</p>
-
-<p><strong>Mubox:</strong> Also on August 26, 2025, Mubox announced results for its Internship Leads to Placement (ILP) program, extending 3 offers. The selected interns will receive a stipend of ₹15,000 per month.</p>
-
-<p><strong>Pax:</strong> On August 26, 2025, Pax announced 3 selections for its Internship Leads to Placement (ILP) program. This program leads to a full-time position with a Cost to Company (CTC) of ₹15.00 LPA.</p>
-
-<p><strong>Sam Sebastin (Reg. No: RA231103I010110):</strong> A second-year B.Tech student in Networking and Communications, Information Technology, successfully completed a one-month internship at <strong>Sandeza Systems Private Limited, India</strong>, from 1st July 2025 to 31st July 2025. The internship was conducted in physical mode, and Sam demonstrated strong technical and communication skills, successfully completing all assigned project tasks.</p>
-
+<div class="ribbon">
+The Department’s Placement Percentage (2022–2026 Batch) has increased
+<strong>from 44.34% to 62.27%</strong> in December 2025.
 </div>
 
 </div>
 
-
-
-</main>
 <%- include("../partials/footer") %>
