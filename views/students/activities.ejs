@@ -5,36 +5,45 @@
 
   <div class="row g-4">
     <% 
-      // Sort: activities with images first
       const sortedActivities = activities.slice().sort((a, b) => {
         const aHasImage = a.imageUrl && a.imageUrl.length > 0 ? 1 : 0;
         const bHasImage = b.imageUrl && b.imageUrl.length > 0 ? 1 : 0;
-        return bHasImage - aHasImage; // descending: images first
+        return bHasImage - aHasImage;
       });
     %>
 
     <% sortedActivities.forEach(activity => { %>
       <div class="col-md-6 col-lg-4">
-        <div class="card activity-card h-100 shadow-lg border-0">
-          
+        <div class="card activity-card h-100 border-0">
+
           <% if (activity.imageUrl && activity.imageUrl.length > 0) { %>
-            <!-- Case 1: With Image -->
-            <img src="<%= activity.imageUrl[0] %>" class="card-img-top activity-img" alt="Student Activity">
+
+            <img src="<%= activity.imageUrl[0] %>" class="card-img-top activity-img">
+
             <div class="card-body">
-              <h5 class="card-title text-dark fw-bold">
-                <%= activity.name %> <small class="text-muted">(<%= activity.rollNumber %>)</small>
+              <h5 class="card-title fw-bold">
+                <%= activity.name %>
+                <small>(<%= activity.rollNumber %>)</small>
               </h5>
-              <p class="card-text text-secondary"><%= activity.description %></p>
+
+              <p class="card-text">
+                <%= activity.description %>
+              </p>
             </div>
 
           <% } else { %>
-            <!-- Case 2: No Image (Text-only style) -->
+
             <div class="card-body text-only-card d-flex flex-column justify-content-center align-items-center">
-              <h5 class="card-title text-dark fw-bold text-center">
-                <%= activity.name %> <small class="text-muted">(<%= activity.rollNumber %>)</small>
+              <h5 class="card-title fw-bold text-center">
+                <%= activity.name %>
+                <small>(<%= activity.rollNumber %>)</small>
               </h5>
-              <p class="card-text text-secondary text-center"><%= activity.description %></p>
+
+              <p class="card-text text-center">
+                <%= activity.description %>
+              </p>
             </div>
+
           <% } %>
 
         </div>
@@ -44,49 +53,147 @@
 </div>
 
 <style>
-  /* Activity Section Title */
-  .activity-title {
-    font-size: 2.2rem;
-    color: #0d1b2a; /* dark navy to match navbar */
-    border-bottom: 3px solid #ffcc00;
-    display: inline-block;
-    padding-bottom: 6px;
-  }
 
-  /* Activity Card */
-  .activity-card {
-    border-radius: 15px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    overflow: hidden;
-    background: #fff;
-  }
+/* ===== Title ===== */
 
-  .activity-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.2);
-  }
+.activity-title{
+  font-size:2.4rem;
+  color:#0d1b2a;
+  position:relative;
+  display:inline-block;
+}
 
-  .activity-img {
-    height: 220px;
-    object-fit: cover;
-    border-bottom: 1px solid #eee;
-  }
+.activity-title::after{
+  content:"";
+  width:90px;
+  height:4px;
+  background:#ffcc00;
+  position:absolute;
+  bottom:-10px;
+  left:50%;
+  transform:translateX(-50%);
+  border-radius:2px;
+}
 
-  .text-only-card {
-    padding: 40px 20px;
-    text-align: center;
-    min-height: 220px;
-  }
+/* ===== Card ===== */
 
-  .card-title {
-    font-size: 1.2rem;
-    color: #0d1b2a; /* match dark navy */
-  }
+.activity-card{
+  position:relative;
+  border-radius:16px;
+  overflow:hidden;
+  background:#ffffff;
+  border:1px solid #eee;
+  box-shadow:0 8px 20px rgba(0,0,0,0.08);
+  transition:transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-  .card-text {
-    font-size: 0.95rem;
-    line-height: 1.4;
-  }
+.activity-card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 16px 35px rgba(0,0,0,0.15);
+}
+
+/* ===== Mouse Spotlight Effect ===== */
+
+.activity-card::before{
+  content:"";
+  position:absolute;
+  width:300px;
+  height:300px;
+  background:radial-gradient(circle, rgba(255,204,0,0.25), transparent 60%);
+  top:var(--y);
+  left:var(--x);
+  transform:translate(-50%, -50%);
+  opacity:0;
+  transition:opacity 0.3s;
+  pointer-events:none;
+}
+
+.activity-card:hover::before{
+  opacity:1;
+}
+
+/* ===== Image ===== */
+
+.activity-img{
+  height:220px;
+  object-fit:cover;
+  width:100%;
+  transition:transform 0.4s ease;
+}
+
+.activity-card:hover .activity-img{
+  transform:scale(1.05);
+}
+
+/* ===== Card Body ===== */
+
+.card-body{
+  padding:22px;
+}
+
+.card-title{
+  font-size:1.25rem;
+  color:#0d1b2a;
+}
+
+.card-title small{
+  font-size:0.8rem;
+  color:#6b7280;
+}
+
+.card-text{
+  font-size:0.96rem;
+  color:#374151;
+  line-height:1.6;
+}
+
+/* ===== Text Only Card ===== */
+
+.text-only-card{
+  padding:40px 25px;
+  min-height:220px;
+  background:#fafafa;
+}
+
+/* ===== Responsive ===== */
+
+@media(max-width:768px){
+
+.activity-title{
+font-size:2rem;
+}
+
+.activity-img{
+height:200px;
+}
+
+}
+
 </style>
+
+
+<script>
+
+/* ===== Mouse Spotlight Tracking ===== */
+
+const cards = document.querySelectorAll(".activity-card");
+
+cards.forEach(card => {
+
+  card.addEventListener("mousemove", e => {
+
+    const rect = card.getBoundingClientRect();
+
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    card.style.setProperty("--x", x + "px");
+    card.style.setProperty("--y", y + "px");
+
+  });
+
+});
+
+</script>
 
 <%- include("../partials/footer") %>
