@@ -1,18 +1,45 @@
 <%- include("../partials/header", { title: page.pageTitle }) %>
+
 <h1>RESEARCH ORATION</h1>
+
 <div class="container">
   <% page.sections.forEach(oration => { 
        const images = Array.isArray(oration.imageUrl) ? oration.imageUrl : (oration.imageUrl ? [oration.imageUrl] : []); 
   %>
+
     <div class="card <%= images.length === 1 ? 'single-image' : 'multi-image' %>">
-      
+
       <!-- Text Section -->
       <div class="card-text">
-        <p class="name"><%= oration.name %> (Reg. No: <%= oration.regNo %>)</p>
-        <p class="supervisor">Supervisor : <%= oration.supervisor %></p>
-        <p class="title">Title : <%= oration.title %></p>
-        <p class="date">Date : <%= new Date(oration.date).toDateString() %></p>
-        <p class="description"><%= oration.description %></p>
+
+        <% if (oration.name || oration.regNo) { %>
+          <p class="name">
+            <% if (oration.name) { %>
+              <%= oration.name %>
+            <% } %>
+
+            <% if (oration.regNo) { %>
+              (Reg. No: <%= oration.regNo %>)
+            <% } %>
+          </p>
+        <% } %>
+
+        <% if (oration.supervisor) { %>
+          <p class="supervisor">Supervisor : <%= oration.supervisor %></p>
+        <% } %>
+
+        <% if (oration.title) { %>
+          <p class="title">Title : <%= oration.title %></p>
+        <% } %>
+
+        <% if (oration.date) { %>
+          <p class="date">Date : <%= new Date(oration.date).toDateString() %></p>
+        <% } %>
+
+        <% if (oration.description) { %>
+          <p class="description"><%= oration.description %></p>
+        <% } %>
+
       </div>
 
       <!-- Image Section -->
@@ -25,66 +52,77 @@
       <% } %>
 
     </div>
+
   <% }) %>
 </div>
+
 <br>
 <br>
+
 <%- include("../partials/footer") %>
 
 <style>
-  h1 {
-    text-align: center;
-    color: #0c2c5d;
-    margin-bottom: 20px;
-    border-bottom: 2px dashed #aaa;
-    padding-bottom: 10px;
-  }
-  .container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  .card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    width: 100%;
-    max-width: 700px;
-    padding: 15px;
-    background: #fff;
-    box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  /* Horizontal layout when only 1 image */
-  .card.single-image {
-    flex-direction: row;
-    align-items: flex-start;
-  }
-  .card.single-image .card-text {
-    flex: 2;
-    padding-right: 15px;
-  }
-  .card.single-image .card-images {
-    flex: 1;
-  }
-  /* Vertical layout for multiple images */
-  .card.multi-image {
-    flex-direction: column;
-  }
-  .card-images {
+
+h1 {
+  text-align: center;
+  color: #0c2c5d;
+  margin-bottom: 20px;
+  border-bottom: 2px dashed #aaa;
+  padding-bottom: 10px;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 700px;
+  padding: 15px;
+  background: #fff;
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Horizontal layout when only 1 image */
+.card.single-image {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.card.single-image .card-text {
+  flex: 2;
+  padding-right: 15px;
+}
+
+.card.single-image .card-images {
+  flex: 1;
+}
+
+/* Vertical layout for multiple images */
+.card.multi-image {
+  flex-direction: column;
+}
+
+.card-images {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  justify-content: center;  /* ✅ centers images */
+  justify-content: center;
   margin-top: 10px;
 }
 
 .card-images img {
-  max-width: 220px;   /* limit width */
-  max-height: 180px;  /* limit height */
+  max-width: 220px;
+  max-height: 180px;
   width: auto;
   height: auto;
   border-radius: 5px;
@@ -92,33 +130,40 @@
   display: block;
 }
 
+.name {
+  font-weight: bold;
+  color: #b22222;
+}
 
-  .name {
-    font-weight: bold;
-    color: #b22222;
-  }
-  .supervisor {
-    font-weight: bold;
-  }
-  .title {
-    font-weight: bold;
-    margin-top: 5px;
-  }
-  .date {
-    font-style: italic;
-    margin-bottom: 8px;
-  }
-  .description {
-    color: #444;
+.supervisor {
+  font-weight: bold;
+}
+
+.title {
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.date {
+  font-style: italic;
+  margin-bottom: 8px;
+}
+
+.description {
+  color: #444;
+}
+
+/* Responsive: stack even single-image layout on small screens */
+@media (max-width: 768px) {
+
+  .card.single-image {
+    flex-direction: column;
   }
 
-  /* Responsive: stack even single-image layout on small screens */
-  @media (max-width: 768px) {
-    .card.single-image {
-      flex-direction: column;
-    }
-    .card.single-image .card-text {
-      padding-right: 0;
-    }
+  .card.single-image .card-text {
+    padding-right: 0;
   }
+
+}
+
 </style>
