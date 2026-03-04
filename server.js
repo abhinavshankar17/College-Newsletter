@@ -83,7 +83,7 @@ app.use("/phdscholars", phdScholarRoutes);
 app.use("/FacultyArticle", FacultyArticle);
 
 app.use("/research-articles", researchArticlesRoutes);
-app.use("/students/achievements", studentAchievementsRoutes);
+// app.use("/students/achievements", studentAchievementsRoutes);
 app.use("/students", activitiesRoutes);
 app.use("/students", articleRoutes);
 // app.use("/students", alumniRoutes);
