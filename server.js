@@ -101,6 +101,9 @@ app.get("/", (req, res) => {
 app.get("/visitors", (req, res) => {
   res.render("visitors", { page: { pageTitle: "Visitors" } });
 });
+app.get("/students/sap", (req, res) => {
+  res.render("students/sap");
+});
 
 app.get("/students/placement-highlights", (req, res) => {
   res.render("students/placementHighlights", {

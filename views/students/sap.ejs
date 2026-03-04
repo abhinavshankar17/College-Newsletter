@@ -1,0 +1,165 @@
+<%- include("../partials/header", { title: "Study Abroad Programme (SAP)" }) %>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+.sap-container{
+  max-width:1200px;
+  margin:auto;
+  padding:40px 20px;
+  font-family:'Poppins', sans-serif;
+  line-height:1.8;
+  color:#2f2f2f;
+}
+
+/* ===== Title Banner ===== */
+
+.sap-title{
+  background:#2d6f6d;
+  color:white;
+  text-align:center;
+  font-size:36px;
+  font-weight:700;
+  font-family:'Playfair Display', serif;
+  padding:14px;
+  border-radius:6px;
+  margin-bottom:40px;
+  letter-spacing:1px;
+}
+
+/* ===== Top Grid ===== */
+
+.sap-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+  align-items:center;
+}
+
+/* ===== Images ===== */
+
+.sap-img{
+  width:100%;
+  border:3px dotted #2db4ff;
+  border-radius:6px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* ===== Quote Section ===== */
+
+.sap-quote{
+  font-size:19px;
+  color:#444;
+  font-style:italic;
+  font-family:'Playfair Display', serif;
+}
+
+.sap-quote strong{
+  font-weight:600;
+}
+
+.sap-author{
+  text-align:right;
+  margin-top:12px;
+  font-style:italic;
+  font-weight:500;
+}
+
+/* ===== Middle Layout ===== */
+
+.sap-middle{
+  margin-top:35px;
+  display:grid;
+  grid-template-columns:1.2fr 1fr;
+  gap:40px;
+  align-items:center;
+}
+
+/* ===== Text Blocks ===== */
+
+.sap-text{
+  margin-top:22px;
+  font-size:17px;
+  text-align:justify;
+  font-weight:400;
+}
+
+/* ===== Responsive ===== */
+
+@media(max-width:900px){
+
+  .sap-grid{
+    grid-template-columns:1fr;
+  }
+
+  .sap-middle{
+    grid-template-columns:1fr;
+  }
+
+}
+
+</style>
+
+
+<div class="sap-container">
+
+  <!-- Title -->
+  <div class="sap-title">
+    Study Abroad Programme (SAP)
+  </div>
+
+
+  <!-- Top Section -->
+  <div class="sap-grid">
+
+    <!-- Left Image -->
+    <img src="/images/sap/hslu.jpg" class="sap-img">
+
+    <!-- Quote -->
+    <div class="sap-quote">
+      “SAP at <strong>HSLU University</strong> gave me exposure to cutting-edge AI research and a chance to collaborate with international peers.  
+      An extended opportunity of Research Internship aims to give full hands-on experience in cybersecurity specialization.”
+      <div class="sap-author">– Vishesh Anand</div>
+    </div>
+
+  </div>
+
+
+  <!-- Middle Section -->
+  <div class="sap-middle">
+
+    <div>
+
+      <p class="sap-text">
+        <strong>Kurapati Surya Manasa</strong> – RA2411028010049 attended GAIP Program at 
+        <strong>NUS Singapore</strong> (Global Immersion Program) during December 2025.
+      </p>
+
+      <p class="sap-text">
+        Four students from our department have been selected for a 
+        <strong>Study Abroad Programme (SAP)</strong> opportunity at 
+        <strong>Jeonbuk National University</strong> (often abbreviated as JGNU-QS Ranking #701–710 globally). 
+        It is a public national university located in Jeonju, South Korea for the upcoming 
+        <strong>2026 semester (March 2026 – June 2026).</strong>
+      </p>
+
+    </div>
+
+    <!-- Right Image -->
+    <img src="/images/sap/nus.jpg" class="sap-img">
+
+  </div>
+
+
+  <!-- Bottom Section -->
+
+  <p class="sap-text">
+    Two students from our department have been shortlisted for the prestigious research internship programme 
+    at the <strong>Fields Institute for Research in Mathematical Sciences, Canada</strong>, scheduled for July 2026.  
+    This fully funded internship provides hands-on research experience in advanced and applied mathematical sciences 
+    under the guidance of internationally renowned experts.
+  </p>
+
+</div>
+
+<%- include("../partials/footer") %>
