@@ -1,13 +1,24 @@
 import mongoose from "mongoose";
 
 const phdScholarSchema = new mongoose.Schema({
+  images: { type: [String], default: [] },
+
   name: { type: String, required: true },
+
   regNo: { type: String, required: false },
+
   description: { type: String, required: false },
-  createdAt: { type: Date, default: Date.now },
+
+  mode: { type: String, required: false },   // NEW
+
+  supervisor: { type: String, required: false }, // NEW
+
+  completionDate: { type: Date, required: false }, // NEW
+
+  createdAt: { type: Date, default: Date.now }
 });
 
-// Static method to fetch all scholars
+// Static method
 phdScholarSchema.statics.getPhdScholars = async function () {
   try {
     const scholars = await this.find().lean();
@@ -18,11 +29,10 @@ phdScholarSchema.statics.getPhdScholars = async function () {
   }
 };
 
-// Model & Collection
 const PhdScholar = mongoose.model(
   "PhdScholar",
   phdScholarSchema,
-  "phdScholars" // separate collection
+  "phdScholars"
 );
 
 export default PhdScholar;

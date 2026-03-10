@@ -3,8 +3,8 @@ import mongoose from "mongoose";
 // Outreach Activity Schema
 const OutReachSchema = new mongoose.Schema(
   {
-    title: { type: String, required: true, trim: true },
-    date: { type: String, required: true, trim: true },
+    title: { type: String , trim: true },
+    date: { type: String , trim: true },
     time: { type: String, default: "", trim: true },
 
     venue: { type: [String], default: [] },

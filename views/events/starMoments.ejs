@@ -1,0 +1,231 @@
+<%- include('../partials/header', { title: "Star Moments" }) %>
+
+<style>
+
+/* =========================
+   PAGE BACKGROUND
+========================= */
+
+body{
+font-family:"Segoe UI",Roboto,Arial,sans-serif;
+background:linear-gradient(135deg,#e3f2fd,#fffde7);
+margin:0;
+}
+
+/* =========================
+   TITLE
+========================= */
+
+.page-title{
+text-align:center;
+font-size:2.6rem;
+font-weight:800;
+margin:60px 0 40px;
+color:#0d47a1;
+letter-spacing:.5px;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+
+.moments-container{
+
+max-width:1300px;
+margin:auto;
+padding:0 40px;
+
+display:flex;
+flex-direction:column;
+gap:30px;
+
+}
+
+/* =========================
+   GLASS CARD
+========================= */
+
+.moment-card{
+
+display:flex;
+gap:30px;
+align-items:center;
+
+padding:25px;
+
+border-radius:18px;
+
+background:rgba(255,255,255,0.55);
+
+backdrop-filter:blur(12px);
+
+box-shadow:0 12px 35px rgba(0,0,0,0.08);
+
+transition:.35s ease;
+
+border:1px solid rgba(255,255,255,0.5);
+
+}
+
+.moment-card:hover{
+
+transform:translateY(-6px) scale(1.01);
+
+box-shadow:0 18px 45px rgba(0,0,0,0.16);
+
+}
+
+/* =========================
+   IMAGE SECTION
+========================= */
+
+.moment-images{
+
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+
+}
+
+.moment-images img{
+ 
+
+object-fit:contain;
+
+border-radius:10px;
+
+border:3px solid #ffd54f;
+
+transition:.4s;
+
+}
+
+.moment-images img:hover{
+
+transform:scale(1.07);
+
+}
+
+/* =========================
+   TEXT SECTION
+========================= */
+
+.moment-content{
+
+flex:1;
+
+}
+
+.moment-title{
+
+font-size:1.4rem;
+font-weight:700;
+color:#0d47a1;
+margin-bottom:10px;
+
+}
+
+.moment-desc{
+
+font-size:.96rem;
+line-height:1.7;
+color:#475569;
+
+}
+
+/* =========================
+   EMPTY MESSAGE
+========================= */
+
+.empty-msg{
+
+text-align:center;
+background:#e3f2fd;
+padding:20px;
+border-radius:8px;
+color:#0d47a1;
+font-weight:500;
+
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:900px){
+
+.moment-card{
+
+flex-direction:column;
+
+}
+
+.moment-images{
+
+justify-content:center;
+
+}
+
+}
+
+</style>
+
+
+
+<h1 class="page-title">Star Moments</h1>
+
+
+
+<div class="moments-container">
+
+<% if(!starMoments || starMoments.length === 0){ %>
+
+<div class="empty-msg">
+No star moments available.
+</div>
+
+<% } else { %>
+
+
+<% starMoments.forEach(moment => { %>
+
+<div class="moment-card">
+
+<% if(moment.images && moment.images.length > 0){ %>
+
+<div class="moment-images">
+
+<% moment.images.forEach(img => { %>
+
+<img src="<%= img %>" alt="Star Moment Image">
+
+<% }) %>
+
+</div>
+
+<% } %>
+
+
+<div class="moment-content">
+
+<div class="moment-title">
+<%= moment.title %>
+</div>
+
+<div class="moment-desc">
+<%= moment.description %>
+</div>
+
+</div>
+
+</div>
+
+<% }) %>
+
+
+<% } %>
+
+</div>
+
+
+<%- include('../partials/footer') %>

@@ -15,49 +15,23 @@
           <div class="card-body">
 
             <!-- Title -->
-            <h2 class="card-title mb-3">
-              <%= activity.title || "Untitled Activity" %>
-            </h2>
-
+          
             <!-- Date -->
-            <% if (activity.Date) { %>
-              <p><strong>Date:</strong> <%= activity.Date %></p>
-            <% } %>
+           
 
             <!-- Time -->
-            <% if (activity.Time) { %>
-              <p><strong>Time:</strong> <%= activity.Time %></p>
-            <% } %>
+           
 
             <!-- Venue -->
-            <% if (activity.Venue) { %>
-              <p><strong>Venue:</strong> <%= activity.Venue %></p>
-            <% } %>
-
+             
             <!-- Participants -->
-            <% if (activity.Participants) { %>
-              <p><strong>Participants:</strong> <%= activity.Participants %></p>
-            <% } %>
+            
 
             <!-- Resource Persons -->
-            <% if (activity.ResoursePerson && activity.ResoursePerson.length > 0) { %>
-              <h5>Resource Persons</h5>
-              <div class="tags-container">
-                <% activity.ResoursePerson.forEach(person => { %>
-                  <div class="tag"><%= person %></div>
-                <% }) %>
-              </div>
-            <% } %>
+             
 
             <!-- Conveners -->
-            <% if (activity.convener && activity.convener.length > 0) { %>
-              <h5>Conveners</h5>
-              <div class="tags-container">
-                <% activity.convener.forEach(c => { %>
-                  <div class="tag"><%= c %></div>
-                <% }) %>
-              </div>
-            <% } %>
+           
 
             <!-- Event Summary -->
             <% if (activity.eventsummary) { %>

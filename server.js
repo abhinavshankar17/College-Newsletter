@@ -48,7 +48,11 @@ import GuestLecture from "./routes/events/GuestLecture.js";
 import Workshop from "./routes/events/Workshop.js";
 import AlumniActivities from "./routes/events/AlumniActivity.js";
 import OutreachActivities from "./routes/events/OutreachActivity.js";
-
+import StarMoments from "./routes/events/StarMoments.js"; 
+import professionalSocietyEventsRoutes from "./routes/events/ProfessionalSocietyEvents.js";
+import hackathonRoutes from "./routes/events/Hackthon.js";
+import lectureSeriesRoutes from "./routes/events/LectureSeries.js";
+import facultyWellnessRoutes from "./routes/faculty/FacultyWellnessSeries.js";
 const app = express();
 
 dotenv.config(); // loads .env variables
@@ -93,7 +97,11 @@ app.use("/GuestLecture", GuestLecture);
 app.use("/Workshop", Workshop);
 app.use("/AlumniActivities", AlumniActivities);
 app.use("/OutreachActivities", OutreachActivities);
-
+app.use("/star-moments", StarMoments);
+app.use("/professionalsocietyevents", professionalSocietyEventsRoutes);
+app.use("/hackathons", hackathonRoutes);
+app.use("/lecture-series", lectureSeriesRoutes);
+app.use("/faculty-wellness-series", facultyWellnessRoutes);
 // Default route
 app.get("/", (req, res) => {
   res.render("home", { page: { pageTitle: "HomePage" } });

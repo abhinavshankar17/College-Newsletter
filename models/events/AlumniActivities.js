@@ -18,30 +18,30 @@ const alumniActivitySchema = new mongoose.Schema({
   },
    Venue: {
     type: String,     // e.g., "2014 to 2023"
-    trim: true
+    trim: false
   },
   Participants: {
       type: String,
       required: false, // e.g., "Dr. M. Lakshmi"
-      trim: true
+      trim: false
     },
     ResoursePerson: {
       type: [String],   // e.g., "Professor & Head"
-      trim: true
+      trim: false
     },
     convener: {
       type: [String],   // e.g., "Networking and Communications"
-      trim: true
+      trim: false
     },
   eventsummary: {
     type: String,     // Full paragraph of event outcomes
     required: false,
-    trim: true
+    trim: false
   },
   eventoutcome: {
     type: String,     // Full paragraph of event outcomes
     required: false,
-    trim: true
+    trim: false
   },
        images: { type: [String], default: [] },
   
