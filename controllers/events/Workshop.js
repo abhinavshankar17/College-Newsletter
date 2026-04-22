@@ -2,7 +2,7 @@ import Workshop from "../../models/events/WorkshopModel.js";
 export const getAllWorkshops = async (req, res) => {
   try {
     const groupedWorkshops = await Workshop.getGroupedWorkshops();
-    res.render("events/workshops.ejs", { workshops: groupedWorkshops });
+    res.render("events/Workshops", { workshops: groupedWorkshops });
   } catch (err) {
     console.error("Error fetching workshops:", err);
     res.status(500).send("Server Error");
