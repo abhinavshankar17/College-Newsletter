@@ -102,6 +102,12 @@ app.use("/professionalsocietyevents", professionalSocietyEventsRoutes);
 app.use("/hackathons", hackathonRoutes);
 app.use("/lecture-series", lectureSeriesRoutes);
 app.use("/faculty-wellness-series", facultyWellnessRoutes);
+
+// Health check endpoint (for UptimeRobot to keep Render alive)
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "ok", uptime: process.uptime() });
+});
+
 // Default route
 app.get("/", (req, res) => {
   res.render("home", { page: { pageTitle: "HomePage" } });
