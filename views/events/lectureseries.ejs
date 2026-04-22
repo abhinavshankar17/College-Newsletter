@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Lecture Series</title>
+
+<style>
+
+body{
+  font-family:"Segoe UI", Arial;
+  margin:0;
+  background:linear-gradient(135deg,#eef4ff,#fff6cc);
+}
+
+/* Title */
+
+.page-title{
+  text-align:center;
+  font-size:2.6rem;
+  padding:40px 0;
+  color:#0b3d91;
+}
+
+/* Container */
+
+.container{
+  width:90%;
+  max-width:1000px;
+  margin:auto;
+}
+
+/* Lecture Card */
+
+.lecture-card{
+  background:white;
+  border-radius:12px;
+  padding:25px;
+  margin-bottom:35px;
+  box-shadow:0 10px 20px rgba(0,0,0,0.1);
+  border-left:8px solid #ffd54f;
+  transition:0.3s;
+}
+
+.lecture-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 15px 25px rgba(0,0,0,0.15);
+}
+
+/* Heading */
+
+.lecture-title{
+  font-size:1.6rem;
+  color:#0b3d91;
+  margin-bottom:10px;
+}
+
+/* Description */
+
+.lecture-description{
+  color:#444;
+  line-height:1.6;
+  text-align:justify;
+}
+
+/* Image Gallery */
+
+.lecture-images{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:15px;
+}
+
+.lecture-images img{
+  width:220px;
+  height:150px;
+  object-fit:cover;
+  border-radius:10px;
+  border:3px solid #ffd54f;
+  transition:0.3s;
+}
+
+.lecture-images img:hover{
+  transform:scale(1.08);
+  border-color:#0b3d91;
+}
+
+@media(max-width:768px){
+  .lecture-images img{
+    width:100%;
+    height:auto;
+  }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<%- include('../partials/header', { title: "Lecture Series" }) %>
+
+<h1 class="page-title">Lecture Series</h1>
+
+<div class="container">
+
+<% lectures.forEach(lecture => { %>
+
+<div class="lecture-card">
+
+<h2 class="lecture-title"><%= lecture.heading %></h2>
+
+<p class="lecture-description"><%= lecture.description %></p>
+
+<% if(lecture.images && lecture.images.length > 0){ %>
+
+<div class="lecture-images">
+
+<% lecture.images.forEach(img => { %>
+
+<img src="<%= img %>">
+
+<% }) %>
+
+</div>
+
+<% } %>
+
+</div>
+
+<% }) %>
+
+</div>
+
+<%- include('../partials/footer') %>
+
+</body>
+</html>

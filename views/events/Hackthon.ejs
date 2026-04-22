@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Hackathons</title>
+
+<style>
+
+body{
+  font-family: "Segoe UI", Arial;
+  margin:0;
+  padding:0;
+  background: linear-gradient(135deg,#0a1f44,#001028);
+  color:white;
+}
+
+/* Title */
+
+.page-title{
+  text-align:center;
+  font-size:3rem;
+  padding:40px 0;
+  color:#ffd54f;
+  letter-spacing:2px;
+}
+
+/* Container */
+
+.container{
+  width:90%;
+  max-width:1000px;
+  margin:auto;
+}
+
+/* Hackathon Card */
+
+.hack-card{
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(10px);
+  border-radius:15px;
+  padding:30px;
+  margin-bottom:30px;
+  border-left:6px solid #ffd54f;
+  box-shadow:0 10px 25px rgba(0,0,0,0.4);
+  transition:0.3s;
+  position:relative;
+  overflow:hidden;
+}
+
+/* Glow line animation */
+
+.hack-card::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:100%;
+  height:3px;
+  background:linear-gradient(90deg,#00c6ff,#ffd54f);
+  transition:0.6s;
+}
+
+.hack-card:hover::before{
+  left:0;
+}
+
+.hack-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 20px 35px rgba(0,0,0,0.6);
+}
+
+/* Title */
+
+.hack-title{
+  font-size:1.6rem;
+  color:#ffd54f;
+  margin-bottom:10px;
+}
+
+/* Description */
+
+.hack-description{
+  color:#d9e3ff;
+  line-height:1.7;
+  font-size:0.95rem;
+}
+
+/* Tech grid background */
+
+body::after{
+  content:"";
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background-image:
+  linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size:40px 40px;
+  pointer-events:none;
+}
+.hack-images{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:15px;
+}
+
+.hack-images img{
+  width:220px;
+  height:150px;
+  object-fit:cover;
+  border-radius:10px;
+  border:3px solid #ffd54f;
+  transition:0.3s;
+}
+
+.hack-images img:hover{
+  transform:scale(1.08);
+  border-color:#00c6ff;
+}
+</style>
+
+</head>
+
+<body>
+
+<%- include('../partials/header', { title: "Hackathons" }) %>
+
+<h1 class="page-title">Hackathons</h1>
+
+<div class="container">
+
+<% hackathons.forEach(hack => { %>
+
+<div class="hack-card">
+
+<h2 class="hack-title"><%= hack.title %></h2>
+
+<p class="hack-description">
+<%= hack.description %>
+</p>
+
+<div class="hack-images">
+
+<% if(hack.images && hack.images.length > 0) { %>
+
+  <% hack.images.forEach(img => { %>
+    <img src="<%= img %>">
+  <% }) %>
+
+<% } %>
+
+</div>
+
+</div>
+
+<% }) %>
+<%- include('../partials/footer') %>
+
+</body>
+</html>

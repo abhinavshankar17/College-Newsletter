@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Faculty Wellness Series</title>
+
+<style>
+
+body{
+  margin:0;
+  font-family:"Segoe UI", Arial;
+  background:linear-gradient(135deg,#0b3d91,#ffd54f);
+  min-height:100vh;
+}
+
+/* Page Title */
+
+.page-title{
+  text-align:center;
+  font-size:2.7rem;
+  color:white;
+  padding:40px 0;
+  letter-spacing:1px;
+}
+
+/* Container */
+
+.container{
+  width:90%;
+  max-width:1100px;
+  margin:auto;
+  padding-bottom:50px;
+}
+
+/* Glass Card */
+
+.wellness-card{
+  background:rgba(255,255,255,0.2);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border-radius:16px;
+  padding:30px;
+  margin-bottom:35px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.25);
+  border:1px solid rgba(255,255,255,0.3);
+  transition:0.3s;
+}
+
+.wellness-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 15px 35px rgba(0,0,0,0.35);
+}
+
+/* Title */
+
+.wellness-title{
+  font-size:1.8rem;
+  color:#ffffff;
+  margin-bottom:10px;
+}
+
+/* Description */
+
+.wellness-description{
+  color:#f5f5f5;
+  line-height:1.7;
+  text-align:justify;
+}
+
+/* Image Gallery */
+
+.image-gallery{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:15px;
+  margin-top:20px;
+}
+
+.image-gallery img{
+  width:100%;
+  height:auto;
+  border-radius:10px;
+  border:3px solid #ffd54f;
+  transition:0.3s;
+}
+
+
+.image-gallery img:hover{
+  transform:scale(1.05);
+  border-color:white;
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+  .page-title{
+    font-size:2rem;
+  }
+
+  .wellness-card{
+    padding:20px;
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<%- include('../partials/header', { title: "Faculty Wellness Series" }) %>
+
+<h1 class="page-title">Faculty Wellness Series</h1>
+
+<div class="container">
+
+<% wellness.forEach(session => { %>
+
+<div class="wellness-card">
+
+<% if(session.title){ %>
+<h2 class="wellness-title"><%= session.title %></h2>
+<% } %>
+
+<p class="wellness-description">
+<%= session.description %>
+</p>
+
+<% if(session.images && session.images.length > 0){ %>
+
+<div class="image-gallery">
+
+<% session.images.forEach(img => { %>
+
+<img src="<%= img %>">
+
+<% }) %>
+
+</div>
+
+<% } %>
+
+</div>
+
+<% }) %>
+
+</div>
+
+<%- include('../partials/footer') %>
+
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Professional Society Events</title>
+
+  <style>
+
+    body{
+      font-family: "Segoe UI", Arial, sans-serif;
+      background:#f2f6ff;
+      margin:0;
+      padding:0;
+    }
+
+    h1{
+      text-align:center;
+      padding:35px 0;
+      color:#0b3d91;
+      font-size:38px;
+      letter-spacing:1px;
+    }
+
+    .container{
+      width:90%;
+      max-width:1100px;
+      margin:auto;
+      padding-bottom:40px;
+    }
+
+    .event-card{
+      background:white;
+      padding:30px;
+      margin-bottom:35px;
+      border-radius:12px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.08);
+      border-left:8px solid #0b3d91;
+      transition:0.3s;
+    }
+
+    .event-card:hover{
+      transform:translateY(-6px);
+      box-shadow:0 10px 22px rgba(0,0,0,0.15);
+    }
+
+    .event-title{
+      color:#0b3d91;
+      margin-bottom:5px;
+      font-size:26px;
+      font-weight:700;
+    }
+
+    .event-subtitle{
+      color:#f2b705;
+      margin-bottom:15px;
+      font-size:18px;
+      font-weight:600;
+    }
+
+    .event-description{
+      line-height:1.7;
+      color:#444;
+      margin-bottom:20px;
+      font-size:16px;
+    }
+
+    .image-gallery{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(200px,1fr));
+      gap:12px;
+      margin-top:15px;
+    }
+
+    .image-gallery img{
+   height: 300px;
+      object-fit:cover;
+      border-radius:8px;
+      border:3px solid #f2b705;
+      transition:0.3s;
+    }
+
+    .image-gallery img:hover{
+      transform:scale(1.05);
+      border-color:#0b3d91;
+    }
+
+    @media(max-width:768px){
+      h1{
+        font-size:28px;
+      }
+
+      .event-card{
+        padding:20px;
+      }
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+<%- include('../partials/header', { title: "Professional Society Events" }) %>
+
+<h1>Professional Society Events</h1>
+
+<div class="container">
+
+<% events.forEach(event => { %>
+
+  <div class="event-card">
+
+    <h2 class="event-title"><%= event.heading %></h2>
+
+    <h4 class="event-subtitle"><%= event.subheading %></h4>
+
+    <p class="event-description"><%= event.description %></p>
+
+    <% if(event.images && event.images.length > 0) { %>
+
+      <div class="image-gallery">
+        <% event.images.forEach(img => { %>
+          <img src="<%= img %>">
+        <% }) %>
+      </div>
+
+    <% } %>
+
+  </div>
+
+<% }) %>
+
+</div>
+
+<%- include('../partials/footer') %>
+
+</body>
+</html>

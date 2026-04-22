@@ -2,94 +2,131 @@
 
 <style>
   /* Page Title */
-  .page-title {
-    font-size: 2.5rem;
-    color: #0a1f44;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+/* Background */
+body{
+  background: linear-gradient(135deg,#eaf2ff,#fff7cc);
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* Page Title */
+.page-title {
+  font-size: 2.7rem;
+  color: #0a2a66;
+  font-weight: 700;
+  text-align:center;
+  letter-spacing:1px;
+  margin-bottom:30px;
+  text-shadow:0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* Glass Card */
+.activity-card {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255,255,255,0.65);
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,0.3);
+  box-shadow:0 8px 25px rgba(0,0,0,0.12);
+  transition: all 0.35s ease;
+  overflow:hidden;
+  margin-bottom:2.5rem;
+  border-left:6px solid #0d47a1;
+}
+
+.activity-card:hover{
+  transform:translateY(-8px) scale(1.01);
+  box-shadow:0 20px 40px rgba(0,0,0,0.18);
+}
+
+/* Card Body Paragraphs */
+.card-body p {
+  margin-bottom:0.7rem;
+  font-size:0.96rem;
+  color:#2f2f2f;
+  text-align:justify;
+  line-height:1.6;
+}
+
+/* Card Heading */
+.card-body h5 {
+  color:#0d47a1;
+  font-weight:600;
+}
+
+/* Person List */
+.person-list {
+  padding-left:0;
+  list-style:none;
+  margin:0 0 14px 0;
+}
+
+.person-list li {
+  padding:8px 14px;
+  background: linear-gradient(90deg,#fff9c4,#e3f2fd);
+  border-radius:8px;
+  font-weight:500;
+  margin-bottom:7px;
+  border-left:5px solid #f2b705;
+  transition:all 0.25s ease;
+}
+
+.person-list li:hover{
+  background: linear-gradient(90deg,#ffe082,#bbdefb);
+  transform:translateX(3px);
+}
+
+/* Section Headings */
+h3.text-primary {
+  font-size:1.7rem;
+  color:#0a2a66;
+  border-bottom:3px solid #f2b705;
+  display:inline-block;
+  padding-bottom:5px;
+  margin-bottom:18px;
+}
+
+/* Images container */
+.activity-images {
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:12px;
+}
+
+/* Images */
+.activity-images img {
+  max-width: calc(33.33% - 12px);
+  height:170px;
+  object-fit:cover;
+  border-radius:12px;
+  border:3px solid #ffd54f;
+  transition: all 0.35s ease;
+  box-shadow:0 6px 14px rgba(0,0,0,0.15);
+}
+
+.activity-images img:hover{
+  transform:scale(1.07);
+  border-color:#0d47a1;
+  box-shadow:0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .activity-images img{
+    max-width: calc(50% - 12px);
+  }
+}
+
+@media (max-width: 576px) {
+  .activity-images img{
+    max-width:100%;
+    height:auto;
   }
 
-  /* Card */
-  .activity-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-radius: 15px;
-    overflow: hidden;
-    margin-bottom: 2rem;
+  .page-title{
+    font-size:2rem;
   }
-
-  .activity-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
-  }
-
-  /* Card Body Paragraphs */
-  .card-body p {
-    margin-bottom: 0.6rem;
-    font-size: 0.95rem;
-    color: #333;
-    text-align: justify; /* Justify all paragraphs */
-  }
-
-  .card-body h5 {
-    color: #0d47a1;
-  }
-
-  /* Person List: vertical, justified */
-  .person-list {
-    padding-left: 0;
-    list-style: none;
-    margin: 0 0 12px 0;
-  }
-
-  .person-list li {
-    padding: 8px 12px;
-    background: #e3f2fd;
-    border-radius: 8px;
-    font-weight: 500;
-    text-align: justify; /* Justify person names */
-    margin-bottom: 6px;
-    border-left: 4px solid #0d6efd;
-  }
-
-  /* Headings */
-  h3.text-primary {
-    font-size: 1.6rem;
-    border-bottom: 2px solid #0d6efd;
-    display: inline-block;
-    padding-bottom: 4px;
-  }
-
-  /* Images */
-  .activity-images {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-
-  .activity-images img {
-    width: 100%;
-    max-width: calc(33.33% - 10px);
-    height: 160px;
-    object-fit: cover;
-    border-radius: 10px;
-    transition: transform 0.3s ease;
-  }
-
-  .activity-images img:hover {
-    transform: scale(1.05);
-  }
-
-  /* Responsive adjustments */
-  @media (max-width: 992px) {
-    .activity-images img {
-      max-width: calc(50% - 10px);
-    }
-  }
-
-  @media (max-width: 576px) {
-    .activity-images img {
-      max-width: 100%;
-    }
-  }
+}
 </style>
 
 <div class="container my-5">
@@ -120,12 +157,12 @@
               <% } %>
 
               <!-- Venue -->
-              <% if (activity.venue && activity.venue.length > 0) { %>
+              <% if (activity.venue && activity.venue.length > 1) { %>
                 <p><i class="bi bi-geo-alt me-2"></i><strong>Venue:</strong> <%= activity.venue.join(", ") %></p>
               <% } %>
 
               <!-- Participants -->
-              <% if (activity.participants && activity.participants.length > 0) { %>
+              <% if (activity.participants && activity.participants.length > 1) { %>
                 <p><i class="bi bi-people me-2"></i><strong>Participants:</strong> <%= activity.participants.join(", ") %></p>
               <% } %>
 
@@ -135,7 +172,7 @@
               <% } %>
 
               <!-- Convenor -->
-              <% if (activity.convenor && activity.convenor.length > 0) { %>
+              <% if (activity.convenor && activity.convenor.length > 1) { %>
                 <p><i class="bi bi-person-badge me-2"></i><strong>Convenor:</strong></p>
                 <ul class="person-list">
                   <% activity.convenor.forEach(c => { %>
@@ -147,7 +184,7 @@
               <% } %>
 
               <!-- Co-Convenor -->
-              <% if (activity.coconvenor && activity.coconvenor.length > 0) { %>
+              <% if (activity.coconvenor && activity.coconvenor.length > 1) { %>
                 <p><i class="bi bi-person-badge-fill me-2"></i><strong>Co-Convenor:</strong></p>
                 <ul class="person-list">
                   <% activity.coconvenor.forEach(c => { %>
@@ -159,7 +196,7 @@
               <% } %>
 
               <!-- Resource Person -->
-              <% if (activity.resourcePerson) { %>
+              <% if (activity.resourcePerson && activity.resourcePerson.length > 1) { %>
                 <p><i class="bi bi-mic me-2"></i><strong>Resource Persons:</strong></p>
                 <ul class="person-list">
                   <%
