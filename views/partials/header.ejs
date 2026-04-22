@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= typeof title !== 'undefined' ? title : "College Newsletter" %></title>
   <link rel="stylesheet" href="/style.css">
@@ -51,16 +52,44 @@
 .navbar-custom .nav-item.dropdown {
   position: relative;
 }
-#studentsDropdown + .dropdown-menu {
-  left: -100px;   /* move 20px to the left */
-  right: auto;
-}
-
-/* Open dropdown on hover for desktop */
+/* Shift Students dropdown left on desktop only */
 @media (min-width: 992px) {
+  #studentsDropdown + .dropdown-menu {
+    left: -100px;
+    right: auto;
+  }
+
+  /* Open dropdown on hover for desktop */
   .navbar .dropdown:hover > .dropdown-menu {
     display: block;
-    margin-top: 0; /* prevent small gap */
+    margin-top: 0;
+  }
+}
+
+/* Mobile dropdown styling */
+@media (max-width: 991px) {
+  .navbar-custom .dropdown-menu {
+    background-color: #162435;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+    left: 0 !important;
+    right: 0 !important;
+    position: static !important;
+    width: 100%;
+    box-shadow: none;
+  }
+
+  .navbar-custom .dropdown-item {
+    padding: 10px 25px;
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .navbar-custom .nav-link {
+    padding: 10px 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
   }
 }
 
@@ -82,7 +111,7 @@
         <!-- Research -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="researchDropdown" role="button"
-             aria-expanded="false">
+             data-bs-toggle="dropdown" aria-expanded="false">
             Research
           </a>
           <ul class="dropdown-menu" aria-labelledby="researchDropdown">
@@ -110,7 +139,7 @@
         <!-- Faculty -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="facultyDropdown" role="button"
-             aria-expanded="false">
+             data-bs-toggle="dropdown" aria-expanded="false">
             Faculty
           </a>
           <ul class="dropdown-menu" aria-labelledby="facultyDropdown">
@@ -132,7 +161,7 @@
         <!-- Events -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="eventsDropdown" role="button"
-              aria-expanded="false">
+              data-bs-toggle="dropdown" aria-expanded="false">
             Events
           </a>
           <ul class="dropdown-menu" aria-labelledby="eventsDropdown">
@@ -152,7 +181,7 @@
         <!-- Students -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="studentsDropdown" role="button"
-              aria-expanded="false">
+              data-bs-toggle="dropdown" aria-expanded="false">
             Students
           </a>
           <ul class="dropdown-menu" aria-labelledby="studentsDropdown">
