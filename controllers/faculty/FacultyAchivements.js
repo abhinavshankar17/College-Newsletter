@@ -5,7 +5,7 @@ import FacultyAchievement from "../../models/faculty/FacultyAchievements.js";
 export const getFacultyAchievements = async (req, res) => {
   try {
     const groupedAchievements = await FacultyAchievement.getGroupedFacultyAchievements();
-    res.render("faculty/facultyAchievements.ejs", { groupedAchievements });
+    res.render("faculty/FacultyAchievements", { groupedAchievements });
   } catch (error) {
     console.error("Error fetching faculty achievements:", error);
     res.status(500).send("Error fetching faculty achievements");
