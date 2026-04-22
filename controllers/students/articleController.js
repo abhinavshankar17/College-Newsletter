@@ -1,4 +1,4 @@
-import StudentArticle from "../../models/students/StudentArticle.js";
+import StudentArticle from "../../models/students/studentArticle.js";
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
 
