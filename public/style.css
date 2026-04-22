@@ -357,3 +357,47 @@ h6.fw-bold {
   object-fit: contain;
 }
 
+
+/* ---------------- MOBILE OPTIMIZATION ---------------- */
+@media (max-width: 768px) {
+  body {
+    margin: 0;
+  }
+  
+  .hero-section {
+    padding: 60px 15px;
+  }
+  
+  .hero-heading {
+    font-size: 1.8rem;
+  }
+  
+  .hero-quote {
+    font-size: 1.1rem;
+  }
+  
+  .hero-message {
+    font-size: 0.95rem;
+    padding: 0 10px;
+  }
+
+  .hod-message {
+    margin: 30px 15px;
+    padding: 20px;
+  }
+
+  .hod-title {
+    font-size: 1.4rem;
+  }
+
+  .navbar-custom .navbar-brand {
+    font-size: 1.2rem;
+  }
+
+  /* Ensure dropdowns are easy to tap on mobile */
+  .navbar-custom .dropdown-menu {
+    background-color: #162435;
+    border-radius: 0;
+    margin-top: 0;
+  }
+}
