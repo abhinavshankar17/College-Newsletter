@@ -252,13 +252,32 @@ router.post("/add-article", isAuthenticated, upload.any(), async (req, res) => {
     }
     delete formData.__v;
 
+    // Clean up empty fields and handle date conversion
     for (const key in formData) {
-      if (key.toLowerCase().includes("date") && typeof formData[key] === "string") {
-        let rawDate = formData[key].trim();
-        const separator = rawDate.includes("-") ? "-" : "/";
-        const [day, month, year] = rawDate.split(separator);
-        if (day && month && year) {
-          formData[key] = new Date(`${year}-${month}-${day}`);
+      if (typeof formData[key] === "string") {
+        formData[key] = formData[key].trim();
+        
+        // If field is empty, set to undefined so Mongoose doesn't try to cast ""
+        if (formData[key] === "") {
+          delete formData[key];
+          continue;
+        }
+
+        // Handle date conversion for fields containing "date"
+        if (key.toLowerCase().includes("date")) {
+          const rawDate = formData[key];
+          const separator = rawDate.includes("-") ? "-" : rawDate.includes("/") ? "/" : null;
+          
+          if (separator) {
+            const parts = rawDate.split(separator);
+            if (parts.length === 3) {
+              const [day, month, year] = parts;
+              const parsedDate = new Date(`${year}-${month}-${day}`);
+              if (!isNaN(parsedDate.getTime())) {
+                formData[key] = parsedDate;
+              }
+            }
+          }
         }
       }
     }
