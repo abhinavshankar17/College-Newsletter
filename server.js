@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import session from "express-session";
 
+dotenv.config();
+
 // MongoDB Connection
 mongoose.connect(process.env.ATLAS, {
   useNewUrlParser: true,
@@ -13,7 +15,6 @@ mongoose.connect(process.env.ATLAS, {
 
 
 // ✅ Debug check for Cloudinary envs (remove in production)
-dotenv.config();
 console.log("Cloudinary config:", {
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY ? "✅ set" : "❌ missing",
@@ -54,8 +55,6 @@ import hackathonRoutes from "./routes/events/Hackthon.js";
 import lectureSeriesRoutes from "./routes/events/LectureSeries.js";
 import facultyWellnessRoutes from "./routes/faculty/FacultyWellnessSeries.js";
 const app = express();
-
-dotenv.config(); // loads .env variables
 
 // Middleware
 app.set("view engine", "ejs");

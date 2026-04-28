@@ -309,8 +309,14 @@ router.post("/add-article", isAuthenticated, upload.any(), async (req, res) => {
       );
     }
 
-    const Model = mongoose.models[model];
-    if (!Model) return res.status(400).send("Invalid model selected");
+    let Model = mongoose.models[model];
+    if (!Model) {
+      // Try to load models if not found (e.g. after server restart)
+      await buildPagesAndSchemas();
+      Model = mongoose.models[model];
+    }
+    
+    if (!Model) return res.status(400).send("Invalid model selected: " + model);
 
     const doc = new Model(formData);
     await doc.save();
@@ -318,7 +324,14 @@ router.post("/add-article", isAuthenticated, upload.any(), async (req, res) => {
     res.render("admin/success", { message: `${model} saved successfully!` });
   } catch (err) {
     console.error("❌ Error saving document:", err);
-    res.status(500).send("Failed to save data");
+    
+    // Check if it's a validation error
+    if (err.name === 'ValidationError') {
+      const messages = Object.values(err.errors).map(e => e.message);
+      return res.status(400).send(`Validation Error: ${messages.join(', ')}`);
+    }
+
+    res.status(500).send(`Failed to save data: ${err.message}`);
   }
 });
 
